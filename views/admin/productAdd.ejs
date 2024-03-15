@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Evara Dashboard - Add New Product</title>
+        <link rel="stylesheet" href="/admin/admin-assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                padding: 20px;
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            form {
+                max-width: 400px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            input[type="text"],
+            input[type="date"],
+            input[type="file"],
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            input[type="submit"] {
+                background-color: #007bff;
+                color: #ffffff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Add New Product</h1>
+        <form id="form" action="/admin/add-product" method="post" enctype="multipart/form-data">
+            <div  class="spin error" id="name-error"></div>
+            <input type="text" name="name" placeholder="Enter Name" id="name" required>
+            <br>
+            <div  class="spin error" id="price-error"></div>
+            <input type="text" name="price" placeholder="Enter Price" id="price" required>
+            <div  class="spin error" id="name-error"></div>
+            <br>
+            <div  class="spin error" id="disprice-error"></div>
+            <input type="text" name="disprice" placeholder="Enter Discount Price" id="disprice" required>
+            <br>
+            <div  class="spin error" id="color-error"></div>
+            <input type="text" name="color" placeholder="Enter Color" id="color" required>
+            <br>
+            <div  class="spin error" id="stock-error"></div>
+            <input type="text" name="stock" placeholder="Enter Stock" id="stock" required>
+            <br>
+            <div  class="spin error" id="size1-error"></div>
+            <input type="text" name="sizes[]" placeholder="Size 1" id="size1"><br>
+            <div  class="spin error" id="size2-error"></div>
+            <input type="text" name="sizes[]" placeholder="Size 2" id="size2"><br>
+            <div  class="spin error" id="size3-error"></div>
+            <input type="text" name="sizes[]" placeholder="Size 3" id="size3"><br>
+            <div  class="spin error" id="size4-error"></div>
+            <input type="text" name="sizes[]" placeholder="Size 4" id="size4"><br>
+            <br>
+            
+            <input type="file" name="image" id="image-upload" accept="image/*" multiple>
+            <br>
+            <select
+                        class="form-select"
+                        id="choices-category-input"
+                        name="category"
+                     >
+                        <% categories.forEach(category => { %>
+                        <option value="<%=category.name%>" name="category">
+                          <%=category.name%>
+                        </option>
+
+                        <% }); %>
+                     </select>
+            
+            <br>
+            <!-- <button type="button" id="crop-button">Crop Image</button> -->
+            <button type="button" id="done-button" style="display: none;">Done</button>
+            <!-- <br>
+            <input type="hidden" name="croppedImage" id="cropped-image" required> -->
+            <br>
+            <button type="submit" id="submit-btn">Submit</button>
+        </form>
+        <!-- <% if (typeof message !== 'undefined') { %>
+            <p><%= message %></p>
+        <% } %> -->
+    
+        <!-- Include necessary scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+       <script>
+        document.getElementById("submit-btn").addEventListener("click",(event)=>{
+            event.preventDefault()
+            const name = document.getElementById("name").value.trim()
+            const price = document.getElementById("price").value
+            const disprice = document.getElementById("disprice").value
+            const color = document.getElementById("color").value.trim()
+            const stock = document.getElementById("stock").value 
+            const size1 = document.getElementById("size1").value
+            const size2 = document.getElementById("size2").value
+            const size3 = document.getElementById("size3").value
+            const size4 = document.getElementById("size4").value
+
+            const nameError = document.getElementById("name-error")
+            const priceError = document.getElementById("price-error")
+            const dispriceError = document.getElementById("disprice-error")
+            const colorError = document.getElementById("color-error")
+            const stockError = document.getElementById("stock-error")
+            const size1Error = document.getElementById("size1-error")
+            const size2Error = document.getElementById("size2-error")
+            const size3Error = document.getElementById("size3-error")
+            const size4Error = document.getElementById("size4-error")
+      
+ 
+            let isValid = true
+            if(name.trim()===""){
+                nameError.textContent = "Please Enter a valid Name"
+                isValid = false
+            }
+            if(isNaN(price) || price.trim()===""){
+                priceError.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            
+            if(isNaN(disprice) || disprice.trim()===""){
+                dispriceError.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(stock) || stock.trim()===""){
+                stockError.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size1) || size1.trim()===""){
+                size1Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size2) || size2.trim()===""){
+                size2Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size3) || size3.trim()===""){
+                size3Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size4) || size4.trim()===""){
+                size4Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(!isNaN(color) || color.trim()===""){
+                color.textContent = "Please Don't Enter a Number"
+                isValid = false
+            }
+            
+            if (isValid) {
+        document.getElementById('form').submit();
+    }
+        })
+      
+
+       </script>
+      
+            
+    </body>
+    </html>
