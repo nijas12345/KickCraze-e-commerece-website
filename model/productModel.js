@@ -7,11 +7,11 @@ const productSchema = new mongoose.Schema({
         required:true
     },
     price:{
-        type:String,
+        type:Number,
         required:true
     },
     disprice:{
-        type:String,
+        type:Number,
         required:true
     },
     image:[{
@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
         required:true
     },
     sizes:{
-        type:Array  ,
+        type:Array ,
         required:true
     },
     status:{
@@ -41,9 +41,14 @@ const productSchema = new mongoose.Schema({
     category:{
         type:String,
         required:true
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now()
     }
+
 })
-const Product = mongoose.model("products",productSchema)
+const Product = mongoose.model("Product",productSchema)
 
 
 module.exports = Product

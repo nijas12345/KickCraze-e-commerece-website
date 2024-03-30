@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt")
 const nodemailer = require("nodemailer")
 const jwt = require("jsonwebtoken")
 const Product = require('../model/productModel')
+const Address = require("../model/addressModel")
+const Cart = require("../model/cartModel")
+
 
 
 const createToken = (user)=>{
@@ -38,7 +41,7 @@ const insertUser = async(req,res)=>{
         const checkEmail = await User.findOne({email:req.body.email})
         if(checkEmail){
             res.status(200).render("register",{message:"Email already exists"})
-        }
+        }   
         else{
             const spassword = await securePassword(req.body.pass)
             const users = {
@@ -61,7 +64,7 @@ const insertUser = async(req,res)=>{
     }
 }
 
-const loadOtp    = async (req,res)=>{
+const loadOtp = async (req,res)=>{
     try {
        
         const email = req.session.temp.email;
@@ -79,6 +82,9 @@ const loadOtp    = async (req,res)=>{
             auth:{
                 user:process.env.USER_NAME,
                 pass:process.env.USER_PASSWORD
+            },
+            tls:{
+               rejectUnauthorized:false
             }
         })
         const mailOptions = {
@@ -130,7 +136,7 @@ const verifyRegister = async(req,res)=>{
             const userData = await user.save()
             if(userData){
                const token = createToken({id:userData._id})
-               res.cookie("jwt",token,{httpOnly:true,maxAge:600000})
+               res.cookie("jwt",token,{httpOnly:true,maxAge:60000000})
                console.log(token)
                res.redirect('/home')
             }   
@@ -149,7 +155,22 @@ const verifyRegister = async(req,res)=>{
 
 const loadShop = async (req,res)=>{
 try {
-    res.render('shop')
+    const userId = req.id
+    const products = await Product.find()
+    
+    const carts = await Cart.find({userId:userId})
+    console.log("carts:",carts);
+    let quantity = 0
+    let total = 0
+    carts.forEach((cart)=>{
+        quantity = quantity +cart.quantity
+        total = total + cart.total
+    })
+    
+    
+    console.log(quantity);
+    res.render('shop',{products:products,quantity:quantity,total:total})
+    
 } catch (error) {
     console.log(error);
     const errorMessage = "Internal Server Error";
@@ -157,9 +178,123 @@ try {
 }
 }
 
+const loadSearch = async (req,res)=>{
+    const searchQuery = req.body.query
+    console.log(searchQuery);
+    try {
+        const products = await Product.find({
+            name:{$regex:new RegExp(searchQuery,"i")}
+        })
+        console.log(products);
+        res.json(products)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const loadSortAZ = async(req,res)=>{
+    try {
+        const userId = req.id
+        const products = await Product.find().sort({name:1})
+        const carts = await Cart.find({userId:userId})
+        console.log("carts:",carts);
+        let quantity = 0
+        let total = 0
+
+        carts.forEach((cart)=>{
+        quantity = quantity +cart.quantity
+        total = total + cart.total
+    })
+    console.log("products",products);
+        res.render("shop",{products:products,total:total})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const loadSortZA = async(req,res)=>{
+    try {
+        const userId = req.id
+        const products = await Product.find().sort({name:-1})
+        const carts = await Cart.find({userId:userId})
+        console.log("carts:",carts);
+        let quantity = 0
+        let total = 0
+
+        carts.forEach((cart)=>{
+        quantity = quantity +cart.quantity
+        total = total + cart.total
+    })
+    console.log("products",products);
+        res.render("shop",{products:products,total:total})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const highToLow = async(req,res)=>{
+    try {
+        const userId = req.id
+        const products = await Product.find().sort({disprice:-1})
+        console.log("products",products);
+        const carts = await Cart.find({userId:userId})
+        console.log("carts:",carts);
+        let quantity = 0
+        let total = 0
+
+        carts.forEach((cart)=>{
+        quantity = quantity +cart.quantity
+        total = total + cart.total
+    })
+    console.log("products",products);
+        res.render("shop",{products:products,total:total})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const lowToHigh = async(req,res)=>{
+    try {
+        const userId = req.id
+        const products = await Product.find().sort({disprice:1})
+        console.log("products",products);
+        const carts = await Cart.find({userId:userId})
+        console.log("carts:",carts);
+        let quantity = 0
+        let total = 0
+
+        carts.forEach((cart)=>{
+        quantity = quantity +cart.quantity
+        total = total + cart.total
+    })
+    console.log("products",products);
+        res.render("shop",{products:products,total:total})
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
+const newArrivals = async(req,res)=>{
+    try {
+        const userId = req.id
+        const products = await Product.find().sort({date:-1})
+        console.log("products",products);
+        const carts = await Cart.find({userId:userId})
+        console.log("carts:",carts);
+        let quantity = 0
+        let total = 0
 
+        carts.forEach((cart)=>{
+        quantity = quantity +cart.quantity
+        total = total + cart.total
+    })
+    console.log("products",products);
+        res.render("shop",{products:products,total:total})
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const loadLogin = async (req,res)=>{
     try {
@@ -185,6 +320,40 @@ const loadLogout = async (req,res)=>{
         return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
     }
 }
+const verifyGoogle = async (req,res)=>{
+    try {
+        console.log("req.user",req.user);
+        
+        const userData = await User.findOne({email:req.user.email})
+        console.log('existing use',userData);
+        if(userData){
+            const token = createToken({id:userData._id})
+            res.cookie("jwt",token,{httpOnly:true,maxAge:600000000})
+        res.redirect('/home')
+            
+        }
+        else{
+            const user =  new User({
+                name:req.user.given_name,
+                email:req.user.email,
+                password:"123456789",
+                mobile:"1234567890",
+    
+            })
+            const userData = await user.save()
+            console.log('userData',userData);
+            const token = createToken({id:userData._id})
+            res.cookie("jwt",token,{httpOnly:true,maxAge:600000000})
+        res.redirect('/home')
+
+        }
+      
+       
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
 const verifyUser = async(req,res)=>{
     try {
         const email = req.body.name
@@ -195,10 +364,12 @@ const verifyUser = async(req,res)=>{
         if(userData){
             console.log(userData);
             if(userData.status){
+                console.log(userData.status);
                 const passwordMatch = await bcrypt.compare(password,userData.password)
                 if(passwordMatch){
+                    
                     const token = createToken({id:userData._id})
-                    res.cookie("jwt",token,{httpOnly:true,maxAge:600000})
+                    res.cookie("jwt",token,{httpOnly:true,maxAge:600000000})
                    
                     res.redirect('/home')
         
@@ -238,6 +409,7 @@ const forgotPassword = async (req,res)=>{
 const loadHome = async (req,res)=>{
     try {
         const products = await Product.find()
+        console.log(products);
         res.render('home',{product:products})
     } catch (error) {
         console.log(error);
@@ -264,7 +436,6 @@ const productProfile = async(req,res)=>{
        const productId = req.query.id
        const products = await Product.findOne({_id:productId})
        const similarProducts = await Product.find({category:products.category})
-       console.log(similarProducts);
         res.render("productProfile",{products:products,similarProducts:similarProducts})
     } catch (error) {
         console.log(error);
@@ -276,6 +447,7 @@ const productProfile = async(req,res)=>{
 
 
 module.exports = { 
+    verifyGoogle,
     loadRegister,
     insertUser,
     verifyRegister,
@@ -286,6 +458,12 @@ module.exports = {
     loadOtp,
     registerOtp,
     loadShop,
+    loadSearch,
+    loadSortAZ, 
+    loadSortZA,
+    highToLow,
+    lowToHigh,
+    newArrivals,
     productProfile,
-    loadLogout
+    loadLogout,
 }

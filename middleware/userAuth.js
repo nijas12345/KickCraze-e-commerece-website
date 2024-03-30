@@ -7,13 +7,14 @@ const requireAuth = async (req,res,next)=>{
         const token = req.cookies.jwt;
         console.log(token)
         if(token){
-            jwt.verify(token,secret,(err,docodedToken)=>{
+            jwt.verify(token,secret,(err,decodedToken)=>{
                 if(err){
-                    console.log(err)
+                    console.log(err)    
                     res.redirect("/login")
                 }
                 else{
-                   
+                              console.log(decodedToken);
+                   req.id=decodedToken.id
                     next()
                 }
             })
@@ -26,7 +27,7 @@ const requireAuth = async (req,res,next)=>{
         
     }
  
-}
+}   
 const requireAuth1 = async (req,res,next)=>{
     const token = req.cookies.jwt;
     if(token){

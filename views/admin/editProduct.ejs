@@ -50,19 +50,27 @@
     <body>
         <h1>Edit Product</h1>
         
-        <form id="product-form" action="/admin/product-edit?id=<%=products.id%>" method="post" >
+        <form id="form" action="/admin/product-edit?id=<%=products.id%>" method="post" >
 
-            <input type="text" name="name" placeholder="Enter Name" value="<%=products.name%>">
+            <div  class="spin error" id="name-error"></div>
+            <input type="text" name="name" placeholder="Enter Name" id="name" value="<%=products.name%>">
             <br>
+            <div  class="spin error" id="price-error"></div>
             <input type="text" name="price" placeholder="Enter Price" value="<%=products.price%>" required>
             <br>
+            <div  class="spin error" id="color-error"></div>
             <input type="text" name="color" placeholder="Enter Color" value="<%=products.color%>" required>
             <br>
+            <div  class="spin error" id="stock-error"></div>
             <input type="text" name="stock" placeholder="Enter Stock" value="<%=products.stock%>" required>
             <br>
+            <div  class="spin error" id="size1-error"></div>
             <input type="text" name="sizes[]" placeholder="Size 1" value="<%=products.sizes[0]%>"><br>
+            <div  class="spin error" id="size2-error"></div>
             <input type="text" name="sizes[]" placeholder="Size 2" value="<%=products.sizes[1]%>"><br>
+            <div  class="spin error" id="size3-error"></div>
             <input type="text" name="sizes[]" placeholder="Size 3" value="<%=products.sizes[2]%>"><br>
+            <div  class="spin error" id="size4-error"></div>
             <input type="text" name="sizes[]" placeholder="Size 4" value="<%=products.sizes[3]%>"><br>
             <br>
             
@@ -84,7 +92,7 @@
             <br>
             <!-- <button type="button" id="crop-button">Crop Image</button> -->
            
-            <input type="submit" value="Add Product">
+            <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
         </form>
        
     
@@ -95,7 +103,73 @@
 
        
       <script>
-        
+        document.getElementById("submit-btn").addEventListener("click",function(event){
+            // event.preventDefault()
+            const name = document.getElementById("name").value
+            const price = document.getElementById("price").value
+            const disprice = document.getElementById("disprice").value
+            const color = document.getElementById("color").value.trim()
+            const stock = document.getElementById("stock").value 
+            const size1 = document.getElementById("size1").value
+            const size2 = document.getElementById("size2").value
+            const size3 = document.getElementById("size3").value
+            const size4 = document.getElementById("size4").value
+
+            const nameError = document.getElementById("name-error")
+            const priceError = document.getElementById("price-error")
+            const dispriceError = document.getElementById("disprice-error")
+            const colorError = document.getElementById("color-error")
+            const stockError = document.getElementById("stock-error")
+            const size1Error = document.getElementById("size1-error")
+            const size2Error = document.getElementById("size2-error")
+            const size3Error = document.getElementById("size3-error")
+            const size4Error = document.getElementById("size4-error")
+      
+           console.log(name);
+            let isValid = true
+            if(name.trim()===""){
+                nameError.textContent = "Please Enter a valid Name"
+                isValid = false
+            }
+            if(isNaN(price) || price.trim()===""){
+                priceError.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            
+            if(isNaN(disprice) || disprice.trim()===""){
+                dispriceError.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(stock) || stock.trim()===""){
+                stockError.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size1) || size1.trim()===""){
+                size1Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size2) || size2.trim()===""){
+                size2Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size3) || size3.trim()===""){
+                size3Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(isNaN(size4) || size4.trim()===""){
+                size4Error.textContent = "Please Enter a valid Number"
+                isValid = false
+            }
+            if(!isNaN(color) || color.trim()===""){
+                colorError.textContent = "Please Don't Enter a Number"
+                isValid = false
+            }
+            
+            if (isValid) {
+        document.getElementById('form').submit();
+    }
+  })
+      
       </script>
             
     </body>

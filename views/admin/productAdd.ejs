@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Evara Dashboard - Add New Product</title>
         <link rel="stylesheet" href="/admin/admin-assets/css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.css" integrity="sha512-bs9fAcCAeaDfA4A+NiShWR886eClUcBtqhipoY5DM60Y1V3BbVQlabthUBal5bq8Z8nnxxiyb1wfGX2n76N1Mw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -45,26 +46,31 @@
             input[type="submit"]:hover {
                 background-color: #0056b3;
             }
+            .preview-image {
+    max-width: 200px; /* Set the maximum width */
+    max-height: 200px; /* Set the maximum height */
+    margin: 5px; /* Add some margin between images */
+}
         </style>
     </head>
     <body>
         <h1>Add New Product</h1>
-        <form id="form" action="/admin/add-product" method="post" enctype="multipart/form-data">
+        <form id="form" action="/admin/add-products" method="post" enctype="multipart/form-data">
             <div  class="spin error" id="name-error"></div>
-            <input type="text" name="name" placeholder="Enter Name" id="name" required>
+            <input type="text" name="name" placeholder="Enter Name" id="name" >
             <br>
             <div  class="spin error" id="price-error"></div>
-            <input type="text" name="price" placeholder="Enter Price" id="price" required>
-            <div  class="spin error" id="name-error"></div>
+            <input type="text" name="price" placeholder="Enter Price" id="price" >
+            
             <br>
             <div  class="spin error" id="disprice-error"></div>
-            <input type="text" name="disprice" placeholder="Enter Discount Price" id="disprice" required>
+            <input type="text" name="disprice" placeholder="Enter Discount Price" id="disprice" >
             <br>
             <div  class="spin error" id="color-error"></div>
-            <input type="text" name="color" placeholder="Enter Color" id="color" required>
+            <input type="text" name="color" placeholder="Enter Color" id="color" >
             <br>
             <div  class="spin error" id="stock-error"></div>
-            <input type="text" name="stock" placeholder="Enter Stock" id="stock" required>
+            <input type="text" name="stock" placeholder="Enter Stock" id="stock" >
             <br>
             <div  class="spin error" id="size1-error"></div>
             <input type="text" name="sizes[]" placeholder="Size 1" id="size1"><br>
@@ -75,9 +81,15 @@
             <div  class="spin error" id="size4-error"></div>
             <input type="text" name="sizes[]" placeholder="Size 4" id="size4"><br>
             <br>
-            
-            <input type="file" name="image" id="image-upload" accept="image/*" multiple>
+            <div  class="spin error" id="image-error"></div>
+            <input type="file" id="image-upload" accept="image/*" multiple>
             <br>
+            <div id="cropper-container"></div>
+            
+            <!-- Buttons for controlling cropping -->
+            <button type="button" id="crop-button">Crop Image</button>
+            <button type="button" id="cancel-crop-button">Cancel</button>
+            <input type="submit" name="cropped-image" id="cropped-image">
             <select
                         class="form-select"
                         id="choices-category-input"
@@ -87,29 +99,135 @@
                         <option value="<%=category.name%>" name="category">
                           <%=category.name%>
                         </option>
-
+                        
                         <% }); %>
                      </select>
-            
-            <br>
-            <!-- <button type="button" id="crop-button">Crop Image</button> -->
-            <button type="button" id="done-button" style="display: none;">Done</button>
-            <!-- <br>
-            <input type="hidden" name="croppedImage" id="cropped-image" required> -->
-            <br>
-            <button type="submit" id="submit-btn">Submit</button>
+            <button type="button" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
         </form>
         <!-- <% if (typeof message !== 'undefined') { %>
             <p><%= message %></p>
         <% } %> -->
     
         <!-- Include necessary scripts -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-
+       
+        
+       <script src="productAdd.ejs"></script>
+       
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
        <script>
-        document.getElementById("submit-btn").addEventListener("click",(event)=>{
+   const form = document.getElementById("form")
+  let totalimages = 0;
+
+  function imageupload(event) {
+
+    const files = event.target.files;
+    const imagecontainer = document.getElementById("cropper-container");
+    const maximum = 5;
+
+    const totalupload = totalimages + files.length;
+    if (totalupload > maximum) {
+     //   Swal.fire(Oops! Upload only ${maximum} files., "Sorry");
+        event.target.value = "";
+        return;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+      if (!file.type.startsWith("image/")) {
+        console.log("File is not an image.", file.type);
+        continue;
+      }
+
+      const imgdiv = document.createElement("div");
+      imgdiv.classList.add("image-div");
+
+      const img = document.createElement("img");
+      img.style.height = "300px";
+      img.style.width = "300px";
+      img.setAttribute("name", "image");
+      img.classList.add("uploaded-image");
+
+      const deletebutton = document.createElement("button");
+      deletebutton.textContent = "Delete";
+      deletebutton.classList.add("btn", "btn-danger", "m-2");
+
+      deletebutton.addEventListener("click", function () {
+        totalimages--;
+        imgdiv.remove();
+      });
+
+      reader.onload = function (event) {
+        img.src = event.target.result;
+
+        const cropperdiv = document.createElement("div");
+        cropperdiv.classList.add("cropper-container");
+        cropperdiv.appendChild(img);
+
+        imgdiv.appendChild(cropperdiv);
+        const cropper = new Cropper(img, {
+          dragMode: "move",
+          aspectRatio: 1,
+          autoCropArea: 0.8,
+          restore: false,
+          guides: false,
+          center: false,
+          responsive:true,
+          highlight: false,
+          cropBoxMovable: false,
+          cropBoxResizable: false,
+          toggleDragModeOnDblclick: false,
+        });
+
+        const cropbtn = document.createElement("button");
+        cropbtn.classList.add("btn", "btn-primary", "m-2");
+        cropbtn.textContent = "Crop";
+        cropbtn.addEventListener("click", function (event) {
+          event.preventDefault();
+          const croppedCanvas = cropper.getCroppedCanvas();
+
+          img.src = croppedCanvas.toDataURL()
+
+          croppedCanvas.toBlob((blob) => {
+            const fileName = Date.now();
+            const file = new File([blob],` ${fileName}.jpg`, { type: 'image/jpeg' });
+
+            if (window.FileList && window.DataTransfer) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.name =`image${i}`;
+                input.files = dataTransfer.files;
+               form.appendChild(input)
+               input.style.display = 'none'
+               
+            } else {
+                console.error('FileList and DataTransfer are not supported in this browser.');
+            }
+        })
+          cropper.destroy();
+          cropbtn.remove();
+    
+
+        });
+      
+        imgdiv.appendChild(cropbtn);
+        imgdiv.appendChild(deletebutton);
+      };
+
+      reader.readAsDataURL(file);
+
+      imagecontainer.appendChild(imgdiv);
+    }
+    totalimages = totalupload;
+  }
+
+  const imageInput = document.getElementById("image-upload");
+
+     imageInput.addEventListener("change", imageupload);
+
+        document.getElementById('submit-btn').addEventListener("click",function(event){
             event.preventDefault()
             const name = document.getElementById("name").value.trim()
             const price = document.getElementById("price").value
@@ -130,52 +248,89 @@
             const size2Error = document.getElementById("size2-error")
             const size3Error = document.getElementById("size3-error")
             const size4Error = document.getElementById("size4-error")
+            
+
+            nameError.textContent = "";
+            priceError.textContent = "";
+            dispriceError.textContent = "";
+            colorError.textContent = "";
+            stockError.textContent = "";
+            size1Error.textContent = "";
+            size2Error.textContent = "";
+            size3Error.textContent = "";
+            size4Error.textContent = "";
       
- 
+            console.log(name);
+            console.log(price);
             let isValid = true
-            if(name.trim()===""){
-                nameError.textContent = "Please Enter a valid Name"
-                isValid = false
+
+            if (name === '') {
+            nameError.textContent = 'Name is required';
+            isValid = false;
+              }
+              else if (/\d|-/.test(name)) {
+              nameError.textContent = 'Name cannot contain digits or hyphens';
+             isValid = false;
+              }
+              if (isNaN(price) || price === '' ||parseFloat(price) === 0 ) {
+               priceError.textContent = 'Please Enter a valid Price';
+              isValid = false;
+             
+                }
+                if (isNaN(disprice) || disprice === '' ||parseFloat(disprice)===0) {
+             dispriceError.textContent = 'Please Enter a valid Discount Price';
+             isValid = false;
+              }
+              if (isNaN(stock) || stock === ''||parseFloat(stock)===0) {
+             stockError.textContent = 'Please Enter a valid stock';
+             isValid = false;
+              }
+              
+              if (/\d/.test(color)) {
+              colorError.textContent = 'Color cannot contain numbers';
+              isValid = false;
+              }
+             if (isNaN(size1) || size1 === '' ||parseFloat(size1)===0) {
+             size1Error.textContent = 'Please Enter a valid size';
+             isValid = false;
+              }
+              if (isNaN(size2) || size2 === '' ||parseFloat(size2)===0) {
+             size2Error.textContent = 'Please Enter a  size';
+             isValid = false;
+              }
+              if (isNaN(size3) || size3 === ''||parseFloat(size3)===0) {
+             size3Error.textContent = 'Please Enter a  size';
+             isValid = false;
+              }
+              if (isNaN(size4) || size4 === ''||parseFloat(size4)===0) {
+             size4Error.textContent = 'Please Enter a  size';
+             isValid = false;
+              }
+              
+              const files = document.getElementById("image-upload").files;
+              const imageError = document.getElementById("image-error");
+              imageError.textContent = "";
+
+               if (files.length === 0) {
+              imageError.textContent = "Please select at least one image";
+              isValid = false;
+              } else {
+              const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+              for (let i = 0; i < files.length; i++) {
+              if (!allowedTypes.includes(files[i].type)) {
+              imageError.textContent = "Please select only image files (JPEG, PNG, or GIF).";
+              isValid = false;
+              break;
             }
-            if(isNaN(price) || price.trim()===""){
-                priceError.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            
-            if(isNaN(disprice) || disprice.trim()===""){
-                dispriceError.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            if(isNaN(stock) || stock.trim()===""){
-                stockError.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            if(isNaN(size1) || size1.trim()===""){
-                size1Error.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            if(isNaN(size2) || size2.trim()===""){
-                size2Error.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            if(isNaN(size3) || size3.trim()===""){
-                size3Error.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            if(isNaN(size4) || size4.trim()===""){
-                size4Error.textContent = "Please Enter a valid Number"
-                isValid = false
-            }
-            if(!isNaN(color) || color.trim()===""){
-                color.textContent = "Please Don't Enter a Number"
-                isValid = false
-            }
-            
-            if (isValid) {
-        document.getElementById('form').submit();
+        }
     }
+           
+          if(isValid){
+            document.getElementById("form").submit()
+          }
         })
-      
+
+
 
        </script>
       

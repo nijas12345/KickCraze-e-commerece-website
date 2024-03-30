@@ -11,7 +11,10 @@ const cookieParser = require("cookie-parser");
 
 const userRoute = require("./route/userRoute");
 const adminRoute = require('./route/adminRoute');
+require("./middleware/auth")
+
 const nocache = require('nocache');
+const passport = require('passport');
 
 // Use the nocache middleware before defining routes
 app.use(nocache());
@@ -23,11 +26,28 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(passport.initialize())
+app.use(passport.session())
 // For cookie
 app.use(cookieParser());
 
 // For static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.get('/auth/google',
+   passport.authenticate("google",{scope:['email','profile']}))
+
+   app.get('/auth/google/callback',
+   passport.authenticate("google",{
+       successRedirect:"/verify-google",
+       failureRedirect:"/login"
+   }))
+
+
+
+
+
 
 // User route 
 app.use('/', userRoute);

@@ -68,7 +68,7 @@
                         </ul>
                     </div>
                     <div class="col-auto d-sm-block d-none">
-                        <p class="font-dark-30 mb-0">Offer Coupon Code : <span class="fw-bold">DEF4526</span></p>
+                        <p class="font-dark-30 mb-0">Offer Coupon Code : <span class="fw-bold">coming soon</span></p>
                     </div>
                     <div class="col-auto">
                         <ul class="border-list">
@@ -94,7 +94,8 @@
                                 <div class="dropdown top-header-dropdown">
                                     <a class="dropdown-toggle" href="/user/javascript:void(0)" role="button"
                                         id="dropdownMenuLink1" data-bs-toggle="dropdown">
-                                        <span class="fw-bolder">₹</span> Rupee
+                                        <a href="/userProfile" class="fw-bolder">Profile</a>
+
                                         <!-- <i class="fas fa-chevron-down"></i> -->
                                     </a>
                                     <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
@@ -167,7 +168,7 @@
                                         <ul>
                                             
                                             <li >
-                                                <a href="/user/javascript:void(0)">Sports Shoes</a>
+                                                <a href="/shop">Sports Shoes</a>
                                                 <ul class="category-mega-menu">
                                                     <li>
                                                         <div class="row">
@@ -254,11 +255,11 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="/user/javascript:void(0)">Casual Shoes</a>
+                                                <a href="/shop">Casual Shoes</a>
                                             </li>
 
                                             <li >
-                                                <a href="/user/javascript:void(0)">Loafers</a>
+                                                <a href="/shop">Loafers</a>
                                                 <ul class="category-mega-menu">
                                                     <li>
                                                         <div class="row">
@@ -357,7 +358,7 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="/user/javascript:void(0)">Running Shoes</a>
+                                                <a href="/shop">Running Shoes</a>
                                             </li>
                                             <!-- <li>
                                                 <a href="/user/javascript:void(0)">Home & decor</a>
@@ -546,7 +547,7 @@
                                                 </ul>
                                             </li> -->
                                             <li >
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a>
+                                                <a href="/shop" class="nav-link menu-title">Shop</a>
                                                 <!-- <ul class="nav-submenu menu-content">
                                                     <li>
                                                         <a href="/user/product-4-image.html">Product 4 Images</a>
@@ -899,21 +900,21 @@
                             </nav>
                             <div class="menu-right">
                                 <ul>
-                                    <li>
+                                    <!-- <li>
                                         <div class="search-box theme-bg-color">
                                             <i data-feather="search"></i>
                                         </div>
-                                    </li>
-                                    <li class="onhover-dropdown wislist-dropdown">
+                                    </li> -->
+                                    <!-- <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
                                             <div class="cart-icon">
                                                 <i data-feather="heart"></i>
                                                 <span class="label label-theme rounded-pill">0</span>
                                             </div>
-                                            <!-- <div class="cart-content">
+                                            <div class="cart-content">
                                                 <h6>Empty</h6>
                                                 <span>Wish List</span>
-                                            </div> -->
+                                            </div>
                                         </div>
                                         <div class="onhover-div">
                                             <a href="/user/wishlist.html">
@@ -924,12 +925,14 @@
                                                 </div>
                                             </a>
                                         </div>
-                                    </li>
+                                    </li> -->
                                     <li class="onhover-dropdown cart-dropdown">
-                                        <button type="button" class="btn btn-solid-default btn-spacing">
+                                        <a href="/cart" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
                                             <span>CART</span>
-                                        </button>
+                                        </a>
+                                        
+                                        
                                         <!-- <div class="onhover-div">
                                             <div class="cart-menu">
                                                 <div class="cart-title">
@@ -1124,21 +1127,21 @@
                         <div class="labels">
                             <ul class="label-15">
                                 <li>
-                                    <a href="/user/https://www.facebook.com/">
+                                    <a href="https://www.facebook.com/">
                                         <img src="/user/assets/images/social-icon/1.png" class="img-fluid blur-up lazyload"
                                             alt="facebook">
                                         <h5 class="d-lg-block d-none">Facebook</h5>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/user/https://www.instagram.com/">
+                                    <a href="https://www.instagram.com/">
                                         <img src="/user/assets/images/social-icon/2.png" class="img-fluid blur-up lazyload"
                                             alt="Instagram">
                                         <h5 class="d-lg-block d-none">Instagram</h5>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/user/https://twitter.com/">
+                                    <a href="https://twitter.com/">
                                         <img src="/user/assets/images/social-icon/3.png" class="img-fluid blur-up lazyload"
                                             alt="Twitter">
                                         <h5 class="d-lg-block d-none">Twitter</h5>
@@ -1176,7 +1179,7 @@
                                 
 
                                 <% for(i=0;i<1;i++){%>
-                                    <img src="<%= product[i].image[0]%> " class="img-fluid blur-up lazyload" alt="" width="40%">
+                                    <img src="<%= product[0].image[0]%> " width="100px" alt="" >
                                <% } %>
                                 
                                 
@@ -1601,7 +1604,8 @@
                             <div class="banner-content">
                                 <h6>New <span class="theme-color">Collections</span></h6>
                                 <h2> New Red <br> Shoes<span class="theme-color d-block">$48</span></h2>
-                                <button class=" btn default-light default-theme mt-md-2 mt-1 rounded">SHOP NOW</button>
+                                <a id="shopNowLink" href="/shop" class="btn default-light default-theme mt-md-2 mt-1 rounded">SHOP NOW</a>
+
                             </div>
                         </div>
                     </div>
@@ -1778,15 +1782,17 @@
                     </div>
                     <div class="product-wrapper slide-5 light-arrow bottom-space">
                         
-                        <% for(i=0;i<5;i++) {  %>
+                        <%product.forEach((product)=>{%>
+
+                     
 
                             
                         <div>
                             <div class="product-box">
                                 <div class="img-wrapper text-center">
-                                    <a href="/product-profile?id=<%=product[i]._id%>">
-                                        <img width="50" src= "<%=product[i].image[0]%>"
-                                            class="img-fluid bg-img blur-up lazyload" alt="">
+                                    <a href="/product-profile?id=<%= product._id%>">
+                                        <img width="250" src= "<%= product.image[0]%>"
+                                             alt="">
                                     </a>
                                     <!-- <div class="cart-wrap">
                                         <ul>
@@ -1817,11 +1823,11 @@
                                 </div>
                                 <div class="product-details text-center">
                                     <h3 class="theme-color">
-                                        <%= product[i].price %>
-                                        <span class="font-light ml-1"><%=product[i].disprice%></span>
+                                        <%= product.price %>
+                                        <span class="font-light ml-1"><%=product.disprice%></span>
                                     </h3>
-                                    <a href="/product-profile?id=<%=product[i]._id%>" class="font-default">
-                                        <h5><%=product[i].name %></h5>
+                                    <a href="/product-profile?id=<%=product._id%>" class="font-default">
+                                        <h5><%=product.name %></h5>
                                     </a>
                                 </div>
                                     <!-- <ul class="rating mt-1">
@@ -1844,7 +1850,7 @@
                                 
                             </div>
                         </div>
-                        <%}%>        
+                        <% })%>       
 
                     </div>
                 </div>

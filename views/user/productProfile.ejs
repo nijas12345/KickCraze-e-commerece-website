@@ -266,7 +266,7 @@
                                                     </span>
                                                 </div>
                                             </li>
-                                            <li class="mega-menu dropdown home-menu">
+                                            <li class="mega-menu  home-menu">
                                                 <a href="/home" class="nav-link menu-title">home</a>
                                                 <!-- <div class="mega-menu-container menu-content"> -->
                                                         <!-- <div class="container-fluid">
@@ -374,9 +374,9 @@
                                                         </div>
                                                     </div> -->
                                             </li>
-                                            <li class="dropdown">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">shop</a>
-                                                <ul class="nav-submenu menu-content">
+                                            <li class="">
+                                                <a href="/shop" class="nav-link menu-title">shop</a>
+                                                <ul class="">
                                                     <!-- <li>
                                                         <a href="/user/shop-canvas-filter.html">Shop Canvas Filter</a>
                                                     </li>
@@ -411,8 +411,8 @@
                                                     </li> -->
                                                 </ul>
                                             </li>
-                                            <li class="dropdown">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a>
+                                            <li class="">
+                                                <!-- <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a> -->
                                                 <ul class="nav-submenu menu-content">
                                                     <!-- <li>
                                                         <a href="/user/product-4-image.html">Product 4 Images</a>
@@ -455,8 +455,8 @@
                                                 <div class=>
                                                                                                     </div>
                                             </li>
-                                            <li class="dropdown">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">pages</a>
+                                            <li class="">
+                                                <!-- <a href="/user/javascript:void(0)" class="nav-link menu-title">pages</a> -->
                                                 <!-- <ul class="nav-submenu menu-content">
                                                     <li>
                                                         <a href="/user/404.html">404</a>
@@ -509,7 +509,7 @@
                                                 </ul> -->
                                             </li>
                                             <li class="dropdown">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">blog</a>
+                                                <!-- <a href="/user/javascript:void(0)" class="nav-link menu-title">blog</a> -->
                                                 <ul class="nav-submenu menu-content">
                                                     <!-- <li>
                                                         <a href="/user/blog-details.html">Blog Details</a>
@@ -553,17 +553,18 @@
                                 <ul>
                                     <li>
                                         <div class="search-box">
-                                            <i data-feather="search"></i>
+                                            <!-- <i data-feather="search"></i> -->
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown">
                                         <div class="cart-media">
-                                            <i data-feather="user"></i>
+                                            
+                                            <a href="/logout" class="d-block">Logout</a>
                                         </div>
                                         <div class="onhover-div profile-dropdown">
                                             <ul>
                                                 <li>
-                                                    <a href="/user/log-in.html" class="d-block">Login</a>
+                                                  
                                                 </li>
                                                 <li>
                                                     <a href="/user/sign-up.html" class="d-block">Register</a>
@@ -572,13 +573,13 @@
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
-                                        <div class="cart-media">
+                                        <!-- <div class="cart-media">
                                             <a href="/user/wishlist.html">
                                                 <i data-feather="heart"></i>
                                                 <span class="label label-theme rounded-pill">5</span>
                                             </a>
-                                        </div>
-                                        <div class="onhover-div">
+                                        </div> -->
+                                        <!-- <div class="onhover-div">
                                             <a href="/user/wishlist.html">
                                                 <div class="wislist-empty">
                                                     <i class="fab fa-gratipay"></i>
@@ -586,19 +587,19 @@
                                                     <p class="font-light mb-0">explore more and shortlist items.</p>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </li>
                                     <li class="onhover-dropdown cart-dropdown">
-                                        <button type="button" class="btn btn-solid-default btn-spacing">
+                                        <a href="/cart" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
-                                            <span>$5686.25</span>
-                                        </button>
+                                            <span>Cart</span>
+                                        </a>
                                         <div class="onhover-div">
                                             <div class="cart-menu">
                                                 <div class="cart-title">
                                                     <h6>
                                                         <i data-feather="shopping-bag"></i>
-                                                        <span class="label label-theme rounded-pill">5</span>
+                                                        <span class="label label-theme rounded-pill"></span>
                                                     </h6>
                                                     <span class="d-md-none d-block">
                                                         <i class="fas fa-arrow-right back-cart"></i>
@@ -607,16 +608,16 @@
                                                 <ul class="custom-scroll">
                                                     <li>
                                                         <div class="media">
-                                                            <img src="/user/assets/images/fashion/product/front/1.jpg"
+                                                            <img src="<%= products.image[0] %>"
                                                                 class="img-fluid blur-up lazyload" alt="">
                                                             <div class="media-body">
-                                                                <h6>Slim Fit Plastic Coat</h6>
+                                                                <h6><%= products.name%></h6>
                                                                 <div class="qty-with-price">
-                                                                    <span>$78.00</span>
-                                                                    <span>
+                                                                    <span> ₹ <%= products.disprice %></span>
+                                                                    <!-- <span>
                                                                         <input type="number" class="form-control"
-                                                                            value="1">
-                                                                    </span>
+                                                                            value="">
+                                                                    </span> -->
                                                                 </div>
                                                             </div>
                                                             <button type="button" class="btn-close d-block d-md-none"
@@ -625,12 +626,12 @@
                                                             </button>
                                                         </div>
                                                     </li>
-                                                    <li>
+                                                    <!-- <li>
                                                         <div class="media">
                                                             <img src="/user/assets/images/fashion/product/front/7.jpg"
                                                                 class="img-fluid blur-up lazyload" alt="">
                                                             <div class="media-body">
-                                                                <h6>Womens Stylish Jacket</h6>
+                                                                <h6></h6>
                                                                 <div class="qty-with-price">
                                                                     <span>$24.00</span>
                                                                     <span>
@@ -644,16 +645,16 @@
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
                                             </div>
                                             <div class="cart-btn">
                                                 <h6 class="cart-total"><span class="font-light">Total:</span> $
                                                     542.00</h6>
-                                                <button onclick="location.href ='cart.html';" type="button"
+                                                <!-- <button onclick="location.href ='/order-success';" type="button"
                                                     class="btn btn-solid-default btn-block">
                                                     Proceed to payment
-                                                </button>
+                                                </button> -->
                                             </div>
                                         </div>
                                     </li>
@@ -881,7 +882,7 @@
                                     <div class="label-section">
                                        <% if(products.stock==0){%>
 
-                                        <span class="label-text">#No Stock</span>
+                                        <span  id="No-stock" class="label-text">#No Stock</span>
                                         
                                         <%}
                                         else {%>
@@ -918,32 +919,37 @@
                                             </ul> -->
                                         </div>
                                     </div>
-
+                                    <form id="add-cart">
                                     <div id="selectSize" class="addeffect-section product-description border-product">
                                         <h6 class="product-title size-text">select size
-                                            <a href="/user/javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#sizemodal">size chart</a>
+                                            
                                         </h6>
 
                                         <h6 class="error-message">please select size</h6>
-
+                            
                                         <div class="size-box">
-                                            <ul>
+                                            <ul>    
+                                 
                                                 <li>
-                                                    <a href="/user/javascript:void(0)"><%=products.sizes[0] %></a>
+                                                    <input type="hidden" value="<%=products._id%>" id="product-id">
+                                                    <input type="radio" id="small" name="size" value="<%=products.sizes[0] %>"><br>
+                                                    <label for="small"><%=products.sizes[0] %></label><br>
                                                 </li>
                                                 <li>
-                                                    <a href="/user/javascript:void(0)"><%=products.sizes[1] %></a>
+                                                    <input type="radio" id="medium" name="size" value="<%=products.sizes[1] %>"><br>
+                                                    <label for="small"><%=products.sizes[1] %></label><br>
                                                 </li>
                                                 <li>
-                                                    <a href="/user/javascript:void(0)"><%=products.sizes[2] %></a>
+                                                    <input type="radio" id="large" name="size" value="<%=products.sizes[2] %>"><br>
+                                                    <label for="small"><%=products.sizes[2] %></label><br>
                                                 </li>
                                                 <li>
-                                                    <a href="/user/javascript:void(0)"><%=products.sizes[3] %></a>
+                                                    <input type="radio" id="xl" name="size" value="<%=products.sizes[3] %>"><br>
+                                                    <label for="small"><%=products.sizes[3]%></label><br>
                                                 </li>
                                             </ul>
                                         </div>
-
+                                        <input type="hidden" id="stock" value="<%=products.stock%>">
                                         <h6 class="product-title product-title-2 d-block">quantity</h6>
 
                                         <div class="qty-box">
@@ -951,33 +957,37 @@
                                                 <span class="input-group-prepend">
                                                     <button type="button" class="btn quantity-left-minus"
                                                         data-type="minus" data-field="">
-                                                        <i class="fas fa-minus"></i>
+                                                         <i class="fas fa-minus"></i>
                                                     </button>
                                                 </span>
-                                                <input type="text" name="quantity" class="form-control input-number"
-                                                    value="1">
+                                                
+                                                <input type="number" name="quantity" class="form-control input-number"
+                                                    value="1" id="quantity" min="1" max="6">
                                                 <span class="input-group-prepend">
-                                                    <button type="button" class="btn quantity-right-plus"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fas fa-plus"></i>
+                                                    <button type="button"  class="btn quantity-right-plus"
+                                                        data-type="plus" data-field="" id="increased-qty"  >
+                                                        <i class="fas fa-plus" ></i>
                                                     </button>
+
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-
+                                         
                                     <div class="product-buttons">
                                         <a href="/user/wishlist.html" class="btn btn-solid">
                                             <i class="fa fa-bookmark fz-16 me-2"></i>
                                             <span>Wishlist</span>
                                         </a>
-                                        <a href="/user/javascript:void(0)" id="cartEffect"
+                                        <button  id="cartEffect" type="submit"
                                             class="btn btn-solid hover-solid btn-animation">
                                             <i class="fa fa-shopping-cart"></i>
+                                            <span id="addtocart"></span>
                                             <span>Add To Cart</span>
-                                        </a>
+                                        </button>
+                          
                                     </div>
-
+                                </form>
                                     <ul class="product-count shipping-order">
                                         <li>
                                             <img src="/user/assets/images/gif/truck.png" class="img-fluid blur-up lazyload"
@@ -1671,13 +1681,13 @@
                                     <div class="front">
                                         <a href="/product-profile?id=<%=similarProducts[i]._id%>">
                                             <img src="<%=similarProducts[i].image[0] %>"
-                                                class="bg-img blur-up lazyload" alt="">
+                                               width="300px" alt="">
                                         </a>
                                     </div>
                                     <div class="back">
                                         <a href="/product-profile?id=<%=similarProducts[i]._id%>">
-                                            <img width="50px" src="<%=similarProducts[i].image[1] %>"
-                                                class="bg-img blur-up lazyload" alt="">
+                                            <img width="300px" src="<%=similarProducts[i].image[1] %>"
+                                               width="300"  alt="">
                                         </a>
                                     </div>
                                     <div class="cart-wrap">
@@ -1740,7 +1750,7 @@
                                                 qui, minus quidem eveniet! Dolorum magnam numquam, asperiores
                                                 accusantium architecto placeat quam officia, tempore repellendus.</p>
                                         </div>
-                                        <h3 class="theme-color"><%= similarProducts[i].disprice %></h3>
+                                        <h3 class="theme-color"> ₹ <%= similarProducts[i].disprice %></h3>
                                         <button onclick="location.href ='cart.html';" class="btn listing-content">Add
                                             To Cart</button>
                                     </div>
@@ -1988,12 +1998,14 @@
                             <option>Large</option>
                             <option>Extra Large</option>
                         </select>
+
+
                     </div>
                 </div>
                 <div class="add-btn">
                     <a class="btn default-light-theme default-theme default-theme-2 outline-button wishlist-btn"
                         href="/user/wishlist.html"><i class="fa fa-bookmark"></i> Wishlist</a>
-                    <a class="btn default-light-theme default-theme default-theme-2 outline-button" href="/user/cart.html"><i
+                    <a class="btn default-light-theme default-theme default-theme-2 outline-button" href="/cart"><i
                             class="fas fa-shopping-cart"></i> Add To Cart</a>
                 </div>
             </div>
@@ -2009,7 +2021,7 @@
                 <h4>Some recently purchase this item</h4>
                 <a href="/user/javascript:void(0)">
                     <span class="product-name">
-                        Floral Dress
+                        Casual Shoes
                     </span>
                 </a>
                 <small class="timeAgo">50 minutes ago</small>
@@ -2295,10 +2307,7 @@
     <!-- Size Modal End -->
 
     <!-- Add To Cart Notification -->
-    <div class="added-notification">
-        <img src="/user/assets/images/fashion/banner/2.jpg" class="img-fluid blur-up lazyload" alt="">
-        <h3>added to cart</h3>
-    </div>
+   
     <!-- Add To Cart Notification -->
 
     <!-- theme Setting Start -->
@@ -2366,7 +2375,51 @@
     <!-- script js -->
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
+     <script>
 
+
+       
+       const form = document.getElementById("add-cart")
+       form.addEventListener("submit",async (event)=>{
+        event.preventDefault()
+        
+        const productId = document.getElementById("product-id").value
+        const size = document.querySelector("input[name='size']:checked").value
+        let quantity = document.getElementById("quantity").value
+        
+        const stock = document.getElementById("stock").value
+        console.log(stock);
+        
+        if(stock<parseInt(quantity ) ){
+            alert('not enough stock Available')
+            return 
+        }
+        if(parseInt(quantity)>5){
+          alert("please select minimum quantity")
+        }
+        console.log(parseInt(quantity)>3);
+        console.log(stock);
+        
+        const data = {productId,size,quantity}
+        console.log(data);
+        try {
+            
+            const response = await fetch("/insert-cart",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(data)
+            })
+            const responseData = response.json()
+        } catch (error) {
+            console.log(error);
+        }
+       })
+
+
+       
+    </script>
 </body>
 
 

@@ -60,7 +60,7 @@
                 <br>
                 
                 <p style="margin-left: 120px; color: red; margin-top: 5px;">OTP expires in <span id="otp-timer" style="margin-left: 0px;"></span></p>
-                <a href="/loadOtp"><input type="button" value="RESEND" style="border: 0; margin-left: 340px; color: grey;" id="resend-btn" ></a>
+                <a href="/loadOtp" id="resend-link"><input type="button" value="RESEND" style="border: 0; margin-left: 340px; color: grey;" id="resend-btn" ></a>
                    <%     
                 if(typeof message !=="undefined"){
                     %> 
@@ -95,18 +95,18 @@
 
     <!-- theme Setting Start -->
     <!-- <div class="theme-setting">
-        <ul>
-            <li>
-                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>
-            </li>
-            <li>
-                <button class="btn btn-sm rtl-button">RTL</button>
-            </li>
-            <li class="color-picker">
-                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#e22454"
-                    title="Choose your color">
-            </li>
-        </ul>
+        // <ul>
+        //     <li>
+        //         <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>
+        //     </li>
+        //     <li>
+        //         <button class="btn btn-sm rtl-button">RTL</button>
+        //     </li>
+        //     <li class="color-picker">
+        //         <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#e22454"
+        //             title="Choose your color">
+        //     </li>
+        // </ul>
     </div> -->
     <!-- theme Setting End -->
 
@@ -138,44 +138,37 @@
 
 // function to start the timer
 
-document.addEventListener("DOMContentLoaded",()=>{
-    function startTimer (){
-    var timer = 300
-    let timeInterval = setInterval(() => {
-        var minuites = Math.floor(timer/60)
-        var seconds = timer % 60
-        var timeString = ("0"+minuites).slice(-2) + ":" + ("0" + seconds).slice(-2)
-        document.getElementById("otp-timer").textContent = timeString;
-        timer--
+document.addEventListener("DOMContentLoaded", () => {
+    let timerInterval;
 
-        if(timer <0){
-    clearInterval(timeInterval)
-    document.getElementById("resend-btn").disabled = false
-  }
-  else{
-    document.getElementById.disabled =true
-  }
-    }, 1000);
+    function startTimer() {
+        let timer = 60; // Reduced for testing purposes
+        let timeInterval = setInterval(() => {
+            let minutes = Math.floor(timer / 60);
+            let seconds = timer % 60;
+            let timeString = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+            document.getElementById("otp-timer").textContent = timeString;
+            timer--;
 
-    
-  }
-    document.getElementById("resend-btn").addEventListener("click",function(){
-        
-        // startTimer()
-        
-        
-    })
-  startTimer()
+            if (timer < 1) {
+                clearInterval(timeInterval);
+                document.getElementById("resend-btn").disabled = false; // Enable the button
+            }
+            else{
+                document.getElementById("resend-btn").disabled = true;
+            }
+        }, 1000);
+        return timeInterval;
+    }
+
+    document.getElementById("resend-btn").addEventListener("click", function () {
+
+        //   startTimer();
+        // timerInterval = startTimer();
+    });
+startTimer()
   
-        
-        
-    
-
-})
-
-
-
-
+});
 
 
        

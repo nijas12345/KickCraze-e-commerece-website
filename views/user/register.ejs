@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 
@@ -82,6 +82,14 @@
     
                     <div class="input">
                         <input type="text" name="mno" id="mobileno" placeholder="Phone Number">
+                        <% 
+    
+                   if(typeof message1 !=="undefined"){
+                    %> 
+                 <p style="color:red; margin-left: -135px ;"><%=message %></p>
+                 <%
+                  }
+                  %> 
                         
                     </div>
                           <div class="spin error" id="phone-error"></div>
@@ -101,6 +109,12 @@
                             <i class="fa fa-check"></i>
                         </button>
                     </div>
+                    <div class="button login">
+                        <button onclick="location.href = '/login'" type="button" id="s" style="width: 150px; margin-left: 250px;">
+                            <span>login</span>
+                            <i class="fa fa-check"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,7 +122,7 @@
   
 
                 <p class="sign-category">
-                    <span>Or sign up with</span>
+                    <span></span>
                 </p>
 
                 <div class="row gx-md-3 gy-3">
@@ -117,7 +131,7 @@
                             <div class="social-media fb-media">
                                 <img src="useassets/images/inner-page/facebook.png" class="img-fluid blur-up lazyload"
                                     alt="">
-                                <h6>Facebook</h6>
+                                <h6></h6>
                             </div>
                         </a>
                     </div>
@@ -126,12 +140,12 @@
                             <div class="social-media google-media">
                                 <img src="/useassets/images/inner-page/google.png" class="img-fluid blur-up lazyload"
                                     alt="">
-                                <h6>Google</h6>
+                                <h6></h6>
                             </div>
                         </a>
                     </div>
                 </div>
-                <p><a href="/user/log-in.html" class="theme-color">Already have an account?</a></p>
+                <p><a href="/user/log-in.html" class="theme-color"></a></p>
             </div>
         </div>
     </div>
@@ -209,6 +223,11 @@
         nameError.textContent = 'Name is required';
         isValid = false;
     }
+    else if (/\d|-/.test(name)) {
+    nameError.textContent = 'Name cannot contain digits or hyphens';
+    isValid = false;
+    }
+    
 
     // Email validation
     if (email === '') {

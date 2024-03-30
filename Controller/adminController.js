@@ -2,12 +2,51 @@ const User = require('../model/userModel')
 const Admin = require("../model/adminModel")
 const Category = require("../model/categoryModel")
 const Product = require('../model/productModel')
+const Order = require("../model/orderModel")
 const sharp = require("sharp")
 const path=require('path')
+const jwt = require("jsonwebtoken")
 
+
+const createToken = (admin)=>{
+    const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET
+    return jwt.sign(admin,ADMIN_JWT_SECRET,{expiresIn:"1h"})
+}
 
 //Admin Authentication
 
+
+const adminRegister = async (req,res)=>{
+    try {
+        res.render("signUp")
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "internal Servor Error"
+        return res.status(500).render("errorPage",{statusCode:500,errorMessage})
+    }
+}
+const verifyRegister = async (req,res)=>{
+    try {
+        const admin = new Admin({
+            email:req.body.email,
+            mobile:req.body.mobile,
+            password:req.body.password
+
+        })
+    
+        const adminData = await admin.save()
+        
+        if(adminData){
+            const token = createToken({id:adminData._id})
+            res.cookie("Adminjwt",token,{httpOnly:true,maxAge:6000000})
+            res.redirect('/admin/dashboard')      
+        }
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "internal Servor Error"
+        return res.status(500).render("errorPage",{statusCode:500,errorMessage})
+    }
+}
 const adminLogin = async (req,res)=>{
     try {
         res.render('adminLogin')
@@ -27,7 +66,10 @@ const adminVerify = async (req,res)=>{
         const adminData = await Admin.findOne({email:email})
         if(adminData){
             if(adminData.password===password){
-                res.redirect('dashboard')
+            const token = createToken({id:adminData._id})
+            res.cookie("Adminjwt",token,{httpOnly:true,maxAge:60000000})
+                res.redirect('/admin/dashboard')
+                console.log(token);
             }
             else{
                 res.render("adminLogin",{message:"Password is incorrect"})
@@ -51,6 +93,22 @@ const adminForgot = async (req,res)=>{
     }
      catch (error) {
         console.log(error);
+        const errorMessage = "internal Servor Error"
+        return res.status(500).render("errorPage",{statusCode:500,errorMessage})
+    }
+}
+
+//logout
+
+const loadLogout = async (req,res)=>{
+    try {
+       
+        res.clearCookie("Adminjwt")
+        res.redirect('/admin/login')
+    } catch (error) {
+        console.log(error);
+     const errorMessage = "internal Servor Error"
+     return res.status(500).render("errorPage",{statusCode:500,errorMessage})
     }
 }
 
@@ -84,34 +142,27 @@ const userList = async (req,res)=>{
 }
 
 
-const userUnblock = async (req,res)=>{
+const  userBlock= async (req,res)=>{
     try {
-    const userId = req.query.id;
-    const user = await User.findOneAndUpdate({_id:userId},{status:true})
-    const users = await User.find({})
-    console.log(user);
-    
-    res.render("userlist",{users:users})
-    } catch (error) {
-        console.log(error);
-        const errorMessage = "internal Servor Error"
-        return res.status(500).render("errorPage",{statusCode:500,errorMessage})
-    }
-    
-}
-
-
-const userBlock = async (req,res)=>{
-
-    try {
-    const userId = req.query.id;
+    const userId = req.query.id
     console.log(userId);
-    const user = await User.findOneAndUpdate({_id:userId},{status:false})
+    const user = await User.find({_id:userId})
     console.log(user);
-    const users = await User.find({})
-    res.render("userlist",{users:users})
+    userStatus = user[0].status
+    if(userStatus == true){
+        console.log("hai");
+        await User.findOneAndUpdate({_id:userId},{status:false})   
+        const users = await User.find({})        
+        res.render("userlist",{users:users})
     }
-     catch (error) {
+    else{  
+        console.log("hai2"); 
+        await User.findOneAndUpdate({_id:userId},{status:true})
+        const users = await User.find({})
+        res.render("userlist",{users:users})  
+    }
+    
+    } catch (error) {
         console.log(error);
         const errorMessage = "internal Servor Error"
         return res.status(500).render("errorPage",{statusCode:500,errorMessage})
@@ -137,15 +188,24 @@ const productCategories = async (req,res)=>{
 
 const insertCategories = async (req,res)=>{
     try {
-        console.log(req.body.description);
-        const category = new Category({
-            name:req.body.name,
-            description:req.body.description
-        }) 
-        const categoryData = await category.save()
-        if(categoryData){
+      
+      
+       
+        const categories = await Category.findOne({name:req.body.name})
+        
+        if(categories){
+           const categories =await Category.find()
+            res.render('categories',{message:"This category is already exist",categories:categories})
+        }
+        else{
+            const category = new Category({
+                name:req.body.name,
+                description:req.body.description
+            }) 
             const categories =await Category.find()
             res.render('categories',{categories:categories})
+            const categoryData = await category.save()
+           
         }
     }
      catch (error) {
@@ -237,31 +297,40 @@ const addProduct = async (req,res)=>{
 const insertProduct = async (req,res)=>{
 
     try { 
-        console.log(req.body.sizes);
+        console.log(req.files);
+        console.log(req.body);
       
        const fileNames = req.files.map(file=>file.filename)
       
-        
-      let image = []
+        console.log(fileNames);
+      let image = [];
+
+      fileNames.forEach(filename => {
+        const outputPath2 = "/productImages/"+filename;
+        console.log("==================",outputPath2);
+        image.push(outputPath2);
+      });
+
+      console.log("imsges",image);
          
-      for(let file of req.files){
-        const randomInteger = Math.floor(Math.random() * 20000001)
-    
-        const outputPath1=path.join(__dirname,"../public/croppedImages","crop"+file.filename)
-        const outputPath2 = "/croppedImages/"+"crop"+file.filename
-        console.log("imgPath",outputPath1);
-        const croppedImage = await sharp(file.path)
-        .resize(1000,1000,{
-            fit:"fill",
-        })  
-        .toFile(outputPath1)
-         image.push(outputPath2)
-      }
-   
+    //   for(let file of req.files){
+    //     const randomInteger = Math.floor(Math.random() * 20000001)
+        
+    //     const outputPath1=path.join(__dirname,"../public/croppedImages","crop"+file.filename)
+    //     const outputPath2 = "/croppedImages/"+"crop"+file.filename
+    //     console.log("imgPath",outputPath1);
+    //     const croppedImage = await sharp(file.path)
+    //     .resize(1000,1000,{
+    //         fit:"fill",
+    //     })  
+    //     .toFile(outputPath1)
+    //      image.push(outputPath2)
+    //   }
+       
     
      
-      const price ="₹" +req.body.price
-      const disprice = "₹" +req.body.disprice
+      const price =req.body.price
+      const disprice = req.body.disprice
       const product = new Product({
         name:req.body.name,
         price:price,
@@ -306,7 +375,7 @@ const insertEditedProduct = async (req,res)=>{
 
     try {
         const id = req.query.id
-        const price = "₹ "+req.body.price
+        const price = req.body.price
         const productData = await Product.findByIdAndUpdate(id,
          {
         name:req.body.name,
@@ -348,17 +417,60 @@ const   deleteProduct = async (req,res)=>{
     }
 }
 
+const listOrders = async(req,res)=>{
+     
+    try {
+        const orders = await Order.find().populate("userId").populate("addressId").populate("products.productId")
+        console.log(orders);
+        res.render("orders",{orders:orders})
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "internal Servor Error"
+        return res.status(500).render("errorPage",{statusCode:500,errorMessage})
+    }
 
+}
+
+const cancelOrders = async(req,res)=>{
+    const orderId = req.query.id
+     console.log(orderId);
+    try {
+        const order = await Order.findByIdAndUpdate(orderId,{status:"cancelled"})
+        console.log(order);
+        await order.save()
+        console.log(order);
+      
+        res.redirect("/admin/order-list")
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const statusOrders = async(req,res)=>{
+    const orderId = req.body.orderId
+    const option = req.body.selectedOption
+    console.log("selectedOption",option);
+
+    const orders= await Order.findByIdAndUpdate(orderId,{status:option})
+    await orders.save()
+    console.log("orders",orders);
+    const orderData = await Order.find({_id:orderId})
+    console.log("orderData",orderData);
+    res.status(200).json({redirect:'/admin/order-list'})
+
+}
 
 
 module.exports = {
+    adminRegister,
+    verifyRegister,
     adminLogin,
     adminForgot,
+    loadLogout,
     adminDashboard,
     ListProduct,
     productCategories,
     addProduct,
-    userUnblock,
     adminVerify,
     userList,
     userBlock,
@@ -371,4 +483,7 @@ module.exports = {
     editProduct,
     insertEditedProduct,
     deleteProduct,
+    listOrders,
+    cancelOrders,
+    statusOrders
 }
