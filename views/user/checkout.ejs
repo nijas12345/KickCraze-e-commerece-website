@@ -50,7 +50,22 @@
 
     <!-- Theme css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="/user/assets/css/demo2.css">
+      <style>
+.placeholder-option {
+    color: gray;
+    font-style: italic;
+}
 
+/* Dropdown menu styling */
+#couponSelect {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+}
+
+      </style>
 </head>
 
 <body class="theme-color2 light ltr">
@@ -303,7 +318,7 @@
                                                 </div>
                                             </li>
                                             <li class="mega-menu home-menu">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">home</a>
+                                                <a href="/home" class="nav-link menu-title">home</a>
                                                 <!-- <div class="mega-menu-container menu-content"> -->
                                                     <div class="container-fluid">
 
@@ -431,7 +446,7 @@
                                                 </div>
                                             </li>
                                             <li class=>
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">shop</a>
+                                                <a href="/shop" class="nav-link menu-title">shop</a>
                                                 <!-- <ul class="nav-submenu menu-content">
                                                     <li>
                                                         <a href="/user/shop-canvas-filter.html">Shop Canvas Filter</a>
@@ -468,7 +483,7 @@
                                                 </ul> -->
                                             </li>
                                             <li class="">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a>
+                                                <!-- <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a> -->
                                                 <!-- <ul class="nav-submenu menu-content">
                                                     <li>
                                                         <a href="/user/product-4-image.html">Product 4 Images</a>
@@ -831,27 +846,28 @@
                                     </li>
                                     <li class="onhover-dropdown">
                                         <div class="cart-media">
-                                            <i data-feather="user"></i>
+                                            <a href="/logout" class="d-block">Logout</a>
+                                            <!-- <i data-feather="user"></i> -->
                                         </div>
                                         <div class="onhover-div profile-dropdown">
-                                            <ul>
+                                            <!-- <ul>
                                                 <li>
                                                     <a href="/user/log-in.html" class="d-block">Login</a>
                                                 </li>
                                                 <li>
                                                     <a href="/user/sign-up.html" class="d-block">Register</a>
                                                 </li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
-                                            <a href="/user/wishlist.html">
+                                            <a href="/show-wishlist">
                                                 <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill">5</span>
+                                                <!--     -->
                                             </a>
                                         </div>
-                                        <div class="onhover-div">
+                                        <!-- <div class="onhover-div">
                                             <a href="/user/wishlist.html">
                                                 <div class="wislist-empty">
                                                     <i class="fab fa-gratipay"></i>
@@ -859,14 +875,14 @@
                                                     <p class="font-light mb-0">explore more and shortlist items.</p>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </li>
                                     <li class="onhover-dropdown cart-dropdown">
-                                        <button type="button" class="btn btn-solid-default btn-spacing">
+                                        <button type="button" onclick="location.href='/cart'" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
-                                            <span>$5686.25</span>
+                                            <span></span>
                                         </button>
-                                        <div class="onhover-div">
+                                        <!-- <div class="onhover-div">
                                             <div class="cart-menu">
                                                 <div class="cart-title">
                                                     <h6>
@@ -928,7 +944,7 @@
                                                     Proceed to payment
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </li>
                                 </ul>
                             </div>
@@ -1104,20 +1120,20 @@
                                 <label for="lname" class="form-label">HouseName</label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"></span>
-                                    <input type="text" class="form-control" placeholder="Username" id="hname" required >
+                                    <input type="text" class="form-control" placeholder="Username" id="hname"  >
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="email" placeholder="example@example.com"
-                                    required>
+                                   >
                             </div>
 
                             <div class="col-md-6">
                                 <label for="address" class="form-label">Address</label>
                                 <input type="text" class="form-control" id="address" aria-describedby="emailHelp"
-                                    placeholder="1234 Main St" required>
+                                    placeholder="1234 Main St" >
                                 <div class="invalid-feedback">
                                     Please enter a valid email address for shipping updates.
                                 </div>
@@ -1126,7 +1142,7 @@
                             <div class="col-md-6">
                                 <label for="address2" class="form-label">Phone No</label>
                                 <input type="text" class="form-control" id="mobile" aria-describedby="emailHelp"
-                                    placeholder="1234" required>
+                                    placeholder="1234" >
                             </div>
 
                             <div class="col-md-5">
@@ -1162,7 +1178,7 @@
                             <div class="col-md-3">
                                 <label for="zip" class="form-label">Zip</label>
                                 <input type="text" class="form-control" aria-describedby="emailHelp"
-                                    placeholder="1234 Main St" id="pin" required>
+                                    placeholder="1234 Main St" id="pin" >
                             </div>
                         </div>
 
@@ -1243,19 +1259,25 @@
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="debit">
                                 <label class="form-check-label" for="debit">Debit card</label>
                             </div> -->
-
+                            <div id="cashdelivery" style="color: red;"></div>
+                            <br>
                             <div class="form-check custome-radio-box">
                                 <input class="form-check-input" type="radio" name="payment" id="cash-on-delivery">
                                 <label class="form-check-label" for="paypal">Cash On Delivery</label>
                             </div>
+                            <div class="form-check custome-radio-box">
+                                <input class="form-check-input" type="radio" name="payment" id="online-payment">
+                                <label class="form-check-label" for="paypal">Online Payment</label>
+                            </div>
+                            <div class="form-check custome-radio-box">
+                                <input class="form-check-input" type="radio" name="payment" id="wallet-payment">
+                                <label class="form-check-label" for="paypal">Wallet Payment</label>
+                            </div>
                             
                         </div>
-                        <!-- <div class="row g-4">
-                            <div class="col-md-6">
-                                <label for="cc-name" class="form-label">Name on card</label>
-                                <input type="text" class="form-control" id="cc-name">
-                                <div id="emailHelp" class="form-text">Full name as displayed on card</div>
-                            </div>
+                         <!-- <div class="row g-4"> -->
+                          
+                            <!--
                             <div class="col-md-6">
                                 <label for="cc-number" class="form-label">Credit card number</label>
                                 <input type="text" class="form-control" id="cc-number" required="">
@@ -1278,7 +1300,7 @@
                 <div class="col-lg-4">
                     <div class="your-cart-box">
                         <h3 class="mb-3 d-flex text-capitalize">Your cart<span
-                                class="badge bg-theme new-badge rounded-pill ms-auto bg-dark">3</span>
+                                class="badge bg-theme new-badge rounded-pill ms-auto bg-dark"></span>
                         </h3>
                         <ul class="list-group mb-3">
                             <% carts.forEach((cart)=>{%>
@@ -1286,37 +1308,65 @@
                            
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div>
-                                    <h6 class="my-0"><%=cart.productId.name%></h6>
+                                    <h6 class="my-0"><%=cart.productId.name%> ,<%=cart.size%> </h6>
                                     <small><%= cart.productId.category %></small>
                                 </div>
-                                <span><%= cart.productId.disprice %></span>
+                                <div>
+                                    <span><%= cart.productId.disprice %> * <%= cart.quantity %></span>
+                                </div>
+                                <span>₹<%= cart.total %></span>
                             </li>
                             <% }) %>
 
-                             <!-- <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Second product</h6>
-                                    <small>Brief description</small>
-                                </div>
-                                <span>$8</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Third item</h6>
-                                    <small>Brief description</small>
-                                </div>
-                                <span>$5</span>
-                            </li>
+                             
                             <li class="list-group-item d-flex justify-content-between lh-condensed active">
-                                <div class="text-dark">
-                                    <h6 class="my-0">Promo code</h6>
-                                    <small>EXAMPLECODE</small>
-                                </div>
-                                <span>-$5</span>
-                            </li> -->
+
+                                <%if(couponData == 1){%>
+                                    <div class="text-dark">
+                                    
+                                        <h6 class="my-0" id="promo-code">Promo code</h6>
+                                      
+                                        <select name="" id="coupon-select" style="padding: 8px;">
+                                            <!-- <option value="" class="placeholder-option">Please Select a Coupon</option> -->
+                                           
+                                                <option value="option" >No coupon Available</option>
+                                           
+                                           
+                                        </select>
+                                       
+                                    </div>
+                                <%  } else{%>
+                                    <div class="text-dark">
+                                    
+                                        <h6 class="my-0">Promo code</h6>
+    
+                                        
+    
+                                   
+                                        <select name=""     id="coupon-select" style="padding: 8px;">
+                                            <option  class="placeholder-option" value="option">Please Select a Coupon</option>
+                                            <%couponData.forEach((coupon)=>{%>
+                                                <option value="<%=coupon.couponId %>" ><%= coupon.couponCode %> ,<%= coupon.couponDiscount %>%off</option>
+                                           <% }) %> 
+                                           
+                                        </select>
+                                       
+                                    </div>
+                                    <button type="submit" class="btn btn-solid-default rounded-0" id="coupon-button">Apply</button>
+                                    <button type="submit" hidden class="btn btn-solid-default rounded-0" id="remove-button">Remove</button>
+                                <% } %>
+                                <!-- <button type="submit" class="btn btn-solid-default rounded-0" id="coupon-button">Apply</button> -->
+                                
+                            </li> 
                             <li class="list-group-item d-flex lh-condensed justify-content-between">
+                                <span class="fw-bold" id="discount"></span>
+                                <strong id="coupon-total" ></strong>
+                            </li>
+                            <li class="list-group-item d-flex lh-condensed justify-content-between">
+                                
                                 <span class="fw-bold">Total (INR)</span>
-                                <strong><%=totalCart %></strong>
+                                <span ><del id="total-price"><%=totalPrice %></del></span>
+                                <strong id="total"><%=totalCart%></strong>
                             </li>
                         </ul>
 
@@ -1589,11 +1639,20 @@
     const form = document.getElementById("submit")
     form.addEventListener("click",async(event)=>{
         event.preventDefault()
-    const name = document.getElementById("name").value.trim()
+    let name = document.getElementById("name").value.trim()
     console.log(name);
-    const HouseName = document.getElementById("hname").value.trim()
-    const phoneNo = document.getElementById("mobile").value.trim()
-    const pin = document.getElementById("pin").value
+    let HouseName = document.getElementById("hname").value.trim()
+    let phoneNo = document.getElementById("mobile").value.trim()
+    let pin = document.getElementById("pin").value
+    let total = document.getElementById('total').textContent
+    let selectedId = document.getElementById('coupon-select').value
+    const totalPrice = document.getElementById('total-price').textContent
+    console.log("totalprice",totalPrice);
+
+    console.log(selectedId);
+    console.log(total);
+   
+    
     console.log(pin);
     const selectRadio = document.querySelectorAll('input[name="addressRadio"]')
     let addressId = null;
@@ -1613,10 +1672,220 @@
         if(radio.checked){
         paymentId = radio.id
     }
+    console.log("payment id",paymentId);
 
     })
+    if(paymentId == null){
+        return
+    }
+    
+    if(paymentId ==="online-payment"){
+        console.log("hai");
+        let data;
+    if(addressId == null){
+        console.log("hai");
+        
+    const nameRegex =/^[A-Za-z]{4,}$/    
+    if(!nameRegex.test(name)){
+        isValid = false
+        alert("Please enter a name with more than 4  characters and no digits")
+        return;
+    }
+    const phoneRegex = /^\d{10}$/;
+    if(!phoneRegex.test(phoneNo)){
+        isValid = false
+        alert("please enter a valid 10 digit mobile number")
+        return
+    }
+    const pinRegext = /^\d{6}$/;
+    if(!pinRegext.test(pin)){
+        isValid = false
+        alert("Please enter a valid pincode")
+    }  
+    
+        data = {name,HouseName,phoneNo,pin,paymentId,selectedId,addressId,total,totalPrice}
+         console.log(data);
+    }
+    else{
+      data = {addressId,paymentId,selectedId,total,totalPrice}
+         console.log(data);
+    }
+        
+        const response = await fetch('/online-insert',{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(data)
+        })
+
+        if(response.ok){
+            const responseData = await response.json()
+            if(responseData){
+                var options = {
+    "key": "rzp_test_5gTCwMblhgDXuL", // Enter the Key ID generated from the Dashboard
+    "amount": responseData.order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Voxo",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": responseData.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler":async  function (response){
+            console.log("asdjfkj",response);
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature)
+             console.log(response.razorpay_payment_id);
+            if(response.razorpay_payment_id){
+                console.log("laskdjflkasjl");
+            const daata = await fetch('/online-success',({
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(data)
+
+        }))
+        console.log("response");
+        const responseData = await daata.json()
+        if(responseData.success){
+        
+        window.location.href = responseData.redirect
+            }
+        console.log("hello");
+        
+        }
+        else{
+            console.log("hellooo");
+            window.location.href = "/failure"
+        }
+        
+
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    },
    
-    let data;
+};
+    
+            }else{
+                console.log("not ok")
+                res.send("hai")
+            }   
+        // var razorpay = new razorpay(options)
+        // razorpayObject.options('payment.failed',function(response){
+        //     alert("payment failed")
+        // })
+    //  razorpayObject.open()
+   var razorpayObject = new Razorpay(options);
+   razorpayObject.on("payment.failed", async function (response) {
+    try {
+        const fetchResponse = await fetch('/failed', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const responseData = await fetchResponse.json();
+        console.log(responseData);
+
+        if (responseData.success) {
+            window.location.href = responseData.redirect;
+        } else {
+            window.open(
+                '/order-unSuccess?o',
+                '_self'
+            );
+        }
+    } catch (error) {
+        console.log(error);
+        // Handle error
+    }
+});
+razorpayObject.open();
+
+        
+
+        }
+        
+  
+
+    }else if(paymentId == "wallet-payment"){
+        if(addressId == null){
+        console.log("hai");
+        
+          const nameRegex =/^[A-Za-z]{4,}$/    
+    if(!nameRegex.test(name)){
+        isValid = false
+        alert("Please enter a name with more than 4  characters and no digits")
+        return;
+    }
+    const phoneRegex = /^\d{10}$/;
+    if(!phoneRegex.test(phoneNo)){
+        isValid = false
+        alert("please enter a valid 10 digit mobile number")
+        return
+    }
+    const pinRegext = /^\d{6}$/;
+    if(!pinRegext.test(pin)){
+        isValid = false
+        alert("Please enter a valid pincode")
+    }  
+    
+         data = {name,HouseName,phoneNo,pin,paymentId,selectedId,addressId,total,totalPrice}
+    }
+    else{
+        console.log("addres");
+         data = {addressId,paymentId,selectedId,total,totalPrice}
+    }
+    
+    console.log(data);
+    
+        try {
+
+            const response = await fetch("/wallet-insert",{
+                method : "PUT",
+                headers :{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(data)
+            })
+            console.log(response);
+            const responseData = await response.json()
+            console.log(responseData);
+            if(responseData.success){
+                if(responseData.message){
+                    document.getElementById('cashdelivery').innerHTML = responseData.message
+                }
+                else{
+                    window.location.href = responseData.redirect
+                }
+                
+            }
+     } catch (error) {
+        console.log(error);
+     } 
+    }
+    
+    
+    else{
+
+     if(total>1000){
+        document.getElementById('cashdelivery').innerHTML = "Please choose order above 1000 is online payment"
+        return 
+     }
+        console.log("hai");
+        let data;
     if(addressId == null){
         console.log("hai");
         
@@ -1636,12 +1905,13 @@
     if(!pinRegext.test(pin)){
         isValid = false
         alert("Please enter a valid pincode")
-    }
- 
-         data = {name,HouseName,phoneNo,pin,paymentId}
+    }  
+    
+         data = {name,HouseName,phoneNo,pin,paymentId,selectedId,addressId,total,totalPrice}
     }
     else{
-         data = {addressId,paymentId}
+        console.log("addres");
+         data = {addressId,paymentId,selectedId,total,totalPrice}
     }
     
     console.log(data);
@@ -1663,13 +1933,91 @@
             }
      } catch (error) {
         console.log(error);
-     }
+     } 
+    }
+   
+
+    
     
     })
     
+  ////////////  
+     
+  const couponButton = document.getElementById('coupon-button')
+  couponButton.addEventListener("click",async ()=>{
+  const selectedId = document.getElementById("coupon-select").value
+  const total = document.getElementById('total').innerHTML
     
+    console.log(selectedId);
+    if(selectedId == "option"){
+        return
+    }
+    console.log(total);
+    const data = {selectedId,total}
+    try {
+        const response = await fetch('/apply-coupon',{
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    })
+   
+    if(response.ok){
+        const responseData = await response.json()
+        console.log(responseData);
+        console.log(response);
+        document.getElementById('remove-button').hidden = false
+        document.getElementById('coupon-button').hidden = true
+       
+        document.getElementById('coupon-total').innerHTML = responseData.couponPercentage
+        document.getElementById('discount').innerHTML = "Coupon Discount"
+        document.getElementById('total').innerHTML = responseData.couponDiscount
+        document.getElementById('coupon-select').disabled = true
+        
+        
+    }
+   
+    } catch (error) {
+        console.log(error);
+    }
+
+    
+  })
+  
+const removeButton = document.getElementById('remove-button')
+removeButton.addEventListener('click',async()=>{
+    const selectedId = document.getElementById('coupon-select').value
+    console.log(selectedId)
+    const data = {selectedId}
+    
+    try {
+        const response = await fetch('/remove-coupon',{
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(data)
+    })
+    if(response.ok){
+        console.log(response);
+        const responseData = await response.json()
+        console.log(responseData);
+        window.location.href = responseData.redirect
+        
+    }
+     
+
+    } catch (error) {
+     console.log(error);   
+    }
+    
+
+})
+
     
 </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 </body>
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->

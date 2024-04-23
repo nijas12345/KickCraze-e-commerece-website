@@ -561,16 +561,16 @@
                                             
                                             <a href="/logout" class="d-block">Logout</a>
                                         </div>
-                                        <div class="onhover-div profile-dropdown">
+                                        <!-- <div class="">
                                             <ul>
                                                 <li>
                                                   
                                                 </li>
                                                 <li>
-                                                    <a href="/user/sign-up.html" class="d-block">Register</a>
-                                                </li>
+                                                    <!-- <a href="/user/sign-up.html" class="d-block">Register</a> -->
+                                                <!-- </li>
                                             </ul>
-                                        </div>
+                                        </div>  -->
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <!-- <div class="cart-media">
@@ -880,7 +880,7 @@
                                     </div>
 
                                     <div class="label-section">
-                                       <% if(products.stock==0){%>
+                                       <% if(products.stock<=0){%>
 
                                         <span  id="No-stock" class="label-text">#No Stock</span>
                                         
@@ -892,11 +892,19 @@
                                         
                                     </div>
 
-                                    <h3 class="price-detail"><%=products.disprice%> <del><%=products.price%></del><span></span></h3>
+                                    <h3 class="price-detail"><%=products.disprice%> <del><%=products.price%></del> 
+                                        <%if(products.offer>products.discount){%>
+                                          <span> (<%=products.offer%> %off) </span></h3>
+                                        <%}else{%>
+                                            <span>(<%= products.discount%> %off)</span></h3>
+                                        <%}%>
+                                    
 
                                     <div class="color-image">
                                         <div class="image-select">
-                                            <h5>Color:<%= products.color %></h5>
+                                            <h5>Color:<%= products.color %></h5><br>
+                                            <br>
+                                       
                                             <!-- <ul class="image-section">
                                                 <li>
                                                     <a href="/user/javascript:void(0)">
@@ -918,7 +926,9 @@
                                                 </li>
                                             </ul> -->
                                         </div>
+                                 
                                     </div>
+                                   
                                     <form id="add-cart">
                                     <div id="selectSize" class="addeffect-section product-description border-product">
                                         <h6 class="product-title size-text">select size
@@ -975,10 +985,10 @@
                                     </div>
                                          
                                     <div class="product-buttons">
-                                        <a href="/user/wishlist.html" class="btn btn-solid">
+                                        <button href="" class="btn btn-solid" id="wishlist" data-id="<%=products._id%>">
                                             <i class="fa fa-bookmark fz-16 me-2"></i>
                                             <span>Wishlist</span>
-                                        </a>
+                                        </button>
                                         <button  id="cartEffect" type="submit"
                                             class="btn btn-solid hover-solid btn-animation">
                                             <i class="fa fa-shopping-cart"></i>
@@ -2417,6 +2427,25 @@
         }
        })
 
+   const wishlist = document.getElementById('wishlist')
+   wishlist.addEventListener("click",async function(event){
+   const productId = document.getElementById('wishlist').getAttribute("data-id")
+   console.log(productId);
+   const data = {productId}
+   const response = await fetch("/insert-wishlist",({
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify(data)
+   }))
+   console.log(response);
+   if(response.ok){
+    const responseData = response.json
+    
+   }
+ 
+   })
 
        
     </script>

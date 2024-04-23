@@ -739,12 +739,12 @@
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
-                                            <!-- <a href="/user/wishlist.html">
+                                            <a href="/show-wishlist">
                                                 <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill">5</span>
-                                            </a> -->
+                                                <!-- <span class="label label-theme rounded-pill"></span> -->
+                                            </a>
                                         </div>
-                                        <div class="onhover-div">
+                                        <!-- <div class="onhover-div">
                                             <a href="/user/wishlist.html">
                                                 <div class="wislist-empty">
                                                     <i class="fab fa-gratipay"></i>
@@ -752,13 +752,13 @@
                                                     <p class="font-light mb-0">explore more and shortlist items.</p>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </li>
-                                    <li class="onhover-dropdown cart-dropdown">
-                                        <button type="button" class="btn btn-solid-default btn-spacing">
+                                    <li class="">
+                                        <a href="/cart" type="button" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
                                             <span><%= total %></span>
-                                        </button>
+                                        </a>
                                         <div class="onhover-div">
                                             <div class="cart-menu">
                                                 <div class="cart-title">
@@ -771,7 +771,7 @@
                                                     </span>
                                                 </div>
                                                 <ul class="custom-scroll">
-                                                    <li>
+                                                    <!-- <li>
                                                         <div class="media">
                                                             <img src="/user/assets/images/fashion/product/front/1.jpg"
                                                                 class="img-fluid blur-up lazyload" alt="">
@@ -790,8 +790,8 @@
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
-                                                    </li>
-                                                    <li>
+                                                    </li> -->
+                                                    <!-- <li>
                                                         <div class="media">
                                                             <img src="/user/assets/images/fashion/product/front/7.jpg"
                                                                 class="img-fluid blur-up lazyload" alt="">
@@ -810,7 +810,7 @@
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
                                             </div>
                                             <div class="cart-btn">
@@ -825,18 +825,20 @@
                                     </li>
                                 </ul>
                             </div>
+                    
                             <div class="search-full">
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i data-feather="search" class="font-light"></i>
                                     </span>
-                                    <input type="text" class="form-control  search-type" placeholder="Search here.." id="search-input">
+                                    <input type="text" class="form-control  search-type" placeholder="search here..." value="<%=searchQuery %>" id="search-input">
                                     <span class="input-group-text close-search">
                                         <i data-feather="x" class="font-light"></i>
                                     </span>
                                 </div>
+                        
                                 <div class="search-suggestion">
-                                    <ul class="custom-scroll">
+                                    <!-- <ul class="custom-scroll">
                                         <li>
                                             <div class="product-cart media">
                                                 <img src="/user/assets/images/electronics/product/1.jpg"
@@ -890,8 +892,8 @@
                                                         <li>
                                                             <i class="fas fa-star theme-color"></i>
                                                         </li>
-                                                    </ul>
-                                                    <p class="mb-0 mt-1">$35.00</p>
+                                                    </ul> -->
+                                                    <!-- <p class="mb-0 mt-1">$35.00</p> -->
                                                 </div>
                                             </div>
                                         </li>
@@ -1399,39 +1401,36 @@
 
                                 <div class="select-options">
                                     <div class="page-view-filter">
-                                        <div class=" select-featured">
-                                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        <div class=" select-featured" style="display: flex;">
+                                            <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
                                                 Sort
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li>
-                                                    <a class="dropdown-item" href="/sort-alphabet-a-z">Alphabetically
-                                                        A-Z</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="/sort-alphabet-z-a">Alphabetically
-                                                        Z-A</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="/sort-high-to-low">Price, High To
-                                                        Low</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="/sort-low-to-high">Price, Low To
-                                                        High</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="/sort-new-arrivals">
-                                                        New Arrivals</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="/user/javascript:void(0)">Date, New To
-                                                        Old</a>
-                                                </li>
-                                            </ul>
+                                            </button> -->
+                                         
+
+                                         
+                                            <select name="" id="category">
+                                                <option value="<%=categoryName %>">Category</option>
+                                                <% categories.forEach((category)=>{%>
+                                               
+                                                <option value="<%= category.name %>"><%=category.name %>
+                                                    </option>
+                                                    <%  })%>
+
+                                            </select>
+                                            
+                                            <select style="margin-left: 15px;" name="" id="select">
+                                                <option value="option" <% if (selectedValue === "option") { %>selected<% } %>>Sort</option>
+                                                <option value="option1" <% if (selectedValue === "option1") { %>selected<% } %>>Alphabetically A-Z</option>
+                                                <option value="option2" <% if (selectedValue === "option2") { %>selected<% } %>>Alphabetically Z-A</option>
+                                                <option value="option3" <% if (selectedValue === "option3") { %>selected<% } %>>Price, Low To High</option>
+                                                <option value="option4" <% if (selectedValue === "option4") { %>selected<% } %>>Price, High To Low</option>
+                                                <option value="option5" <% if (selectedValue === "option5") { %>selected<% } %>>New Arrivals</option>
+                                            </select>
+                                            
                                         </div>
                                     </div>
+                                </form>
                                     <div class="dropdown select-featured">
                                         <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -1456,7 +1455,7 @@
                                         </ul>
                                     </div>
                                 </div>
-
+                                
 
                                 <div class="grid-options d-sm-inline-block d-none">
                                     <ul class="d-flex">
@@ -1520,8 +1519,18 @@
                                            width="250" alt="" >
                                         </a>
                                     </div>
+                                    <div class="label-block">
+                                        <span class="label label-black">New</span>
+                                      
+    
+                                        <%if(product.offer>product.discount){%>
+                                            <span class="label label-theme"> (<%=product.offer%>% off)</span>
+                                            <%}else{%>
+                                                <span class="label label-theme">(<%= product.discount%>% off)</span>
+                                            <%}%>
+                                    </div>
                                     <div class="cart-wrap">
-                                        <ul>
+                                         <ul>
                                             <li>
                                                 <a href="/user/javascript:void(0)" class="addtocart-btn"
                                                     data-bs-toggle="modal" data-bs-target="#addtocart">
@@ -1603,11 +1612,12 @@
                                 
                         
                     </div>
-
+                   <form action="/shop" method="get" >
                     <nav class="page-section">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" href="/user/javascript:void(0)" aria-label="Previous">
+                                <input type="hidden" value="1" id="change-page" name="page" >
+                                <a href="/shop" class="page-link" id="prevPageBtn" aria-label="Previous">
                                     <span aria-hidden="true">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
@@ -1623,7 +1633,7 @@
                                 <a class="page-link" href="/user/javascript:void(0)">3</a>
                             </li> -->
                             <li class="page-item">
-                                <a class="page-link" aria-label="Next">
+                                <a class="page-link" id="nextPageBtn" aria-label="Next">
                                     <span aria-hidden="true">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
@@ -1631,6 +1641,7 @@
                             </li>
                         </ul>
                     </nav>
+                </form>
                 </div>
             </div>
         </div>
@@ -2159,118 +2170,298 @@
     <script src="/user/assets/js/script.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded",function(){
-            const searchInput = document.getElementById("search-input")
-            searchInput.addEventListener('input',function(event){
-                const searchQuery = event.target.value.trim()
-                console.log(searchQuery);
-                fetch('/search',{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify({query:searchQuery})
-                
-                })
-                .then((response)=>{
-                     if(response.ok){
-                     return response.json()
-                     }
-                })
-                .then(products=>{
-                    const productContainer = document.querySelector("#product-list-section")
-                    productContainer.innerHTML = ""
-                    products.forEach((product)=>{
-                       const productBox = `<div class="product-box">
+//     document.addEventListener("DOMContentLoaded", function () {
+//     const searchInput = document.getElementById("search-input");
+//     const selectElement = document.getElementById('select');
+//     // Get the select element
+//     const categorySelect = document.getElementById('category');
+    
+     
+    
+
+//     // Event listener for input event on search input
+//         searchInput.addEventListener('input', function (event) {
+//             const searchQuery = event.target.value.trim();
+//             console.log("Search Query:", searchQuery);
+
+//             // Fetch data based on search query and selected option
+//             fetchData(searchQuery);
+//         }); 
+//         categorySelect.addEventListener('change',function(){
+//             const selectedCategory = categorySelect.value;
+//             console.log(selectedCategory);
+//             const searchQuery = searchInput.value.trim();
+//             fetchData(searchQuery,selectedCategory)
+//         })
+
+//         // Event listener for change event on select element
+//         selectElement.addEventListener('change', function () {
+//             const selectedValue = selectElement.value;
+//             console.log("Selected Value:", selectedValue);
+
+//             // Get the current search query
+//             const searchQuery = searchInput.value.trim();
+//             fetchData(searchQuery,selectedValue)
+        
+//         }) 
+//         selectElement.addEventListener('change', function () {
+//         const searchQuery = searchInput.value.trim();
+//         const selectedValue = selectElement.value;
+//         const selectedCategory = categorySelect.value;
+//         fetchData(searchQuery, selectedValue, selectedCategory);
+//         });
+
+//            // Fetch data based on search query and selected option
+//         function fetchData(searchQuery, selectedValue,selectedCategory){
+
+    
+//             console.log(searchQuery,selectedValue,selectedCategory);
+//                     fetch('/search-input',{
+//                         method:"POST",
+//                         headers:{
+//                             "Content-Type":"application/json"
+//                         },
+//                         body:JSON.stringify({query:searchQuery,selectedValue:selectedValue,selectedCategory:selectedCategory})
+                    
+//                 })
+//                 .then((response)=>{
+//                      if(response.ok){
+//                      return response.json()
+//                      }
+//                 })
+//                 .then(products=>{
+//                     const productContainer = document.querySelector("#product-list-section")
+//                     productContainer.innerHTML = ""
+//                     products.forEach((product)=>{
+//                        const productBox = `<div class="product-box">
                                 
-                                <div class="img-wrapper" >
-                                    <div class="front">
-                                        <a href="/product-profile?id=${product._id}">
-                                            <img src="${product.image[0]}" alt="" width="260px">
-                                        </a>
-                                    </div>
-                                    <div class="back">
-                                        <a href="/product-profile?id=${product._id}">
-                                            <img src="${product.image[1]}" alt="" width="260px">
-                                    </a>
-                                    </div>
-                                    <div class="cart-wrap">
-                                        <ul>
-                                            <li>
-                                                <a href="/user/javascript:void(0)" class="addtocart-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#addtocart">
-                                                    <i data-feather="shopping-bag"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/user/javascript:void(0)" data-bs-toggle="modal"
-                                                    data-bs-target="#quick-view">
-                                                    <i data-feather="eye"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/user/compare.html">
-                                                    <i data-feather="refresh-cw"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/user/wishlist.html" class="wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+//                                 <div class="img-wrapper" >
+//                                     <div class="front">
+//                                         <a href="/product-profile?id=${product._id}">
+//                                             <img src="${product.image[0]}" alt="" width="260px">
+//                                         </a>
+//                                     </div>
+//                                     <div class="back">
+//                                         <a href="/product-profile?id=${product._id}">
+//                                             <img src="${product.image[1]}" alt="" width="260px">
+//                                     </a>
+//                                     </div>
+//                                     <div class="cart-wrap">
+//                                         <ul>
+//                                             <li>
+//                                                 <a href="/user/javascript:void(0)" class="addtocart-btn"
+//                                                     data-bs-toggle="modal" data-bs-target="#addtocart">
+//                                                     <i data-feather="shopping-bag"></i>
+//                                                 </a>
+//                                             </li>
+//                                             <li>
+//                                                 <a href="/user/javascript:void(0)" data-bs-toggle="modal"
+//                                                     data-bs-target="#quick-view">
+//                                                     <i data-feather="eye"></i>
+//                                                 </a>
+//                                             </li>
+//                                             <li>
+//                                                 <a href="/user/compare.html">
+//                                                     <i data-feather="refresh-cw"></i>
+//                                                 </a>
+//                                             </li>
+//                                             <li>
+//                                                 <a href="/user/wishlist.html" class="wishlist">
+//                                                     <i data-feather="heart"></i>
+//                                                 </a>
+//                                             </li>
+//                                         </ul>
+//                                     </div>
+//                                 </div>
                                 
 
                                 
-                                <div class="product-details">
+//                                 <div class="product-details">
                                    
-                                    <div class="rating-details">
-                                        <span class="font-light grid-content">${product.name}</span>
-                                        <!-- <ul class="rating mt-0">
-                                            <li>
-                                                <i class="fas fa-star theme-color"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star theme-color"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                        </ul> -->
-                                    </div>
-                                    <div class="main-price">
-                                        <a href="/user/product-left-sidebar.html" class="font-default">
-                                            <h5 class="ms-0">${product.category}</h5>
-                                        </a>
-                                        <div class="listing-content">
-                                            <span class="font-light">Regular Fit</span>
-                                            <p class="font-light">Lorem ipsum, dolor sit amet consectetur adipisicing
-                                                elit. Sit, deserunt? Asperiores aliquam voluptatum culpa aliquid ab
-                                                ducimus eaque illum, quibusdam reiciendis id ad consectetur quis, animi
-                                                qui, minus quidem eveniet! Dolorum magnam numquam, asperiores
-                                                accusantium architecto placeat quam officia, tempore repellendus.</p>
-                                        </div>
-                                        <h3 class="theme-color">₹ ${product.price}</h3>
-                                        <button onclick="location.href ='cart.html';" class="btn listing-content">Add
-                                            To Cart</button>
-                                    </div>
+//                                     <div class="rating-details">
+//                                         <span class="font-light grid-content">${product.name}</span>
+//                                         <!-- <ul class="rating mt-0">
+//                                             <li>
+//                                                 <i class="fas fa-star theme-color"></i>
+//                                             </li>
+//                                             <li>
+//                                                 <i class="fas fa-star theme-color"></i>
+//                                             </li>
+//                                             <li>
+//                                                 <i class="fas fa-star"></i>
+//                                             </li>
+//                                             <li>
+//                                                 <i class="fas fa-star"></i>
+//                                             </li>
+//                                             <li>
+//                                                 <i class="fas fa-star"></i>
+//                                             </li>
+//                                         </ul> -->
+//                                     </div>
+//                                     <div class="main-price">
+//                                         <a href="/user/product-left-sidebar.html" class="font-default">
+//                                             <h5 class="ms-0">${product.category}</h5>
+//                                         </a>
+//                                         <div class="listing-content">
+//                                             <span class="font-light">Regular Fit</span>
+//                                             <p class="font-light">Lorem ipsum, dolor sit amet consectetur adipisicing
+//                                                 elit. Sit, deserunt? Asperiores aliquam voluptatum culpa aliquid ab
+//                                                 ducimus eaque illum, quibusdam reiciendis id ad consectetur quis, animi
+//                                                 qui, minus quidem eveniet! Dolorum magnam numquam, asperiores
+//                                                 accusantium architecto placeat quam officia, tempore repellendus.</p>
+//                                         </div>
+//                                         <h3 class="theme-color">₹ ${product.price}</h3>
+//                                         <button onclick="location.href ='cart.html';" class="btn listing-content">Add
+//                                             To Cart</button>
+//                                     </div>
                                     
-                                </div>
+//                                 </div>
                               
-                            </div>`;
-  productContainer.insertAdjacentHTML('beforeend', productBox);
-                    })
-                })
-            })
-        })
+//                             </div>`;
+//   productContainer.insertAdjacentHTML('beforeend', productBox);
+//                     })
+//                 })
+//             }
+//             })
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("search-input");
+    const selectElement = document.getElementById('select');
+    const categorySelect = document.getElementById('category');
+    let pageInput = document.getElementById('change-page')
+    console.log(pageInput);
+
+
+    // Function to send data to backend
+    function sendDataToBackend(searchQuery, selectedValue, selectedCategory,page) {
+        // Create a form element
+        const form = document.createElement('form');
+        form.setAttribute('method', 'GET'); // Use GET method
+        form.setAttribute('action', '/shop'); // Backend endpoint
+
+        // Create input fields for each data to send
+        const searchQueryInput = document.createElement('input');
+        searchQueryInput.setAttribute('type', 'hidden');
+        searchQueryInput.setAttribute('name', 'searchQuery');
+        searchQueryInput.value = searchQuery;
+        console.log(searchQueryInput.value);
+
+        const selectedValueInput = document.createElement('input');
+        selectedValueInput.setAttribute('type', 'hidden');
+        selectedValueInput.setAttribute('name', 'selectedValue');
+        selectedValueInput.value = selectedValue;
+
+        const selectedCategoryInput = document.createElement('input');
+        selectedCategoryInput.setAttribute('type', 'hidden');
+        selectedCategoryInput.setAttribute('name', 'selectedCategory');
+        selectedCategoryInput.value = selectedCategory;
+
+        const pageInput = document.createElement('input');
+        pageInput.setAttribute('type', 'hidden');
+        pageInput.setAttribute('name', 'page');
+        pageInput.value = page;
+        console.log(pageInput.value);
+
+        // Append input fields to the form
+        form.appendChild(searchQueryInput);
+        form.appendChild(selectedValueInput);
+        form.appendChild(selectedCategoryInput);
+        form.appendChild(pageInput);    
+
+        // Append the form to the document body
+        document.body.appendChild(form);
+
+        // Submit the form
+        form.submit();
+    }
+
+    // Event listeners for input and select elements
+    searchInput.addEventListener('input', function () {
+        const searchQuery = searchInput.value.trim();
+        const selectedValue = selectElement.value;
+        const selectedCategory = categorySelect.value;
+        const page = pageInput.value
+        sendDataToBackend(searchQuery, selectedValue, selectedCategory,page);
+    });
+
+    selectElement.addEventListener('change', function () {
+        const searchQuery = searchInput.value.trim();
+        const selectedValue = selectElement.value;
+        const selectedCategory = categorySelect.value;
+        const page = pageInput.value
+        sendDataToBackend(searchQuery, selectedValue, selectedCategory,page);
+    });
+
+    categorySelect.addEventListener('change', function () {
+        const searchQuery = searchInput.value.trim();
+        const selectedValue = selectElement.value;
+        const selectedCategory = categorySelect.value;
+        const page = pageInput.value
+        sendDataToBackend(searchQuery, selectedValue, selectedCategory,page);
+    });
+
+    const nextPageBtn = document.getElementById('nextPageBtn');
+    nextPageBtn.addEventListener("click", () => {
+        const currentPage = parseInt(pageInput.value);
+        sendDataToBackend(searchInput.value.trim(), selectElement.value, categorySelect.value, currentPage + 1);
+    });
+
+    // Event listener for previous page button
+    const prevPageBtn = document.getElementById('prevPageBtn');
+    prevPageBtn.addEventListener('click', () => {
+        const currentPage = parseInt(pageInput.value);
+        if (currentPage > 1) {
+            sendDataToBackend(searchInput.value.trim(), selectElement.value, categorySelect.value, currentPage - 1);
+        }
+    });
+});
+
+
+
+
+//      document.addEventListener("DOMContentLoaded", function() {
+//     const itemsPerPage = 4;
+//     let currentPage = 1;
+// try {
+//     function sendCurrentPageToBackend(currentPage) {
+//         console.log(currentPage);
+//         const form = document.querySelector('form[action="/shop"]');
+//         let changePageInput = document.getElementById('change-page')
+//         console.log(changePageInput);
+      
+        
+//         changePageInput.value = currentPage; // Update the value of the hidden input
+//         console.log("change",changePageInput.value);
+        
+//         form.submit(); // Submit the form
+//     }
+
+//     // Event listener for next page button
+//     const nextPageBtn = document.getElementById('nextPageBtn');
+//     nextPageBtn.addEventListener("click", () => {
+//         currentPage++;
+//         sendCurrentPageToBackend(currentPage);
+//     });
+
+//     // Event listener for previous page button
+//     const prevPageBtn = document.getElementById('prevPageBtn');
+//     prevPageBtn.addEventListener('click', () => {
+//         if (currentPage > 1) {
+//             currentPage--;
+//             sendCurrentPageToBackend(currentPage);
+//         }
+//     });
+// } catch (error) {
+//     console.log(error);
+// }
+//     // Function to send current page to backend
+   
+// });
+
+
+
+    
     </script>
 </body>
 

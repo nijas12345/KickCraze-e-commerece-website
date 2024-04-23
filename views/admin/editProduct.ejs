@@ -45,33 +45,39 @@
             input[type="submit"]:hover {
                 background-color: #0056b3;
             }
+            .error{
+                color:red
+            }
         </style>
     </head>
     <body>
         <h1>Edit Product</h1>
         
-        <form id="form" action="/admin/product-edit?id=<%=products.id%>" method="post" >
+        <form id="form" action="/admin/product-edit?id=<%=products.id%>" method="put" >
 
             <div  class="spin error" id="name-error"></div>
             <input type="text" name="name" placeholder="Enter Name" id="name" value="<%=products.name%>">
             <br>
             <div  class="spin error" id="price-error"></div>
-            <input type="text" name="price" placeholder="Enter Price" value="<%=products.price%>" required>
+            <input type="text" name="price" placeholder="Enter Price" id="price" value="<%=products.price%>" required>
             <br>
+            <div  class="spin error" id="discount-error"></div>
+            <input type="text" name="discount" placeholder="Enter Discount" id="discount" value="<%=products.discount%>" required>
+            <br>    
             <div  class="spin error" id="color-error"></div>
-            <input type="text" name="color" placeholder="Enter Color" value="<%=products.color%>" required>
+            <input type="text" name="color" placeholder="Enter Color" id="color" value="<%=products.color%>" required>
             <br>
             <div  class="spin error" id="stock-error"></div>
-            <input type="text" name="stock" placeholder="Enter Stock" value="<%=products.stock%>" required>
+            <input type="text" name="stock" placeholder="Enter Stock" id="stock" value="<%=products.stock%>" required>
             <br>
             <div  class="spin error" id="size1-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 1" value="<%=products.sizes[0]%>"><br>
+            <input type="text" name="sizes[]" placeholder="Size 1" id="size1" value="<%=products.sizes[0]%>"><br>
             <div  class="spin error" id="size2-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 2" value="<%=products.sizes[1]%>"><br>
+            <input type="text" name="sizes[]" placeholder="Size 2" id="size2" value="<%=products.sizes[1]%>"><br>
             <div  class="spin error" id="size3-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 3" value="<%=products.sizes[2]%>"><br>
+            <input type="text" name="sizes[]" placeholder="Size 3" id="size3" value="<%=products.sizes[2]%>"><br>
             <div  class="spin error" id="size4-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 4" value="<%=products.sizes[3]%>"><br>
+            <input type="text" name="sizes[]" placeholder="Size 4" id="size4" value="<%=products.sizes[3]%>"><br>
             <br>
             
             <input type="file" name="image" id="image-upload" accept="image/* " multiple value="<%=products.image%>">
@@ -92,7 +98,7 @@
             <br>
             <!-- <button type="button" id="crop-button">Crop Image</button> -->
            
-            <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
+            <button type="button" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
         </form>
        
     
@@ -101,23 +107,24 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 
-       
+
       <script>
         document.getElementById("submit-btn").addEventListener("click",function(event){
-            // event.preventDefault()
+            event.preventDefault()
             const name = document.getElementById("name").value
             const price = document.getElementById("price").value
-            const disprice = document.getElementById("disprice").value
+            const discount = document.getElementById("discount").value
             const color = document.getElementById("color").value.trim()
-            const stock = document.getElementById("stock").value 
+            const stock = document.getElementById("stock").value
             const size1 = document.getElementById("size1").value
             const size2 = document.getElementById("size2").value
             const size3 = document.getElementById("size3").value
             const size4 = document.getElementById("size4").value
+            console.log(name);
 
             const nameError = document.getElementById("name-error")
             const priceError = document.getElementById("price-error")
-            const dispriceError = document.getElementById("disprice-error")
+            const discountError = document.getElementById("disprice-error")
             const colorError = document.getElementById("color-error")
             const stockError = document.getElementById("stock-error")
             const size1Error = document.getElementById("size1-error")
@@ -127,17 +134,21 @@
       
            console.log(name);
             let isValid = true
-            if(name.trim()===""){
+            if(name === ""){
                 nameError.textContent = "Please Enter a valid Name"
                 isValid = false
+            }
+            else if (/\d|-/.test(name)) {
+            nameError.textContent = 'Name cannot contain digits or hyphens';
+            isValid = false;
             }
             if(isNaN(price) || price.trim()===""){
                 priceError.textContent = "Please Enter a valid Number"
                 isValid = false
             }
             
-            if(isNaN(disprice) || disprice.trim()===""){
-                dispriceError.textContent = "Please Enter a valid Number"
+            if(isNaN(discount) || discount.trim()===""){
+                discountError.textContent = "Please Enter a valid Number"
                 isValid = false
             }
             if(isNaN(stock) || stock.trim()===""){

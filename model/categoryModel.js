@@ -13,6 +13,9 @@ const CategorySchema  = new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    offer:{
+        type:Number
+    },
     date:{
         type:Date,
         default:Date.now()

@@ -24,6 +24,10 @@ const orderSchema = new mongoose.Schema({
         total:{
             type:Number,
             default:true
+        },
+        totalPrice:{
+            type:Number,
+            default:true
         }      
     }],
     addressId:{
@@ -32,24 +36,41 @@ const orderSchema = new mongoose.Schema({
         required:true
         
     },
+    totalPrice:{
+        type:Number,
+        default:true
+    },
     payment:{
         type:String,
         required:true
     } ,
-    createdAt:{
+    orderedDate:{
         type:Date,
-        default:Date.now()
     },
         status:{
             type:String,
-            enum:["pending","shipped","delivered","processing","cancelled"],
+            enum:["pending","shipped","delivered","processing","cancelled","returned"],
             default:"pending"
         },
     isOrder:{
         type:Boolean,
         default:true
-    }
-    
+    },
+    discountTotal:{
+        type:String
+    },
+    couponId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"coupon",       
+    },
+    wcTotal:{
+        type:String
+    },
+    reason:{
+        type:String
+    },isPayment:{
+        type:Boolean
+    }    
 })
 
 module.exports = mongoose.model("Order",orderSchema)

@@ -63,8 +63,8 @@
             <input type="text" name="price" placeholder="Enter Price" id="price" >
             
             <br>
-            <div  class="spin error" id="disprice-error"></div>
-            <input type="text" name="disprice" placeholder="Enter Discount Price" id="disprice" >
+            <div  class="spin error" id="discount-error"></div>
+            <input type="text" name="discount" placeholder="Enter Discount Percentage" id="discount" >
             <br>
             <div  class="spin error" id="color-error"></div>
             <input type="text" name="color" placeholder="Enter Color" id="color" >
@@ -102,7 +102,8 @@
                         
                         <% }); %>
                      </select>
-            <button type="button" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
+            <a  class="btn btn-sm btn-primary rounded font-sm mt-15" href="/admin/dashboard" >BACK</a>
+            <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
         </form>
         <!-- <% if (typeof message !== 'undefined') { %>
             <p><%= message %></p>
@@ -231,17 +232,18 @@
             event.preventDefault()
             const name = document.getElementById("name").value.trim()
             const price = document.getElementById("price").value
-            const disprice = document.getElementById("disprice").value
+            const discount = document.getElementById("discount").value
             const color = document.getElementById("color").value.trim()
             const stock = document.getElementById("stock").value 
             const size1 = document.getElementById("size1").value
             const size2 = document.getElementById("size2").value
             const size3 = document.getElementById("size3").value
             const size4 = document.getElementById("size4").value
-
+     
+           
             const nameError = document.getElementById("name-error")
             const priceError = document.getElementById("price-error")
-            const dispriceError = document.getElementById("disprice-error")
+            const discountError = document.getElementById("discount-error")
             const colorError = document.getElementById("color-error")
             const stockError = document.getElementById("stock-error")
             const size1Error = document.getElementById("size1-error")
@@ -252,7 +254,7 @@
 
             nameError.textContent = "";
             priceError.textContent = "";
-            dispriceError.textContent = "";
+            discountError.textContent = "";
             colorError.textContent = "";
             stockError.textContent = "";
             size1Error.textContent = "";
@@ -262,49 +264,65 @@
       
             console.log(name);
             console.log(price);
+            console.log(color);
             let isValid = true
-
+            
             if (name === '') {
             nameError.textContent = 'Name is required';
             isValid = false;
+            
               }
               else if (/\d|-/.test(name)) {
               nameError.textContent = 'Name cannot contain digits or hyphens';
              isValid = false;
+             
               }
               if (isNaN(price) || price === '' ||parseFloat(price) === 0 ) {
                priceError.textContent = 'Please Enter a valid Price';
               isValid = false;
-             
+        
                 }
-                if (isNaN(disprice) || disprice === '' ||parseFloat(disprice)===0) {
-             dispriceError.textContent = 'Please Enter a valid Discount Price';
-             isValid = false;
-              }
+                if(discount == ""){
+               discountError.textContent = "discount is required"
+                isValid = false
+               
+                }
+                const regex = /^\d{2}$/;
+                if(!regex.test(discount)){
+                  discountError.textContent = "discount contain only 2 digits"
+                  isValid = false
+                     
+                }
               if (isNaN(stock) || stock === ''||parseFloat(stock)===0) {
              stockError.textContent = 'Please Enter a valid stock';
              isValid = false;
+      
               }
               
               if (/\d/.test(color)) {
               colorError.textContent = 'Color cannot contain numbers';
               isValid = false;
+              
               }
              if (isNaN(size1) || size1 === '' ||parseFloat(size1)===0) {
              size1Error.textContent = 'Please Enter a valid size';
              isValid = false;
+            
               }
               if (isNaN(size2) || size2 === '' ||parseFloat(size2)===0) {
              size2Error.textContent = 'Please Enter a  size';
              isValid = false;
+           
               }
               if (isNaN(size3) || size3 === ''||parseFloat(size3)===0) {
              size3Error.textContent = 'Please Enter a  size';
              isValid = false;
+      
               }
               if (isNaN(size4) || size4 === ''||parseFloat(size4)===0) {
              size4Error.textContent = 'Please Enter a  size';
              isValid = false;
+           
               }
               
               const files = document.getElementById("image-upload").files;
@@ -314,6 +332,7 @@
                if (files.length === 0) {
               imageError.textContent = "Please select at least one image";
               isValid = false;
+             
               } else {
               const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
               for (let i = 0; i < files.length; i++) {
@@ -321,6 +340,7 @@
               imageError.textContent = "Please select only image files (JPEG, PNG, or GIF).";
               isValid = false;
               break;
+             
             }
         }
     }

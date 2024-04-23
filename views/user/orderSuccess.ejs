@@ -50,7 +50,57 @@
 
     <!-- Theme css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="/user/assets/css/demo2.css">
+        <!-- Other meta tags, stylesheets, etc. -->
 
+    <style>
+        .invoice-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.invoice {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.invoice h2 {
+    text-align: center;
+}
+
+.invoice-details,
+.invoice-table,
+.invoice-total {
+    margin-bottom: 20px;
+}
+
+.invoice-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-table table th,
+.invoice-table table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.download-button {
+    text-align: center;
+}
+
+.download-button button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    
+    
 </head>
 
 <body class="theme-color2 light ltr">
@@ -847,7 +897,7 @@
                                         <div class="cart-media">
                                             <a href="/user/wishlist.html">
                                                 <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill"></span>
+                                                <span class=""></span>
                                             </a>
                                         </div>
                                         <div class="onhover-div">
@@ -867,7 +917,7 @@
                                         </a>
                                         <div class="onhover-div">
                                             <div class="cart-menu">
-                                                <div class="cart-title">
+                                                <!-- <div class="cart-title">
                                                     <h6>
                                                         <i data-feather="shopping-bag"></i>
                                                         <span class="label label-theme rounded-pill">5</span>
@@ -875,7 +925,7 @@
                                                     <span class="d-md-none d-block">
                                                         <i class="fas fa-arrow-right back-cart"></i>
                                                     </span>
-                                                </div>
+                                                </div> -->
                                                 <!-- <ul class="custom-scroll">
                                                     <li>
                                                         <div class="media">
@@ -1070,7 +1120,7 @@
                         <div class="success-contain">
                             <h4>Order Success</h4>
                             <h5 class="font-light">Payment Is Successfully Processsed And Your Order Is On The Way</h5>
-                            <h6 class="font-light">Transaction ID:267676GHERT105467</h6>
+                            <!-- <h6 class="font-light">Transaction ID:267676GHERT105467</h6> -->
                         </div>
                     </div>
                 </div>
@@ -1078,6 +1128,64 @@
         </div>
     </section>
     <!-- Order Success Section End -->
+
+    <!--Invoice Section start-->
+
+    <div class="invoice-container" style="margin-left: 1100px;">
+        <div  class="invoice">
+            <h2>Invoice</h2>
+            <!-- Invoice details -->
+            <div class="invoice-details">
+                <ul>
+                    <div class="invoice-number">
+                        <input type="hidden" value="<%=orders._id %>" name="" id="orderId">
+                        <label for="invoice-number">Invoice Number:</label>
+                        <input type="text" id="invoice-number" readonly>
+                    </div>
+                    <li>Invoice Date: <%= orders.orderedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) %></li>
+                    <li>Customer Name: <%= orders.addressId.name %></li>
+                    <!-- Add more invoice details as needed -->
+                </ul>
+            </div>
+            <!-- Invoice table -->
+            <div class="invoice-table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% orders.products.forEach((product) => { %>
+                        <tr>
+                            <td><%= product.productId.name %></td>
+                            <td><%= product.quantity %></td>
+                            <% if (orders.discountTotal) { %>
+                            <td><%= orders.discountTotal %></td>
+                            <% } else { %>
+                            <td><%= product.total %></td>
+                            <% } %>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Invoice total -->
+            <p>Total: <% if (orders.discountTotal) { %>₹ <%= orders.discountTotal %> <% } else { %>₹ <%= total %> <% } %></p>
+                <!-- Your invoice total here -->
+            </div>
+            <!-- Download button -->
+            <div class="download-button">
+                <button onclick="downloadInvoice()">Download PDF</button>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <!-- Invoice Section End-->
 
     <!-- Oder Details Section Start -->
     <section class="section-b-space cart-section order-details-table">
@@ -1104,16 +1212,23 @@
                                     </td>
                                     <td>
                                         <p>Product Name</p>
-                                        <h5><%=product.productId.name %></h5>
+                                        <h5><%=product.productId.name %> ,  <%= product.size %></h5>
                                     </td>
                                     <td>
                                         <p>Quantity</p>
                                         <h5><%= product.quantity %></h5>
                                     </td>
+                                 <%if(orders.discountTotal) { %>
                                     <td>
                                         <p>Price</p>
-                                        <h5><%= product.total %></h5>
+                                        <h5><%= orders.discountTotal %></h5>
                                     </td>
+                                    <% }else{ %>
+                                        <td>
+                                            <p>Price</p>
+                                            <h5><%= product.total %></h5>
+                                        </td>
+                                    <%  }%>
                                 </tr>
 
                                 <% }) %>
@@ -1151,9 +1266,17 @@
                                     <td colspan="3">
                                         <h4 class="theme-color fw-bold">Total Price :</h4>
                                     </td>
+                                    <%if(orders.discountTotal) {%>
+                                  
                                     <td>
+                                        <h4 class="theme-color fw-bold"><%= orders.discountTotal%></h4>
+                                    </td>
+                                    <% }else{%>
+                                        <td>
                                         <h4 class="theme-color fw-bold"><%= total %></h4>
                                     </td>
+
+                                    <%}%>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1166,8 +1289,14 @@
                                 <h4>summery</h4>
                                 <ul class="order-details">
                                     <li>Order ID: 5563853658932</li>
-                                    <li><%=orders.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%> </li>
+                                    <li><%=orders.orderedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%> </li>
+                                   <% if(orders.discountTotal){%>
+                              <li>₹ <%= orders.discountTotal %></li>
+                                   <%}else{%>
                                     <li>₹ <%= total %></li>
+                                  <% } %>
+                                   
+                                   
                                 </ul>
                             </div>
 
@@ -1182,7 +1311,9 @@
                                     <li>India ,<%= orders.addressId.state %> <%= orders.addressId.pin %>, <%= orders.addressId.mobile %></li>
                                 </ul>
                             </div>
-                           
+                           <% if(orders.isPayment == false){%>
+                                      <h1>aslkfjdl;asdjfkj</h1>
+                          <% } %>
                             <div class="col-12">
                                 <div class="payment-mode">
                                     <h4>payment method</h4>
@@ -1193,7 +1324,7 @@
 
                             <div class="col-md-12">
                                 <div class="delivery-sec">
-                                    <% const deliveryDate = new Date(orders.createdAt); %>
+                                    <% const deliveryDate = new Date(orders.orderedDate); %>
                                      <% deliveryDate.setDate(deliveryDate.getDate() + 7); %>
 
                                  <span>Delivery Date: 
@@ -1408,7 +1539,7 @@
     <!-- footer end -->
 
     <!-- theme Setting Start -->
-    <div class="theme-setting">
+    <!-- <div class="theme-setting">
         <ul>
             <li>
                 <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>
@@ -1421,7 +1552,7 @@
                     title="Choose your color">
             </li>
         </ul>
-    </div>
+    </div> -->
     <!-- theme Setting End -->
 
     <!-- tap to top Section Start -->
@@ -1460,6 +1591,32 @@
     <!-- script js -->
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
+    <script>
+
+function generateInvoiceNumber(orderId) {
+    // Logic to generate invoice number (you can customize this)
+    return "12" + orderId; // Example: INV-123456
+    console.log(orderId);
+}
+
+// Function to update invoice number input field
+function updateInvoiceNumber(orderId) {
+    const invoiceNumberInput = document.getElementById("invoice-number");
+    const invoiceNumber = generateInvoiceNumber(orderId);
+    invoiceNumberInput.value = invoiceNumber;
+}
+  
+        function downloadInvoice() {
+    const invoiceContainer = document.querySelector('.invoice');
+    html2pdf().from(invoiceContainer).save();
+}
+
+
+const order = document.getElementById('orderId').value
+const orderId = order.substring(0, 3);
+updateInvoiceNumber(orderId);
+
+    </script>
 </body>
 
 

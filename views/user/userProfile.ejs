@@ -66,6 +66,7 @@
                         <div class="main-menu">
                             <div class="menu-left">
                                 <div class="brand-logo">
+
                                     <a href="/home">
                                         <svg class="svg-icon">
                                             <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
@@ -304,7 +305,7 @@
                                                     </span>
                                                 </div>
                                             </li>
-                                            <li class="mega-menu dropdown home-menu">
+                                            <li class="mega-menu  home-menu">
                                                 <a href="/home" class="nav-link menu-title">home</a>
                                                 <!-- <div class="mega-menu-container menu-content"> -->
                                                     <div class="container-fluid">
@@ -422,14 +423,14 @@
                                                                     <div class="megamenu-image-title pb-0">
                                                                         <h5 class="mb-0">Vegetables Demo</h5>
                                                                     </div>
-                                                                </div>
+                                                                </div>shop
                                                             </div> -->
                                                         <!-- </div> -->
                                                     </div>
                                                 </div>
                                             </li>
                                             <li >
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">shop</a>
+                                                <a href="/shop" class="nav-link menu-title">shop</a>
                                                 <!-- <ul class="nav-submenu menu-content">
                                                     <li>
                                                         <a href="/user/shop-canvas-filter.html">Shop Canvas Filter</a>
@@ -465,10 +466,10 @@
                                                     </li>
                                                 </ul> -->
                                             </li>
-                                            <li class="dropdown">
-                                                <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a>
+                                            <li class="">
+                                                <!-- <a href="/user/javascript:void(0)" class="nav-link menu-title">product</a> -->
                                                 <ul class="nav-submenu menu-content">
-                                                    <li>
+                                                    <!-- <li>
                                                         <a href="/user/product-4-image.html">Product 4 Images</a>
                                                     </li>
                                                     <li>
@@ -499,7 +500,7 @@
                                                     <li>
                                                         <a href="/user/product-video-thumbnail.html">Product Video
                                                             Thumbnail</a>
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
                                             </li>
                                             <li class="mega-menu dropdown ratio_40">
@@ -826,27 +827,28 @@
                                     </li>
                                     <li class="onhover-dropdown">
                                         <div class="cart-media">
-                                            <i data-feather="user"></i>
+                                            <!-- <i data-feather="user"></i> -->
+                                            <a href="/logout" class="d-block">Logout</a>
                                         </div>
                                         <div class="onhover-div profile-dropdown">
-                                            <ul>
+                                            <!-- <ul>
                                                 <li>
                                                     <a href="/user/log-in.html" class="d-block">Login</a>
                                                 </li>
                                                 <li>
                                                     <a href="/user/sign-up.html" class="d-block">Register</a>
                                                 </li>
-                                            </ul>
+                                            </ul> -->
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
-                                            <a href="/user/wishlist.html">
+                                            <a href="/show-wishlist">
                                                 <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill">5</span>
+                                                <!-- <span class="label label-theme rounded-pill">5</span> -->
                                             </a>
                                         </div>
-                                        <div class="onhover-div">
+                                        <!-- <div class="onhover-div">
                                             <a href="/user/wishlist.html">
                                                 <div class="wislist-empty">
                                                     <i class="fab fa-gratipay"></i>
@@ -854,25 +856,25 @@
                                                     <p class="font-light mb-0">explore more and shortlist items.</p>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </li>
                                     <li class="onhover-dropdown cart-dropdown">
-                                        <button type="button" class="btn btn-solid-default btn-spacing">
+                                        <button type="button" class="btn btn-solid-default btn-spacing" onclick="location.href='/cart'">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
-                                            <span>$5686.25</span>
+                                            <span></span>
                                         </button>
                                         <div class="onhover-div">
                                             <div class="cart-menu">
                                                 <div class="cart-title">
                                                     <h6>
                                                         <i data-feather="shopping-bag"></i>
-                                                        <span class="label label-theme rounded-pill">5</span>
+                                                        <!-- <span class="label label-theme rounded-pill"></span> -->
                                                     </h6>
                                                     <span class="d-md-none d-block">
                                                         <i class="fas fa-arrow-right back-cart"></i>
                                                     </span>
                                                 </div>
-                                                <ul class="custom-scroll">
+                                                <!-- <ul class="custom-scroll">
                                                     <li>
                                                         <div class="media">
                                                             <img src="/user/assets/images/fashion/product/front/1.jpg"
@@ -913,16 +915,16 @@
                                                             </button>
                                                         </div>
                                                     </li>
-                                                </ul>
+                                                </ul> -->
                                             </div>
-                                            <div class="cart-btn">
+                                            <!-- <div class="cart-btn">
                                                 <h6 class="cart-total"><span class="font-light">Total:</span> $
                                                     542.00</h6>
                                                 <button onclick="location.href ='cart.html';" type="button"
                                                     class="btn btn-solid-default btn-block">
                                                     Proceed to payment
                                                 </button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </li>
                                 </ul>
@@ -938,61 +940,7 @@
                                     </span>
                                 </div>
                                 <div class="search-suggestion">
-                                    <ul class="custom-scroll">
-                                        <li>
-                                            <div class="product-cart media">
-                                                <img src="/user/assets/images/electronics/product/1.jpg"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                                <div class="media-body">
-                                                    <a href="/user/javascript:void(0)">
-                                                        <h6 class="mb-1">New Smart Watch 4 ERT2</h6>
-                                                    </a>
-                                                    <ul class="rating p-0">
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star"></i>
-                                                        </li>
-                                                    </ul>
-                                                    <p class="mb-0 mt-1">$28.00</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="product-cart media">
-                                                <img src="/user/assets/images/electronics/product/5.jpg"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                                <div class="media-body">
-                                                    <a href="/user/javascript:void(0)">
-                                                        <h6 class="mb-1">Powermatic 900 W Juicer</h6>
-                                                    </a>
-                                                    <ul class="rating m-0 p-0">
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                    </ul>
+                                   
                                                     <p class="mb-0 mt-1">$35.00</p>
                                                 </div>
                                             </div>
@@ -1110,7 +1058,7 @@
 
                         <li class="nav-item mb-2">
                             <button class="nav-link font-light" id="4-tab" data-bs-toggle="tab" data-bs-target="#pay"
-                                type="button"><i class="fas fa-angle-right"></i>Payment</button>
+                                type="button"><i class="fas fa-angle-right"></i>Wallet</button>
                         </li>
 
                         <li class="nav-item mb-2">
@@ -1304,42 +1252,43 @@
                                                 <p class="fs-6 m-0"><%= product.productId.name %> </p>
                                                 
                                             </td>
+                                            <% if(order.isPayment == false){%>
                                             <td>
-                                                <p class="success-button btn btn-sm"><%= order.status%></p>
+                                                <p class="success-button btn btn-sm">Payment Pending</p>
                                             </td>
-                                            <td>
-                                                <p class="theme-color fs-6"><%= product.productId.disprice%></p>
-                                            </td>
+                                            <%} else{%>
+                                                <td>
+                                                    <p class="success-button btn btn-sm"><%= order.status%></p>
+                                                </td>
+                                                <%}%>
+
+                                            <%if(orders.discountTotal) { %>
+                                                <td>
+                                                    <p>Price</p>
+                                                    <h5 id="amount" data-id="<%=order._id %>" ><%= orders.discountTotal %></h5>
+                                                </td>
+                                                <% }else{ %>
+                                                    <td>
+                                                        <p>Price</p>    
+                                                        <h5 id="amount" data-id="<%=orders._id %>"><%= product.total %></h5>
+                                                    </td>
+                                                <%  }%>
                                             
+            
                                             <td>
                                                 <a href="/user/javascript:void(0)">
                                                     <%= product.size %>
                                                 </a>
                                             </td>
                                            
-                                              
+                                              <% if(order.isPayment == false){%>
+                                                   <td><button class="btn btn-solid-default" type="submit"  data-order-id="<%=order._id %>"> Retry Payment</button></td>
+                                              <%} else{%>
                                             <td>
-                                              <% if  (order.isOrder == true){%>
-
-                                            
-                                                <a href="delete-order?id=<%=order._id%>" onclick="confirmDelete('<%=order._id%>')">
-                                            <span class="badge alert-success">
-                                                                                           
-                                                    <p>Cancel Order</p>
-                                                                                              
-                                            </span>
-                                        </a>
-                                      <% } else { %>
-                                  
-                                            <a href="/delete-order?id=<%=order._id%>">
-                                            <!-- <span class="badge alert-danger"> -->
-                                                                                           
-                                                    <!-- <p></p> -->
-                                                                                              
-                                            </span>
-                                           </a>
-                                           <% } %>
+                                                <a href="/view-order?id=<%=order._id %>" class="btn btn-solid-default btn-sm fw-bold">View
+                                                    </a>
                                         </td>
+                                        <%}%>
                                         </tr>
                                         <% }) %>
                                         <%  }) %>
@@ -1356,143 +1305,91 @@
                                 <h3>My Wishlish</h3>
                             </div>
                             <div class="table-responsive">
-                                <table class="table cart-table">
+                                <table class="table cart-table" id="wishlist-table">
                                     <thead>
                                         <tr class="table-head">
                                             <th scope="col">image</th>
-                                            <th scope="col">Order Id</th>
-                                            <th scope="col">Product Details</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">availability</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <a href="/user/product-left-sidebar.html">
-                                                    <img src="/user/assets/images/fashion/product/front/1.jpg"
-                                                        class="blur-up lazyload" alt="">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <p class="m-0">#125021</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-6 m-0">Outwear & Coats</p>
-                                            </td>
-                                            <td>
-                                                <p class="theme-color fs-6">$49.54</p>
-                                            </td>
-                                            <td>
-                                                <a href="/user/cart.html" class="btn btn-solid-default btn-sm fw-bold">Move to
-                                                    Cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="/user/product-left-sidebar.html">
-                                                    <img src="/user/assets/images/fashion/product/front/2.jpg"
-                                                        class="blur-up lazyload" alt="">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <p class="m-0">#125367</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-6 m-0">Outwear & Coats</p>
-                                            </td>
-                                            <td>
-                                                <p class="theme-color fs-6">$49.54</p>
-                                            </td>
-                                            <td>
-                                                <a href="/user/cart.html" class="btn btn-solid-default btn-sm fw-bold">Move to
-                                                    Cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="/user/product-left-sidebar.html">
-                                                    <img src="/user/assets/images/fashion/product/front/3.jpg"
-                                                        class="blur-up lazyload" alt="">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <p class="m-0">#125948</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-6 m-0">Men's Sweatshirt</p>
-                                            </td>
-                                            <td>
-                                                <p class="theme-color fs-6">$49.54</p>
-                                            </td>
-                                            <td>
-                                                <a href="/user/cart.html" class="btn btn-solid-default btn-sm fw-bold">Move to
-                                                    Cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="/user/product-left-sidebar.html">
-                                                    <img src="/user/assets/images/fashion/product/front/4.jpg"
-                                                        class="blur-up lazyload" alt="">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <p class="m-0">#127569</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-6 m-0">Men's Hoodie t-shirt</p>
-                                            </td>
-                                            <td>
-                                                <p class="theme-color fs-6">$49.54</p>
-                                            </td>
-                                            <td>
-                                                <a href="/user/cart.html" class="btn btn-solid-default btn-sm fw-bold">Move to
-                                                    Cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="/user/product-left-sidebar.html">
-                                                    <img src="/user/assets/images/fashion/product/front/5.jpg"
-                                                        class="blur-up lazyload" alt="">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <p class="m-0">#127569</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-6 m-0">Men's Hoodie t-shirt</p>
-                                            </td>
-                                            <td>
-                                                <p class="theme-color fs-6">$49.54</p>
-                                            </td>
-                                            <td>
-                                                <a href="/user/cart.html" class="btn btn-solid-default btn-sm fw-bold">Move to
-                                                    Cart</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="/user/product-left-sidebar.html">
-                                                    <img src="/user/assets/images/fashion/product/front/6.jpg"
-                                                        class="blur-up lazyload" alt="">
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <p class="m-0">#125021</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-6 m-0">Men's Sweatshirt</p>
-                                            </td>
-                                            <td>
-                                                <p class="theme-color fs-6">$49.54</p>
-                                            </td>
-                                            <td>
-                                                <a href="/user/cart.html" class="btn btn-solid-default btn-sm fw-bold">Move to
-                                                    Cart</a>
-                                            </td>
-                                        </tr>
+
+                                        <% wishlistData.forEach(wishlist => { %>
+                                
+                            
+                                            <tr>
+                                                <td>
+                                                    <a href="/product-profile?id=<%=wishlist.productId._id%>">
+                                                        <img src="<%=wishlist.productId.image[0] %>" class=" blur-up lazyload"
+                                                            alt="">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="/user/product-left-sidebar.html" class="font-light"><%=wishlist.productId.name%></a>
+                                                    <div class="mobile-cart-content row">
+                                                        <% if(wishlist.productId.stock >=1){%>
+                
+                                                      
+                                                        <div class="col">
+                                                            <p>In Stock</p>
+                                                        </div>
+                                                        <%  } else{%>
+                                                            <div class="col">
+                                                                <p>Out of Stock</p>
+                                                            </div>
+                
+                                                        <% } %>
+                                                        <div class="col">
+                                                            <p class="fw-bold">$48.23</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <h2 class="td-color">
+                                                                <a href="/wishlist-remove?id=<%= wishlist.productId._id%>" class="icon">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                            </h2>
+                                                            <h2 class="td-color">
+                                                                <a href="/product-profile?id=<%=wishlist.productId._id%>" class="icon">
+                                                                    <i class="fas fa-shopping-cart"></i>
+                                                                </a>
+                                                            </h2>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="fw-bold"><%= wishlist.productId.disprice %></p>
+                                                </td>
+                                                <td>
+                                                    <% if(wishlist.productId.stock >=1){%>
+                
+                                                      
+                                                        <div class="col">
+                                                            <p>In Stock</p>
+                                                        </div>
+                                                        <%  } else{%>
+                                                            <div class="col">
+                                                                <p>Out of Stock</p>
+                                                            </div>
+                
+                                                        <% } %>
+                                                </td>
+                                                <td>
+                
+                                                    <a href="/wishlist-remove?id=<%= wishlist.productId._id%>" class="icon">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>
+                                                    <a href="/product-profile?id=<%=wishlist.productId._id%>" class="icon">
+                                                        <i class="fas fa-shopping-cart"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                
+                                            <%})  %>
+                                     
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -1561,156 +1458,156 @@
 
                         <div class="tab-pane fade dashboard" id="pay">
                             <div class="box-head">
-                                <h3>Card & Payment</h3>
-                                <button class="btn btn-solid-default btn-sm fw-bold ms-auto" data-bs-toggle="modal"
-                                    data-bs-target="#addPayment"><i class="fas fa-plus"></i>
-                                    Add New Card</button>
+                                <h3>Wallet Details</h3>
+                                <button class="btn btn-solid-" data-bs-toggle="modal"
+                                    data-bs-target="#addPayment"><i class=""></i>
+                                    </button>
                             </div>
 
+                           
+<br>                       <div><h3>Your refferal code is : <%=user[0].referal%> </h3></div><br>
+                            <h2>Wallet Balance :₹ <%=totalAmount%> </h2> 
+                            <br>
+            
+
+                           <table class="table table-hover" id="my-table">
+                            <thead>
+                                <tr>
+                                    <th>#ID</th>
+                                 
+                                    <th scope="col">Purpose</th>
+                                    
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                           <% if(wallets){%>
+                            <%wallets.details.forEach((wallet,index)=>{%>
+
+                              
+<tr>
+    <td><%= index+1%></td>
+    
+    <td><%=wallet.transactionType%></template></td>
+
+  
+    
+    <td><span id="order-id"  class="badge rounded-pill alert-warning"><%=wallet.method%></span></td>
+
+    <td><%=wallet.amount%></template></td>
+    <td><span id="order-id" class="badge rounded-pill alert-success"><%= wallet.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) %>
+</span></td>                             
+</tbody>
+<%})%>
+                           <% }else{%>
+
+                           
+
+                              
+                                <tr>
+                                    <td></td>
+                                    
+                                    <td></template></td>
+
+                                  
+                                    
+                                    <td><span id="order-id"  class="badge rounded-pill alert-warning"></span></td>
+                                
+                                    <td></template></td>
+                                    <td><span id="order-id" class="badge rounded-pill alert-success">   
+ </span></td>                             
+                            </tbody>
+                          
+                            <%}%>
+                        </table>
+                           
+                            
+                             
                             <div class="card-details-section">
                                 <div class="row g-4">
                                     <div class="col-lg-4 col-sm-6">
-                                        <div class="payment-card-detail">
+                                        
+                                        <div class="">
                                             <div class="card-details">
-                                                <div class="card-number">
-                                                    <h4>XXXX - XXXX - XXXX - 2548</h4>
-                                                </div>
+                                                <div class="">
+                                                 
+                                                 </div>
 
                                                 <div class="valid-detail">
-                                                    <div class="title">
-                                                        <span>valid</span>
-                                                        <span>thru</span>
-                                                    </div>
+                                                  
                                                     <div class="date">
-                                                        <h3>12/23</h3>
+                                                     
                                                     </div>
                                                     <div class="primary">
-                                                        <span class="badge bg-pill badge-light">primary</span>
+                                                     
                                                     </div>
+                                                </div>
+
+                                                <div class="">
+                                                    <div class="name">
+                                                 
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+
+                                       
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-4 col-sm-6">
+                                        <div class="">
+                                            <div class="">
+                                               
+
+                                                <div class="valid-detail">
+                                                 
+                                               
                                                 </div>
 
                                                 <div class="name-detail">
-                                                    <div class="name">
-                                                        <h5>mark jecno</h5>
-                                                    </div>
-                                                    <div class="card-img">
-                                                        <img src="/user/assets/images/payment-icon/1.jpg"
-                                                            class="img-fluid blur-up lazyloaded" alt="">
-                                                    </div>
+                                              
                                                 </div>
                                             </div>
 
-                                            <div class="edit-card">
-                                                <a data-bs-toggle="modal" data-bs-target="#addPayment"
-                                                    href="/user/javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                <a href="/user/javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                    delete</a>
-                                            </div>
+                                     
                                         </div>
 
-                                        <div class="edit-card-mobile">
-                                            <a data-bs-toggle="modal" data-bs-target="#addPayment"
-                                                href="/user/javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                            <a href="/user/javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                delete</a>
-                                        </div>
+                                    
                                     </div>
 
                                     <div class="col-lg-4 col-sm-6">
                                         <div class="payment-card-detail">
-                                            <div class="card-details card-visa">
-                                                <div class="card-number">
-                                                    <h4>XXXX - XXXX - XXXX - 2548</h4>
-                                                </div>
+                                            <div class="">
+                                             
 
                                                 <div class="valid-detail">
-                                                    <div class="title">
-                                                        <span>valid</span>
-                                                        <span>thru</span>
-                                                    </div>
-                                                    <div class="date">
-                                                        <h3>12/23</h3>
-                                                    </div>
-                                                    <div class="primary">
-                                                        <span class="badge bg-pill badge-light">primary</span>
-                                                    </div>
+                                               
+                                                   
+                                                
                                                 </div>
 
-                                                <div class="name-detail">
-                                                    <div class="name">
-                                                        <h5>mark jecno</h5>
-                                                    </div>
-                                                    <div class="card-img">
-                                                        <img src="/user/assets/images/payment-icon/2.jpg"
-                                                            class="img-fluid blur-up lazyloaded" alt="">
-                                                    </div>
+                                                <div class="">
+                                          
+                                                  
                                                 </div>
                                             </div>
 
-                                            <div class="edit-card">
-                                                <a data-bs-toggle="modal" data-bs-target="#addPayment"
-                                                    href="/user/javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                <a href="/user/javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                    delete</a>
-                                            </div>
+                                       
                                         </div>
 
-                                        <div class="edit-card-mobile">
-                                            <a data-bs-toggle="modal" data-bs-target="#addPayment"
-                                                href="/user/javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                            <a href="/user/javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                delete</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="payment-card-detail">
-                                            <div class="card-details dabit-card">
-                                                <div class="card-number">
-                                                    <h4>XXXX - XXXX - XXXX - 2548</h4>
-                                                </div>
-
-                                                <div class="valid-detail">
-                                                    <div class="title">
-                                                        <span>valid</span>
-                                                        <span>thru</span>
-                                                    </div>
-                                                    <div class="date">
-                                                        <h3>12/23</h3>
-                                                    </div>
-                                                    <div class="primary">
-                                                        <span class="badge bg-pill badge-light">primary</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="name-detail">
-                                                    <div class="name">
-                                                        <h5>mark jecno</h5>
-                                                    </div>
-                                                    <div class="card-img">
-                                                        <img src="/user/assets/images/payment-icon/3.jpg"
-                                                            class="img-fluid blur-up lazyloaded" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="edit-card">
-                                                <a data-bs-toggle="modal" data-bs-target="#addPayment"
-                                                    href="/user/javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                                <a href="/user/javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                    delete</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="edit-card-mobile">
-                                            <a data-bs-toggle="modal" data-bs-target="#addPayment"
-                                                href="/user/javascript:void(0)"><i class="far fa-edit"></i> edit</a>
-                                            <a href="/user/javascript:void(0)"><i class="far fa-minus-square"></i>
-                                                delete</a>
-                                        </div>
+                                   
                                     </div>
                                 </div>
                             </div>
+
+
+                            
                         </div>
 
                         <div class="tab-pane fade dashboard-profile dashboard" id="profile">
@@ -1976,23 +1873,7 @@
                                 <h3>New Categories</h3>
                             </div>
                             <div class="footer-content">
-                                <ul>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Latest Shoes</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Branded Jeans</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">New Jackets</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Colorfull Hoodies</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Shiner Goggles</a>
-                                    </li>
-                                </ul>
+                                
                             </div>
                         </div>
                     </div>
@@ -2353,6 +2234,14 @@
     <script src="/user/assets/js/script.js"></script>
     <!-- SweetAlert JavaScript -->
 // <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/admin/admin-assets/js/main.js" type="text/javascript"></script>
+    <script>new DataTable('#my-table', {
+        pagingType: 'simple_numbers'
+    });</script>
+    <script>new DataTable('#wishlist-table', {
+        pagingType: 'simple_numbers'
+    });</script>
      <script> 
    const form = document.getElementById("address");
    form.addEventListener("submit", async (event) => {
@@ -2432,7 +2321,7 @@ const edit_modal = document.getElementById("editModal")
  const button = event.relatedTarget;
  const address = button.getAttribute("data-custom-data")
  const addressObj = JSON.parse(address)   
-   console.log(addressObj);                                                                                                
+ console.log(addressObj);                                                                                                
 
     document.getElementById("edit-name").value = addressObj.name
     document.getElementById("edit-state").value = addressObj.state
@@ -2478,7 +2367,7 @@ formEdit.addEventListener("submit",async(event)=>{
     const data = {name,state,houseName,zip,mobile,id}
     try {
         const response = await fetch("/add-edit",{
-            method:"POST",
+            method:"PUT",
             headers:
               {
                 "Content-Type":"application/json"
@@ -2561,7 +2450,7 @@ profileModal.addEventListener("show.bs.modal",function(event){
      const data = {name,email,mobile,password,id}
     try {
         const response = await fetch("/userProfile-edit",{
-            method:"POST",
+            method:"PUT",
             headers:
               {
                 "Content-Type":"application/json"
@@ -2600,9 +2489,80 @@ function confirmDelete(orderId){
     }
 }
 
+const retryButtons = document.querySelectorAll(".btn.btn-solid-default");
+
+// Loop through each button and attach the event listener
+retryButtons.forEach(function(button) {
+    button.addEventListener("click", async function(event) {
+        // Inside this function, you can access each button individually using "button"
+        let total = document.getElementById('amount').textContent;
+        let orderId = button.getAttribute("data-order-id");
+        console.log("orderId", orderId);
+        total = parseInt(total);
+        console.log("total", total);
+
+        // Your fetch and Razorpay code here...
+
+        const response = await fetch('/online-insert', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ total: total })
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log("Response Data:", responseData);
+            if (responseData) {
+                // Initialize Razorpay options
+                var options = {
+                    "key": "rzp_test_5gTCwMblhgDXuL",
+                    "amount": responseData.order.amount, // Amount is in currency subunits
+                    "currency": "INR",
+                    "name": "Voxo",
+                    "description": "Test Transaction",
+                    "image": "https://example.com/your_logo",
+                    "order_id": responseData.order.id,
+                    "handler": async function (response) {
+                        console.log("Razorpay Payment Response:", response);
+                        if (response.razorpay_payment_id) {
+                            // Payment successful
+                            console.log("helloooo");
+                            window.location.href = '/order-success?orderId=' + orderId;
+                        } else {
+                            // Payment failed
+                            window.location.href = "/failure";
+                        }
+                    },
+                    "prefill": {
+                        "name": "Gaurav Kumar",
+                        "email": "gaurav.kumar@example.com",
+                        "contact": "9000090000"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+
+                // Create and open Razorpay object
+                var razorpayObject = new Razorpay(options);
+                razorpayObject.on("payment.failed", async function (response) {
+                window.location.href = '/order-unSuccess?orderId=' +orderId
+});
+                razorpayObject.open();
+            }
+        }
+    });
+});
+
 
 
      </script>
+     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 
 

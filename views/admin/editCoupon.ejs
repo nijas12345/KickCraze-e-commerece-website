@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Coupon</title>
+        <link rel="stylesheet" href="/admin/admin-assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                padding: 20px;
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            form {
+                max-width: 400px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            input[type="text"],
+            input[type="date"],
+            input[type="file"],
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            input[type="submit"] {
+                background-color: #007bff;
+                color: #ffffff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+            .error{
+            color: red;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>Edit Coupon</h1>
+         
+        
+                
+                    <div class="">                           
+                        <form id="form" action="/admin/edit-coupon" method="put">
+                        
+                            <div class="mb-4">
+                                <div  class="spin error" id="code-error"></div>
+                                <% if(message!==undefined){%>
+                                    <div style="color: red;"><%= message %></div>
+                                <%} %>
+                                <label for="product_name" class="form-label">CouponCode</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="code" name="code" value="<%=coupon.couponCode%>">
+                            </div>
+                            <div class="mb-4">
+                                <div  class="spin error" id="discount-error"></div>
+                                <label for="product_name" class="form-label">Coupon Discount (percentage)</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="discount" name="discount" value="<%=coupon.couponDiscount %>">
+                            </div>
+                        
+                            
+                            
+                            <!-- <div class="mb-4">
+                                <label class="form-label">Parent</label>
+                                <select class="form-select">
+                                    <option>Clothes</option>
+                                    <option>T-Shirts</option>
+                                </select>
+                            </div> -->
+                            <div class="mb-4">
+                                <div  class="spin error" id="max-error"></div>
+                                <label for="product_slug" class="form-label">Max Amount</label>
+                                <input type="text" placeholder="Type here" class="form-control" name="max" id="max" value="<%=coupon.maximumAmount%>">
+                                
+                            </div> 
+                            <div class="mb-4">
+                                <div  class="spin error" id="min-error"></div>
+                                <label for="product_slug" class="form-label">Min Amount</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="min" name="min" value="<%= coupon.minimumAmount %>">
+                            </div> 
+                            <div class="mb-4">
+                                <div  class="spin error" id="expiry-error"></div>
+                                <label for="product_slug" class="form-label">Coupon Expiry</label>
+                                <input type="text" placeholder="Type here" class="form-control" id="exp" name="exp" value="<%= coupon.couponExpiry.getDate().toString().padStart(2, '0') %>/<%= (coupon.couponExpiry.getMonth() + 1).toString().padStart(2, '0') %>/<%= coupon.couponExpiry.getFullYear() %>
+
+                                ">
+                            </div> 
+
+                            <div class="mb-4">
+                                <div  class="spin error" id="description-error"></div>
+                                <div id="description-error" style="color: red;"></div>
+                                <label class="form-label">Description</label>
+                                <textarea placeholder="Type here" class="form-control" name="description" id="description" ><%=coupon.couponDescription %></textarea>
+                            </div>
+                             <input type="hidden" name="id" id="id" value="<%=coupon._id%>">
+                            <div class="d-grid">
+                                <button class="btn btn-primary" type="submit" id="submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                  
+                                </thead>    
+                                <tbody>
+                                  
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- .col// -->
+           
+           
+
+    
+        <!-- Include necessary scripts -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+        <script>
+           
+        document.getElementById("submit-btn").addEventListener("click",function(event){
+        event.preventDefault()
+        const description = document.getElementById("description").value
+        const code = document.getElementById("code").value
+        const maxAmount = document.getElementById("max").value
+        const minAmount = document.getElementById('min').value
+        const expiry = document.getElementById('exp').value
+        const CouponDiscount = document.getElementById('discount').value
+        const id = document.getElementById('id').value
+        console.log(expiry);
+        console.log(CouponDiscount);
+        console.log(description);
+        console.log(code);
+        console.log(maxAmount);
+        console.log(minAmount);
+        
+        const codeError = document.getElementById("code-error")
+        const descriptionError = document.getElementById("description-error")
+        const maxError = document.getElementById('max-error')
+        const minError = document.getElementById('min-error')
+        expiryError = document.getElementById('expiry-error')
+        discountError = document.getElementById('discount-error')
+
+        codeError.textContent = ""
+        descriptionError.textContent = ""
+        maxError.textContent = ""
+        minError.textContent = ""
+        expiryError.textContent = ""
+        CouponDiscount.textContent = ""
+        expiryError.textContent = ""
+
+        let isValid = true
+        if(code === ""){
+            codeError.textContent = "Code is required"
+            isValid = false
+            return
+        }
+        else if (code.length !== 10) {
+        codeError.textContent = "Code must be exactly 10 characters";
+        isValid = false;
+        return
+        }
+        
+        if (CouponDiscount < 0 || CouponDiscount >= 100) {
+         discountError.textContent = 'Discount should be a positive value less than 100%';
+         isValid = false;
+         return; 
+        } 
+
+        if (!(/^\d{1,2}(\.\d{1,2})?$/.test(CouponDiscount))) {
+        discountError.textContent = 'Discount should be in two digits format';
+        isValid = false;
+         return;
+         }
+        
+        if (isNaN(maxAmount) || maxAmount === '' || parseFloat(maxAmount) === 0) {
+         maxError.textContent = 'Please enter a valid Max Amount';
+         isValid = false;
+         return
+         }
+         if (isNaN(minAmount) || minAmount === '' || parseFloat(minAmount) === 0) {
+         minError.textContent = 'Please enter a valid Max Amount';
+         isValid = false;
+         return
+         }
+         if(parseInt(maxAmount)<parseInt(minAmount)){
+            minError.textContent = "Maximum should be greater"
+            isValid = false 
+         }
+         const expiryDate = new Date(expiry); // Parse the expiry date string into a Date object
+        const currentDate = new Date(); // Get the current date
+
+        if (expiryDate <= currentDate) {
+        expiryError.textContent = 'Expiry date must be later than the current date';
+        isValid = false;
+        return;
+        }
+         
+
+        
+
+        if(description === ""){
+            descriptionError.textContent = "Description is required"
+            isValid = false
+            return
+        }
+
+       
+
+        if(isValid == true){
+            document.getElementById("form").submit()
+        }
+
+    })
+
+
+            
+            </script>
+            
+    </body>
+    </html>

@@ -5,6 +5,8 @@ const Address = require("../model/addressModel")
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const Order = require("../model/orderModel")
+const wishlist = require('../model/wishlistModel')
+const Wallet = require('../model/walletModel')
 
 
 
@@ -21,18 +23,47 @@ const securePassword = async (password)=>{
 
 const userProfile = async(req,res)=>{
     try {
+        
        const userId = req.id
+       console.log("user",userId);
        const address = await Address.find({userId:userId})
        const user = await User.find({_id:userId})
-       const orders = await Order.find({userId:userId}).populate("products.productId")
-       console.log(orders);
-       console.log(userId);
+       const orders = await Order.find({userId:userId}).populate("products.productId").sort({createdAt: -1})
+    //    console.log(orders);
+    //    console.log(userId);
+    //    console.log("user",user);
+        
+       const wishlistData = await wishlist.find({userId:userId}).populate("userId").populate("productId")
+       console.log("wishlistdata",wishlistData);
        
+       const wallets = await Wallet.findOne({userId:userId})
+
+       console.log("wallets",wallets);
+       let creditedAmount = 0
+       let debitedAmount = 0
+       if(wallets){
+        wallets.details.forEach((wallet)=>{
+            if(wallet.transactionType == "Credited"){
+             creditedAmount += wallet.amount 
+            }
+            else{
+              debitedAmount += wallet.amount
+            }
+  
+         })
+       }
       
-       res.render("userProfile",{addressData:address,user:user,orders:orders})
+      console.log("credited",creditedAmount);
+      console.log("debited",debitedAmount);
+       totalAmount = creditedAmount - debitedAmount
+       console.log("totalAmount",totalAmount);
+      
+       res.render("userProfile",{addressData:address,user:user,orders:orders,wishlistData:wishlistData,totalAmount:totalAmount,wallets:wallets})
         
     } catch (error) {
         console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
     }   
 }
 const addAddress = async(req,res)=>{
@@ -75,6 +106,8 @@ const addEdit = async(req,res)=>{
     }
     } catch (error) {
         console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
     }
 }
 
@@ -88,6 +121,8 @@ deleteAddres = async(req,res)=>{
       
     } catch (error) {
         console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
     }
 }
      
@@ -104,6 +139,8 @@ const editUserProfile = async (req,res)=>{
      }
     } catch (error) {
         console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
     }
 }
 

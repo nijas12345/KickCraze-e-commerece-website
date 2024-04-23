@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/Project-8');
+// mongoose.connect('mongodb://127.0.0.1:27017/Project-8');
+mongoose.connect("mongodb+srv://nijasbinabbas:gGPV60STw86bkmok@cluster0.sgvgomu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 const express = require("express");
 const app = express();
@@ -11,7 +12,7 @@ const cookieParser = require("cookie-parser");
 
 const userRoute = require("./route/userRoute");
 const adminRoute = require('./route/adminRoute');
-require("./middleware/auth")
+
 
 const nocache = require('nocache');
 const passport = require('passport');
@@ -26,28 +27,16 @@ app.use(session({
     saveUninitialized: false
 }));
 
+//for google verification
+
 app.use(passport.initialize())
 app.use(passport.session())
+
 // For cookie
 app.use(cookieParser());
 
 // For static files
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-app.get('/auth/google',
-   passport.authenticate("google",{scope:['email','profile']}))
-
-   app.get('/auth/google/callback',
-   passport.authenticate("google",{
-       successRedirect:"/verify-google",
-       failureRedirect:"/login"
-   }))
-
-
-
-
-
 
 // User route 
 app.use('/', userRoute);

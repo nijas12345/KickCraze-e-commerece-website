@@ -48,6 +48,16 @@
                         <a href="/admin/product-categories" class="active">Product Categories</a>
                     </div>
                 </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="/admin/admin-page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/order-list">Order list </a>
+                        <!-- <a href="/admin/admin-page-orders-2.html">Order list 2</a>
+                        <a href="/admin/admin-page-orders-detail.html">Order detail</a> -->
+                    </div>
+                </li>
                 <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="/admin/admin-page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Orders</span>
@@ -79,6 +89,32 @@
                         <!-- <a href="/admin/admin-page-form-product-4.html">Add product 4</a> -->
                     </div>
                 </li>
+
+                <li class="menu-item has-submenu ">
+                    <a class="menu-link" href="/admin/add-coupon"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Coupon Management</span>
+                    </a>
+                    <div class="submenu">
+                        <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
+                        <a href="/admin/add-coupon" class="active">Coupon</a>
+                        <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                    </div>
+                </li>
+                <li class="menu-item has-submenu ">
+                    <a class="menu-link" href="/admin/sales-report"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Sales Management</span>
+                    </a>
+                    <div class="submenu">
+                        <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
+                         <a href="/admin/sales-report" class="active">Sales Report</a>
+                        <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <a class="menu-link" href="/admin/category-offer"> <i class="icon material-icons md-comment"></i>
+                        <span class="text">Category Offer</span>
+                    </a>
+                </li>
                 <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="/admin/admin-page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
                         <span class="text">Transactions</span>
@@ -98,11 +134,11 @@
                         <a href="/admin/admin-page-error-404.html">Error 404</a>
                     </div>
                 </li> -->
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a class="menu-link" href="/admin/admin-page-reviews.html"> <i class="icon material-icons md-comment"></i>
                         <span class="text">Reviews</span>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li class="menu-item">
                     <a class="menu-link" href="/admin/admin-page-brands.html"> <i class="icon material-icons md-stars"></i>
                         <span class="text">Brands</span> </a>
@@ -208,10 +244,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
-                            <form action="/admin/product-categories" method="post">
+                            <form id="form" action="/admin/product-categories" method="post">
+                                <div id="name-error" style="color: red;"></div>
                                 <div class="mb-4">
                                     <label for="product_name" class="form-label">Name</label>
-                                    <input type="text" placeholder="Type here" class="form-control" id="product_name" name="name">
+                                    <input type="text" placeholder="Type here" class="form-control" id="category-name" name="name">
                                 </div>
                                 <!-- <div class="mb-4">
                                     <label for="product_slug" class="form-label">Slug</label>
@@ -225,11 +262,12 @@
                                     </select>
                                 </div> -->
                                 <div class="mb-4">
+                                    <div id="description-error" style="color: red;"></div>
                                     <label class="form-label">Description</label>
-                                    <textarea placeholder="Type here" class="form-control" name="description"></textarea>
+                                    <textarea placeholder="Type here" class="form-control" name="description" id="description"></textarea>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary">Create category</button>
+                                    <button class="btn btn-primary" type="button" id="submit-btn">Create category</button>
                                 </div>
                             </form>
                         </div>
@@ -329,6 +367,40 @@
             return;
         }
     }  
+    document.getElementById("submit-btn").addEventListener("click",function(){
+        const description = document.getElementById("description").value
+        console.log(description);
+        const name = document.getElementById("category-name").value
+        console.log(name);
+        const nameError = document.getElementById("name-error")
+        const descriptionError = document.getElementById("description-error")
+
+        let isValid = true
+        if(name === ""){
+            nameError.textContent = "Name is required"
+            isValid = false
+            return
+        }
+          else if (/^\d+$/.test(name)) {
+        nameError.textContent = "Name cannot contain digits";
+        isValid = false
+        return; 
+        } else if (!/^[a-zA-Z\s]*$/.test(name)) {
+        nameError.textContent = "Name cannot contain special characters";
+        isValid = false
+        return; 
+        }
+        if(description === ""){
+            descriptionError.textContent = "Description is required"
+            isValid = false
+            return
+        }
+        if(isValid == true){
+            document.getElementById("form").submit()
+        }
+
+    })
+
     </script>
 </body>
 

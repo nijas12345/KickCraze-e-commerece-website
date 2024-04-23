@@ -102,6 +102,10 @@
                         <input type="password" name="cpass" id="compass" placeholder="Confirm Password" required>
                        
                     </div>
+                    <div class="input">
+                        <input type="refferal" name="referal" id="refer" placeholder="referal Code">
+                       
+                    </div>
                           <div class="spin error" id="compass-error"></div>
                     <div class="button login">
                         <button type="button" id="submitBtn">
@@ -202,12 +206,14 @@
     const mobile = document.getElementById('mobileno').value.trim();
     const password = document.getElementById('pass').value;
     const confirmPassword = document.getElementById('compass').value;
+    const refferal = document.getElementById('refer').value.trim()
 
     const nameError = document.getElementById('name-error');
     const emailError = document.getElementById('email-error');
     const phoneError = document.getElementById('phone-error');
     const passError = document.getElementById('pass-error');
     const compassError = document.getElementById('compass-error');
+   
 
     // Reset error messages
     nameError.textContent = '';

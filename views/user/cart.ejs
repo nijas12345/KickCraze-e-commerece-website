@@ -839,20 +839,20 @@
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
-                                            <a href="/user/wishlist.html">
+                                            <a href="/show-wishlist">
                                                 <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill">5</span>
+                                                <span class=""></span>
                                             </a>
                                         </div>
-                                        <div class="onhover-div">
-                                            <a href="/user/wishlist.html">
+                                        <!-- <div class="onhover-div">
+                                            <a href="/wishlist">
                                                 <div class="wislist-empty">
                                                     <i class="fab fa-gratipay"></i>
                                                     <h6 class="mb-1">Your wislist empty !!</h6>
                                                     <p class="font-light mb-0">explore more and shortlist items.</p>
                                                 </div>
                                             </a>
-                                        </div>
+                                        </div> -->
                                     </li>
                                     <li class="onhover-dropdown cart-dropdown">
                                         <a href="/cart" class="btn btn-solid-default btn-spacing">
@@ -1081,14 +1081,14 @@
     <section class="cart-section section-b-space">
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <!-- <div class="col-12">
                     <div class="count-down">
                         <h5>Your cart will be expired in <span class="count-timer theme-color" id="timer"></span>
                             minutes !</h5>
                         <button type="button" onclick="location.href ='checkout.html';"
                             class="btn btn-solid-default btn-sm fw-bold">Check Out</button>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-sm-12 table-responsive mt-4">
                     <table class="table cart-table">
@@ -1137,7 +1137,7 @@
                                             
                                         </div>
                                         <div class="col">
-                                            <h2><%= carts[i].productId.disprice %></h2>
+                                            <h2><%= carts[i].productId.price %></h2>
                                         </div>
                                         <div class="col">
                                             <h2 class="td-color">
@@ -1149,22 +1149,24 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h2><%= carts[i].productId.disprice %></h2>
+                                    <h2><%= carts[i].productId.price %></h2>
                                 </td>
                                 <td>
                                     <div class="qty-box">
+                                        <div id="stock-error" style="color:red"></div>
                                        <% if(carts[i].productId.stock>=1) {%>
                                         
                                         <div class="input-group">
+
                                             <input type="number" name="quantity" min="1" max="6" class="form-control input-number" id="quantity<%= i %>" 
-                                                value="<%= carts[i].quantity%>" data-product-id="<%= carts[i].productId._id %>" data-size="<%=carts[i].size %>">
+                                                value="<%= carts[i].quantity%>" data-product-id="<%= carts[i].productId._id %>" data-size="<%=carts[i].size %>" data-stock="<%=carts[i].productId.stock%>" >
                                         </div>
                                         <% }
                                         else {%>
-                                            <div class="input-group">
-                                                <input type="number" name="quantity" min="1" max="1" class="form-control input-number" id="quantity<%= i %>" 
-                                                    value="<%= carts[i].quantity%>" data-product-id="<%= carts[i].productId._id %>" data-size="<%=carts[i].size %>">
-                                            </div> 
+                                            // <div class="input-group">
+                                            //     <input type="number" name="quantity" min="1" max="1" class="form-control input-number" id="quantity<%= i %>" 
+                                            //         value="<%= carts[i].quantity%>" data-product-id="<%= carts[i].productId._id %>" data-size="<%=carts[i].size %>" data-stock="<%=carts[i].productId.stock%>">
+                                            // </div> 
                                         <% } %>
                                     </div>
                                 </td>
@@ -1176,7 +1178,7 @@
                                 <td>
                                     
                                  
-                                    <h2 class="td-color" id="total<%= i%> " data-total-id="<%= carts[i].productId._id %>" data-total-size="<%=carts[i].size %>"><%= carts[i].total %> </h2>
+                                    <h2 class="td-color" id="total<%= i%> " data-total-id="<%= carts[i].productId._id %>" data-total-size="<%=carts[i].size %>"><%= carts[i].totalPrice %> </h2>
                                 </td>
                                 <% } %>
                             </tr>
@@ -1299,7 +1301,7 @@
                         </div>
                         <div class="col-sm-5 col-7">
                             <div class="left-side-button float-start">
-                                <a href="/user/index.html" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
+                                <a href="/shop" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
                                     <i class="fas fa-arrow-left"></i> Continue Shopping</a>
                             </div>
                         </div>
@@ -1323,8 +1325,8 @@
 
                         <div class="col-lg-4 col-sm-6 ">
                             <div class="checkout-button">
-                                <a href="/checkout" class="btn btn-solid-default btn fw-bold" type="submit">
-                                    Check Out <i class="fas fa-arrow-right ms-1"></i></a>
+                                <button href="" class="btn btn-solid-default btn fw-bold" type="submit" id="checkout">
+                                    Check Out <i class="fas fa-arrow-right ms-1"></i></button>
                             </div>
                         </div>
 
@@ -1334,9 +1336,10 @@
                                     <div class="total-details">
                                         <div class="top-details">
                                             <h3></h3>
-                                            <h6 >Total MRP <span id="total-mrp"><%=totalCart %></span></h6>
-                                                <!-- <h6>Coupon Discount <span>-$25.00</span></h6>
-                                                <h6>Convenience Fee <span><del>$25.00</del></span></h6> -->
+                                            <h6 >Total MRP <span id="total-mrp"><del>₹ <%=totalPrice %></del></span></h6>
+                                                <h6> Discount  <span id="discount">₹ <%=discount%></span></h6>
+                                                <h6> Total <span id="total-price">₹ <%=totalCart%></span></h6>
+                                               
                                         </div>
                                         <div class="bottom-details">
                                             <a href="/checkout">Process Checkout</a>
@@ -1608,14 +1611,19 @@
     <script>
        const quantityInputs = document.querySelectorAll("[id^='quantity']");
        quantityInputs.forEach(input => {
-       input.addEventListener("change", async () => {
+       input.addEventListener("input", async () => {
         const quantity = input.value;
+        console.log("quantity",quantity);
         const size = input.dataset.size;
         const productId = input.dataset.productId
+        const stock = input.dataset.stock
+        console.log(size);
+        console.log(stock);
+        console.log("productId",productId);
        
        
         console.log(quantity,productId,size);
-        if(parseInt(quantity)>6){
+        if(parseInt(quantity)>5){
             alert("The maximum quantity is 6")
             return  
         }
@@ -1623,7 +1631,7 @@
         
         try {
             const response = await fetch('/update-quantity', {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -1637,7 +1645,7 @@
                 console.log("size",size,productId);
 
                 
-                const {total,quantity,totalCart} = await response.json()
+                const {total,quantity,totalCart,totalPrice,discount} = await response.json()
                 console.log(total,quantity,totalCart);
 
                 const elements = document.querySelectorAll(`[data-total-id="${productId}"][data-total-size="${size}"]`)
@@ -1646,7 +1654,9 @@
                 elements.forEach(element => {
                 element.textContent = total;
                         });
-             document.getElementById("total-mrp").textContent = totalCart
+             document.getElementById("total-mrp").textContent = totalPrice
+             document.getElementById('discount').textContent = discount
+             document.getElementById('total-price').textContent = totalCart
             }
             
             // Handle response as needed
@@ -1670,7 +1680,7 @@ deleteButtons.forEach(async function(button) {
 
         try {
             const response = await fetch("/delete-cart", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -1691,6 +1701,33 @@ deleteButtons.forEach(async function(button) {
     });
 });
 
+
+const checkout = document.getElementById('checkout').addEventListener("click",async()=>{
+    const quantityInputs = document.querySelectorAll("[id^='quantity']");
+    const stockError = document.getElementById('stock-error')
+    let isValid = true
+       quantityInputs.forEach(input => {
+       
+        const quantity = parseInt(input.value)
+        console.log("quantity",quantity);
+        const size = input.dataset.size;
+        const productId = input.dataset.productId
+        const stock = parseInt(input.dataset.stock)
+        console.log(productId);
+        console.log(stock);
+        
+        if(quantity>stock){
+            stockError.textContent = "No stock available"
+            isValid = false
+            return 
+        }
+})
+       
+         if(isValid){
+         
+            window.location.href = "/checkout"
+             }
+})
 
     
 

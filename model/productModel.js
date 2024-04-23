@@ -14,6 +14,10 @@ const productSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    discount:{
+        type:Number,
+        required:true
+    },
     image:[{
         type:String,
         required:true
@@ -40,11 +44,15 @@ const productSchema = new mongoose.Schema({
     },
     category:{
         type:String,
-        required:true
-    },
+        ref:"Category"
+    },  
     createdAt:{
         type:Date,
         default:Date.now()
+    },
+    offer:{
+        type:Number,
+        default:0
     }
 
 })

@@ -1,377 +1,399 @@
-<!DOCTYPE HTML>
-<html lang="en">
+                    <!DOCTYPE HTML>
+                    <html lang="en">
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
-<head>
-    <meta charset="utf-8">
-    <title>Evara Dashboard</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="/admin/admin-assets/imgs/theme/favicon.svg">
-    <!-- Template CSS -->
-    <link href="/admin/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
-</head>
+                    <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+                    <head>
+                        <meta charset="utf-8">
+                        <title>Evara Dashboard</title>
+                        <meta http-equiv="x-ua-compatible" content="ie=edge">
+                        <meta name="description" content="">
+                        <meta name="viewport" content="width=device-width, initial-scale=1">
+                        <meta property="og:title" content="">
+                        <meta property="og:type" content="">
+                        <meta property="og:url" content="">
+                        <meta property="og:image" content="">
+                        <!-- Favicon -->
+                        <link rel="shortcut icon" type="image/x-icon" href="/admin/admin-assets/imgs/theme/favicon.svg">
+                        <!-- Template CSS -->
+                        <link href="/admin/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+                    </head>
 
-<body>
-    <div class="screen-overlay"></div>
-    <aside class="navbar-aside" id="offcanvas_aside">
-        <div class="aside-top">
-            <a href="/admin/admin-index.html" class="brand-wrap">
-                <img src="/admin/admin-assets/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
-            </a>
-            <div>
-                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
-            </div>
-        </div>
-        <nav>
-            <ul class="menu-aside">
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/product-list"> <i class="icon material-icons md-shopping_bag"></i>
-                        <span class="text">Products</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/product-list">Product List</a>
-                        <!-- <a href="/admin/admin-page-products-grid.html">Product grid</a>
-                        <a href="/admin/admin-page-products-grid-2.html">Product grid 2</a> -->
-                        <a href="/admin/product-categories">Product Categories</a>
-                    </div>
-                </li>
-                <li class="menu-item has-submenu active">
-                    <a class="menu-link" href="/admin/order-list"> <i class="icon material-icons md-shopping_cart"></i>
-                        <span class="text">Orders</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/order-list" class="active">Order list </a>
-                        <!-- <a href="/admin/admin-page-orders-2.html">Order list 2</a>
-                        <a href="/admin/admin-page-orders-detail.html">Order detail</a>
-                    </div> -->
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/user-list"> <i class="icon material-icons md-store"></i>
-                        <span class="text">User Management</span>
-                    </a>
-                    <div class="submenu">
-                        <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
-                        <a href="/admin/user-list">Users list</a>
-                        <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
-                    </div>
-                </li>
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/add-product   "> <i class="icon material-icons md-add_box"></i>
-                        <span class="text">Add product</span>
-                    </a>
-                    <div class="submenu">
-                        <!-- <a href="/admin/admin-page-form-product-1.html">Add product 1</a>
-                        <a href="/admin/admin-page-form-product-2.html">Add product 2</a> -->
-                        <a href="/admin/add-product">Add product </a>
-                        <!-- <a href="/admin/admin-page-form-product-4.html">Add product 4</a> -->
-                    </div>
-                </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/admin-page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Transactions</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/admin-page-transactions-1.html">Transaction 1</a>
-                        <a href="/admin/admin-page-transactions-2.html">Transaction 2</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/admin-#"> <i class="icon material-icons md-person"></i>
-                        <span class="text">Account</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/admin-page-account-login.html">User login</a>
-                        <a href="/admin/admin-page-account-register.html">User registration</a>
-                        <a href="/admin/admin-page-error-404.html">Error 404</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="/admin/admin-page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" href="/admin/admin-page-brands.html"> <i class="icon material-icons md-stars"></i>
-                        <span class="text">Brands</span> </a>
-                </li> -->
-                <!-- <li class="menu-item">
-                    <a class="menu-link" disabled href="/admin/admin-#"> <i class="icon material-icons md-pie_chart"></i>
-                        <span class="text">Statistics</span>
-                    </a>
-                </li> -->
-            </ul>
-            <hr>
-            <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href=""> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/admin-page-settings-1.html">Setting sample 1</a>
-                        <a href="/admin/admin-page-settings-2.html">Setting sample 2</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admin-page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
-                    </a>
-                </li>
-            </ul>
-            <br>
-            <br>
-        </nav>
-    </aside>
-    <main class="main-wrap">
-        <header class="main-header navbar">
-            <div class="col-search">
-                <form class="searchform">
-                    <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
-                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
-                    </div>
-                    <datalist id="search_terms">
-                        <option value="Products">
-                        <option value="New orders">
-                        <option value="Apple iphone">
-                        <option value="Ahmed Hassan">
-                    </datalist>
-                </form>
-            </div>
-            <div class="col-nav">
-                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon" href="">
-                            <i class="material-icons md-notifications animation-shake"></i>
-                            <span class="badge rounded-pill">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="/admin/admin-#"> <i class="material-icons md-nights_stay"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/admin-#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="/admin/admin-#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-us.png" alt="English">English</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
-                        </div>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="/admin/admin-#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin/admin-assets/imgs/people/avatar2.jpg" alt="User"></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-settings"></i>Account Settings</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-help_outline"></i>Help center</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/admin/admin-#"><i class="material-icons md-exit_to_app"></i>Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </header>
-        <section class="content-main">
-            <div class="content-header">
-                <div>
-                    <h2 class="content-title card-title">Order List </h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div>
-                    <input type="text" placeholder="Search order ID" class="form-control bg-white">
-                </div>
-            </div>
-            <div class="card mb-4">
-                <header class="card-header">
-                    <div class="row gx-3">
-                        <div class="col-lg-4 col-md-6 me-auto">
-                            <input type="text" placeholder="Search..." class="form-control">
-                        </div>
-                        <div class="col-lg-2 col-6 col-md-3">
-                            <select class="form-select">
-                                <option>Status</option>
-                                <option>Active</option>
-                                <option>Disabled</option>
-                                <option>Show all</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-2 col-6 col-md-3">
-                           
-
-                        
-                            <select class="form-select">
-                                <option>Pending</option>
-                                <option>Shipped</option>
-                                <option>Cancelled</option>
-                                <option>Delivered</option>
-                            </select>
-                          
-                        </div>
-                    </div>
-                </header> <!-- card-header end// -->
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col"></th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Edit Status</th>
-                                    <th scope="col" class="text-end"> Action </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                               <%orders.forEach((order)=>{%>
-
-                              
-                                <tr>
-                                    <%let orderId = order._id.toString().slice(8,13)%>
-
-                                    <td><%= orderId %></td>
-                                    <td><b><%=order.userId.name%></b></td>
-                                    <td><template class="__cf_email__" data-cfemail="aec3cfdcd8c7c0eecbd6cfc3dec2cb80cdc1c3"><%=order.userId.name %></template></td>
-                                    <td></td>
-                                    <% if(order.status == "cancelled") {%>
-                                    
-                                    <td><span id="order-id" data-order.id="<%=order._id %>" class="badge rounded-pill alert-warning"><%= order.status %>  </span></td>
-                                     <% }else{%>
-                                        <td><span id="order-id" class="badge rounded-pill alert-success"><%= order.status %>  </span></td>
-                                     <%} %>
-                                    <td><%=order.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%></td>
-                                    <td>   <select id="my-select" data-id="<%=order._id %>" name="selection">
-                                        <option value="pending" >Pending</option>
-                                        <option value="shipped">Shipped</option>
-                                        <!-- <option value="cancelled">Cancelled</option> -->
-                                        <option value="delivered">Delivered</option>
-                                    </select></td>
-                                    <td class="text-end">
-                                        <a href="/admin/cancel-orders?id=<%=order._id %>" class="btn btn-md rounded font-sm">Cancel</a>
-                                        <!-- <div class="dropdown">
-                                            <a href="/admin/admin-#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="/admin/admin-#">View detail</a>
-                                                <a class="dropdown-item" href="/admin/admin-#">Edit info</a>
-                                                <a class="dropdown-item text-danger" href="/admin/admin-#">Delete</a>
-                                            </div>
+                    <body>
+                        <div class="screen-overlay"></div>
+                        <aside class="navbar-aside" id="offcanvas_aside">
+                            <div class="aside-top">
+                                <a href="/admin/admin-index.html" class="brand-wrap">
+                                    <img src="/admin/admin-assets/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
+                                </a>
+                                <div>
+                                    <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
+                                </div>
+                            </div>
+                            <nav>
+                                <ul class="menu-aside">
+                                    <li class="menu-item">
+                                        <a class="menu-link" href="/admin/dashboard"> <i class="icon material-icons md-home"></i>
+                                            <span class="text">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item has-submenu">
+                                        <a class="menu-link" href="/admin/product-list"> <i class="icon material-icons md-shopping_bag"></i>
+                                            <span class="text">Products</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <a href="/admin/product-list">Product List</a>
+                                            <!-- <a href="/admin/admin-page-products-grid.html">Product grid</a>
+                                            <a href="/admin/admin-page-products-grid-2.html">Product grid 2</a> -->
+                                            <a href="/admin/product-categories">Product Categories</a>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item has-submenu active">
+                                        <a class="menu-link" href="/admin/order-list"> <i class="icon material-icons md-shopping_cart"></i>
+                                            <span class="text">Orders</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <a href="/admin/order-list" class="active">Order list </a>
+                                            <!-- <a href="/admin/admin-page-orders-2.html">Order list 2</a>
+                                            <a href="/admin/admin-page-orders-detail.html">Order detail</a>
                                         </div> -->
-                                    </td>
-                                </tr>
-                                <% })%>
+                                    </li>
+                                    <li class="menu-item has-submenu">
+                                        <a class="menu-link" href="/admin/user-list"> <i class="icon material-icons md-store"></i>
+                                            <span class="text">User Management</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
+                                            <a href="/admin/user-list">Users list</a>
+                                            <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                                        </div>
+                                    </li>
+                                    <li class="menu-item has-submenu">
+                                        <a class="menu-link" href="/admin/add-product   "> <i class="icon material-icons md-add_box"></i>
+                                            <span class="text">Add product</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <!-- <a href="/admin/admin-page-form-product-1.html">Add product 1</a>
+                                            <a href="/admin/admin-page-form-product-2.html">Add product 2</a> -->
+                                            <a href="/admin/add-product">Add product </a>
+                                            <!-- <a href="/admin/admin-page-form-product-4.html">Add product 4</a> -->
+                                        </div>
+                                    </li>
+                                    <li class="menu-item has-submenu " >
+                                        <a class="menu-link" href="/admin/add-coupon"> <i class="icon material-icons md-store"></i>
+                                            <span class="text">Coupon Management</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <a href="/admin/add-coupon">Coupon</a>
+                                            <!-- <a href="/admin/admin-page-sellers-list.html">Sellers list</a>
+                                            <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                                        </div>
+                                    </li>
+                                    <li class="menu-item has-submenu ">
+                                        <a class="menu-link" href="/admin/sales-report"> <i class="icon material-icons md-store"></i>
+                                            <span class="text">Sales Management</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
+                                            <a href="/admin/sales-report" >Sales Report</a>
+                                            <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                                        </div>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class="menu-link" href="/admin/category-offer"> <i class="icon material-icons md-comment"></i>
+                                            <span class="text">Category Offer</span>
+                                        </a>
+                                    </li>
+                                    <!-- <li class="menu-item has-submenu">
+                                        <a class="menu-link" href="/admin/admin-#"> <i class="icon material-icons md-person"></i>
+                                            <span class="text">Account</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <a href="/admin/admin-page-account-login.html">User login</a>
+                                            <a href="/admin/admin-page-account-register.html">User registration</a>
+                                            <a href="/admin/admin-page-error-404.html">Error 404</a>
+                                        </div>
+                                    </li> -->
+                                    <!-- <li class="menu-item">
+                                        <a class="menu-link" href="/admin/admin-page-reviews.html"> <i class="icon material-icons md-comment"></i>
+                                            <span class="text">Reviews</span>
+                                        </a>
+                                    </li> -->
+                                    <!-- <li class="menu-item">
+                                        <a class="menu-link" href="/admin/admin-page-brands.html"> <i class="icon material-icons md-stars"></i>
+                                            <span class="text">Brands</span> </a>
+                                    </li> -->
+                                    <!-- <li class="menu-item">
+                                        <a class="menu-link" disabled href="/admin/admin-#"> <i class="icon material-icons md-pie_chart"></i>
+                                            <span class="text">Statistics</span>
+                                        </a>
+                                    </li> -->
+                                </ul>
+                                <hr>
+                                <ul class="menu-aside">
+                                    <li class="menu-item has-submenu">
+                                        <a class="menu-link" href=""> <i class="icon material-icons md-settings"></i>
+                                            <span class="text">Settings</span>
+                                        </a>
+                                        <div class="submenu">
+                                            <a href="/admin/admin-page-settings-1.html">Setting sample 1</a>
+                                            <a href="/admin/admin-page-settings-2.html">Setting sample 2</a>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class="menu-link" href="/admin/admin-page-blank.html"> <i class="icon material-icons md-local_offer"></i>
+                                            <span class="text"> Starter page </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <br>
+                                <br>
+                            </nav>
+                        </aside>
+                        <main class="main-wrap">
+                            <header class="main-header navbar">
+                                <div class="col-search">
+                                    <form class="searchform">
+                                        <div class="input-group">
+                                            <input list="search_terms" type="text" class="form-control" placeholder="Search term">
+                                            <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
+                                        </div>
+                                        <datalist id="search_terms">
+                                            <option value="Products">
+                                            <option value="New orders">
+                                            <option value="Apple iphone">
+                                            <option value="Ahmed Hassan">
+                                        </datalist>
+                                    </form>
+                                </div>
+                                <div class="col-nav">
+                                    <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link btn-icon" href="">
+                                                <i class="material-icons md-notifications animation-shake"></i>
+                                                <span class="badge rounded-pill">3</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link btn-icon darkmode" href="/admin/admin-#"> <i class="material-icons md-nights_stay"></i> </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/admin/admin-#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
+                                        </li>
+                                        <li class="dropdown nav-item">
+                                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="/admin/admin-#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
+                                                <a class="dropdown-item text-brand" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-us.png" alt="English">English</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown nav-item">
+                                            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="/admin/admin-#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin/admin-assets/imgs/people/avatar2.jpg" alt="User"></a>
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
+                                                <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-settings"></i>Account Settings</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-receipt"></i>Billing</a>
+                                                <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-help_outline"></i>Help center</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-danger" href="/admin/admin-#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </header>
+                            <section class="content-main">
+                                <div class="content-header">
+                                    <div>
+                                        <h2 class="content-title card-title">Order List </h2>
+                                        <p>Lorem ipsum dolor sit amet.</p>
+                                    </div>
+                                    <div>
+                                        <input type="text" placeholder="Search order ID" class="form-control bg-white">
+                                    </div>
+                                </div>
+                                <div class="card mb-4">
+                                    <header class="card-header">
+                                        <div class="row gx-3">
+                                            <div class="col-lg-4 col-md-6 me-auto">
+                                                <input type="text" placeholder="Search..." class="form-control">
+                                            </div>
+                                            <div class="col-lg-2 col-6 col-md-3">
+                                                <select class="form-select">
+                                                    <option>Status</option>
+                                                    <option>Active</option>
+                                                    <option>Disabled</option>
+                                                    <option>Show all</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2 col-6 col-md-3">
+                                            
 
-                               
-                             
-                             
+                                            
+                                                <select class="form-select">
+                                                    <option>Pending</option>
+                                                    <option>Shipped</option>
+                                                    <option>Cancelled</option>
+                                                    <option>Delivered</option>
+                                                </select>
+                                            
+                                            </div>
+                                        </div>
+                                    </header> <!-- card-header end// -->
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="my-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#ID</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Date</th>
+                                                    
+                                                        <th scope="col" class="text-end"> Action </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% 
+                                                    // Sort orders array by createdAt field in descending order
+                                                    orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); 
+                                                %>
+                                                    
+                                                <%orders.forEach((order)=>{%>
+
+                                                
+                                                    <tr>
+                                                        <%let orderId = order._id.toString().slice(8,13)%>
+
+                                                        <td><%= orderId %></td>
+                                                        <td><%= order.userId.name %></td>
+                                                        <td><%= order.userId.email %></td>
+                                                        <td></td>
+                                                        <% if(order.status == "cancelled") {%>
+                                                        
+                                                        <td><span id="order-id" data-order.id="<%=order._id %>" class="badge rounded-pill alert-warning"><%= order.status %>  </span></td>
+                                                        <% }else{%>
+                                                            <td><span id="order-id" data-order.id="<%=order._id %>" class="badge rounded-pill alert-success"><%= order.status %>  </span></td>
+                                                        <%} %>
+                                                    <td><%=order.orderedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%></td>
+
+                                                    
+                                                        <td class="text-end">
+                                                            <a href="/admin/view-orders?id=<%=order._id %>" class="btn btn-md rounded font-sm">View</a>
+                                                            <!-- <div class="dropdown">
+                                                                <a href="/admin/admin-#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href="/admin/admin-#">View detail</a>
+                                                                    <a class="dropdown-item" href="/admin/admin-#">Edit info</a>
+                                                                    <a class="dropdown-item text-danger" href="/admin/admin-#">Delete</a>
+                                                                </div>
+                                                            </div> -->
+                                                        </td>
+                                                    </tr>
+                                                    <% })%>
+
+                                                
+                                                
+                                                
+                                                
+                                                    
+                                                
+                                                    
+                                                    
+                                                
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- table-responsive //end -->
+                                    </div> <!-- card-body end// -->
+                                </div> <!-- card end// -->
+                                <!-- <div class="pagination-area mt-15 mb-50">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-start">
+                                            <li class="page-item active"><a class="page-link" href="/admin/admin-#">01</a></li>
+                                            <li class="page-item"><a class="page-link" href="/admin/admin-#">02</a></li>
+                                            <li class="page-item"><a class="page-link" href="/admin/admin-#">03</a></li>
+                                            <li class="page-item"><a class="page-link dot" href="/admin/admin-#">...</a></li>
+                                            <li class="page-item"><a class="page-link" href="/admin/admin-#">16</a></li>
+                                            <li class="page-item"><a class="page-link" href="/admin/admin-#"><i class="material-icons md-chevron_right"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div> -->
+                            </section> <!-- content-main end// -->
+                            <footer class="main-footer font-xs">
+                                <div class="row pb-30 pt-15">
+                                    <div class="col-sm-6">
+                                        <!-- <script data-cfasync="false" src="/admin/admin-../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
+                                        <script>
+                                        document.write(new Date().getFullYear())
+                                        </script> ©, Evara - HTML Ecommerce Template .
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="text-sm-end">
+                                            All rights reserved
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+                        </main>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"/>
+                        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+                        <script src="/admin/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+                        <script src="/admin/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+                        <script src="/admin/admin-assets/js/vendors/select2.min.js"></script>
+                        <script src="/admin/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+                        <script src="/admin/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+                        <!-- Main Script -->
+                        <script src="/admin/admin-assets/js/main.js" type="text/javascript"></script>
+                        <script>new DataTable('#my-table', {
+                            pagingType: 'simple_numbers'
+                        });</script>
+                        <script>
+                        const selectElements = document.querySelectorAll("#my-select");
+                        console.log(selectElements);
+                        selectElements.forEach((selectElement)=>{
+                            selectElement.addEventListener("change", async function(event) {
+                        const selectedOption = event.target.value;
+                        const orderId = event.target.getAttribute("data-id")
+                        console.log(orderId );
+                        
+                        console.log("Selected option:", selectedOption);
+                        const data = {selectedOption,orderId}
+                        console.log(data);
+                        try {
                             
-                                
-                              
-                                
-                                
-                               
-                            </tbody>
-                        </table>
-                    </div> <!-- table-responsive //end -->
-                </div> <!-- card-body end// -->
-            </div> <!-- card end// -->
-            <div class="pagination-area mt-15 mb-50">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="/admin/admin-#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="/admin/admin-#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#"><i class="material-icons md-chevron_right"></i></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </section> <!-- content-main end// -->
-        <footer class="main-footer font-xs">
-            <div class="row pb-30 pt-15">
-                <div class="col-sm-6">
-                    <!-- <script data-cfasync="false" src="/admin/admin-../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
-                    <script>
-                    document.write(new Date().getFullYear())
-                    </script> ©, Evara - HTML Ecommerce Template .
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end">
-                        All rights reserved
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </main>
-    <script src="/admin/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
-    <script src="/admin/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
-    <script src="/admin/admin-assets/js/vendors/select2.min.js"></script>
-    <script src="/admin/admin-assets/js/vendors/perfect-scrollbar.js"></script>
-    <script src="/admin/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
-    <!-- Main Script -->
-    <script src="/admin/admin-assets/js/main.js" type="text/javascript"></script>
-    <script>
-      const selectElements = document.querySelectorAll("#my-select");
+                            
+                            const response = await fetch("/admin/status-update",{
+                                method:"PUT",
+                                headers:{
+                                    "Content-Type":"application/json"
+                                },
+                                body:JSON.stringify(data)
 
-      selectElements.forEach((selectElement)=>{
-        selectElement.addEventListener("change", async function(event) {
-      const selectedOption = event.target.value;
-      const orderId = event.target.getAttribute("data-id")
-      console.log(orderId );
-    
-      console.log("Selected option:", selectedOption);
-      const data = {selectedOption,orderId}
-      console.log(data);
-      try {
-        
-        
-        const response = await fetch("/admin/status-update",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(data)
-
-        })
-        
-        
-        if(response.ok){
-            const responseData = await response.json()
-            console.log(responseData);
-           window.location.href = responseData.redirect
-        }
-      } catch (error) {
-        console.log(error);
-      }
-       })
-  
-      })
-       
-      
-    </script>
-</body>
+                            })
+                            
+                            
+                            if(response.ok){
+                                const responseData = await response.json()
+                                console.log(responseData);
+                            window.location.href = responseData.redirect
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
+                        })
+                    
+                        })
+                        
+                        
+                        </script>
+                    </body>
 
 
-<!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:22 GMT -->
-</html>
+                    <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-orders-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:22 GMT -->
+                    </html>

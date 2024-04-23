@@ -48,6 +48,16 @@
                         <a href="/admin/product-categories">product Categories</a>
                     </div>
                 </li>
+                <li class="menu-item has-submenu">
+                    <a class="menu-link" href="/admin/admin-page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
+                        <span class="text">Orders</span>
+                    </a>
+                    <div class="submenu">
+                        <a href="/admin/order-list">Order list </a>
+                        <!-- <a href="/admin/admin-page-orders-2.html">Order list 2</a>
+                        <a href="/admin/admin-page-orders-detail.html">Order detail</a> -->
+                    </div>
+                </li>
                 <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="/admin/admin-page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Orders</span>
@@ -79,6 +89,26 @@
                         <!-- <a href="/admin/admin-page-form-product-4.html">Add product 4</a> -->
                     </div>
                 </li>
+                <li class="menu-item has-submenu ">
+                    <a class="menu-link" href="/admin/add-coupon"> <i class="icon material-icons md-store"></i>
+                        <span class="text">Coupon Management</span>
+                    </a>
+                    <div class="submenu">
+                        <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
+                        <a href="/admin/add-coupon" class="active">Coupon</a>
+                        <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                    </div>
+                </li>
+                    <li class="menu-item has-submenu ">
+                        <a class="menu-link" href="/admin/sales-report"> <i class="icon material-icons md-store"></i>
+                            <span class="text">Sales Management</span>
+                        </a>
+                        <div class="submenu">
+                            <!-- <a href="/admin/admin-page-sellers-cards.html">Sellers cards</a> -->
+                            <a href="/admin/sales-report" class="active">List Users</a>
+                            <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
+                        </div>
+                    </li>
                 <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="/admin/admin-page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
                         <span class="text">Transactions</span>
@@ -98,15 +128,12 @@
                         <a href="/admin/admin-page-error-404.html">Error 404</a>
                     </div>
                 </li> -->
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admin-page-reviews.html"> <i class="icon material-icons md-comment"></i>
-                        <span class="text">Reviews</span>
-                    </a>
-                <!-- </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admin-page-brands.html"> <i class="icon material-icons md-stars"></i>
-                        <span class="text">Brands</span> </a>
-                </li> -->
+                    <li class="menu-item">
+                        <a class="menu-link" href="/admin/category-offer"> <i class="icon material-icons md-comment"></i>
+                            <span class="text">Category Offer</span>
+                        </a>
+                    </li>
+               
                 <!-- <li class="menu-item">
                     <a class="menu-link" disabled href="/admin/admin-#"> <i class="icon material-icons md-pie_chart"></i>
                         <span class="text">Statistics</span>
@@ -229,7 +256,7 @@
                                             <th class="col-md-1"><div>Image</div></th>
                                             <th class="col-md-1"><div>Name</div></th>
                                             <th class="col-md-1"><div style="margin-left: 10px;">Price</div></th>
-                                            <th class="col-md-1"><div>Color</div></th>
+                                            <th class="col-md-1"><div>Discount</div></th>
                                             <th class="col-md-1"><div>Stock</div></th>
                                             <th class="col-md-1"><div>Size</div></th>
                                             <th class="col-md-1"><div>Date</div></th>
@@ -254,14 +281,14 @@
                                                 </td>
                                                 <td class="col-md-1" ><div style="margin: 10px;"><%= product[i].name %></div></td>
                                                 <td class="col-md-1" ><%= product[i].price %></td>
-                                                <td class="col-md-1"><%= product[i].color %></td>
+                                                <td class="col-md-1"><%= product[i].discount %></td>
                                                 <td class="col-md-1">
                                                     <span class="badge rounded-pill alert-success">
                                                         <%= product[i].stock %>
                                                     </span>
                                                     <td class="col-md-1">
                                                         <% product[i].sizes.forEach(size => { %>
-                                                            <span><%= size %></span><br>
+                                                            <span><%= size %>,</span>
                                                         <% }) %>
                                                     </td>
                                                     

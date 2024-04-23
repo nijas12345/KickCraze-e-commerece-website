@@ -3,26 +3,10 @@ const adminRoute = express()
 const path = require('path')
 const adminController = require('../Controller/adminController')
 const auth = require("../middleware/adminAuth")
-const multer = require("multer")
+const orderController = require('../Controller/orderController')
 
-const storage = multer.diskStorage({
-    destination:function(req,filename,cb){
-        cb(null,path.join(__dirname,"../public/productImages"))
-    },
-    filename:function(req,file,cb){
-       const name = Date.now()+"-"+file.originalname;
-       cb(null,name)
-    }
-})
+const multerStorage = require("../helpers/multerStorage")
 
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, 
-    fileFilter: (req, file, cb) => {
-     
-      cb(null, true); 
-    }
-  });
   
 adminRoute.set("view engine","ejs")
 adminRoute.set('views',path.join(__dirname,"../views/admin"))
@@ -55,22 +39,45 @@ adminRoute.get('/product-categories',auth.adminAuth,adminController.productCateg
 adminRoute.post('/product-categories',auth.adminAuth,adminController.insertCategories)
 adminRoute.get('/categories-edit',auth.adminAuth,adminController.editCategories)
 adminRoute.get('/categories-delete',adminController.deleteCategories)
-adminRoute.post('/update-categories',adminController.updateCategories)
+adminRoute.put('/update-categories',adminController.updateCategories)
 
 //product list
 
 adminRoute.get('/product-list',auth.adminAuth,adminController.ListProduct)
 adminRoute.get('/add-product',auth.adminAuth,adminController.addProduct)
-adminRoute.post('/add-products',upload.any(),adminController.insertProduct)
+adminRoute.post('/add-products',multerStorage.any(),adminController.insertProduct)
 adminRoute.get('/product-edit',auth.adminAuth,adminController.editProduct)
 
-adminRoute.post('/product-edit',auth.adminAuth,adminController.insertEditedProduct)
+adminRoute.put('/product-edit',auth.adminAuth,adminController.insertEditedProduct)
 adminRoute.get("/product-delete",auth.adminAuth,adminController.deleteProduct)
+
+// coupond
+ 
+adminRoute.get('/add-coupon',auth.adminAuth,adminController.loadCoupon)
+adminRoute.post('/add-coupon',auth.adminAuth,adminController.insertCoupon)
+adminRoute.get('/edit-coupon',auth.adminAuth,adminController.editCoupon)
+adminRoute.put('/edit-coupon',auth.adminAuth,adminController.insertEditedCoupon)
+adminRoute.get('/delete-coupon',auth.adminAuth,adminController.deleteCoupon)
 
 //orders
 
 adminRoute.get('/order-list',auth.adminAuth,adminController.listOrders)
-adminRoute.get('/cancel-orders',auth.adminAuth,adminController.cancelOrders)
-adminRoute.post('/status-update',auth.adminAuth,adminController.statusOrders)
+adminRoute.get('/view-orders',auth.adminAuth,adminController.viewOrders)
+
+adminRoute.put('/status-update',auth.adminAuth,adminController.statusOrders)
+
+//category
+
+adminRoute.get('/category-offer',auth.adminAuth,adminController.categoryOffer)
+adminRoute.post('/add-offer',auth.adminAuth,adminController.addCategoryOffer)
+
+//salesReport
+
+adminRoute.get('/sales-report',auth.adminAuth,adminController.salesReport)
+
+
+adminRoute.post('/day-sales',auth.adminAuth,orderController.daySales)
+
+adminRoute.get('/chart-sales',auth.adminAuth,adminController.chartTable)
 
 module.exports = adminRoute
