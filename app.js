@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-// mongoose.connect('mongodb://127.0.0.1:27017/Project-8');
-mongoose.connect("mongodb+srv://nijasbinabbas:gGPV60STw86bkmok@cluster0.sgvgomu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect('mongodb://127.0.0.1:27017/Project-8');
+// mongoose.connect("mongodb+srv://nijasbinabbas:gGPV60STw86bkmok@cluster0.sgvgomu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 const express = require("express");
 const app = express();

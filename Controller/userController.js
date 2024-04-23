@@ -17,6 +17,7 @@ const createToken = (user)=>{
 }
 
 
+
 const securePassword = async (password)=>{
     try {
       const passwordHash = await bcrypt.hash(password,10)
@@ -186,7 +187,7 @@ const verifyRegister = async(req,res)=>{
                status :1,
                referal:referralCode
             })
-          
+
             const userData = await user.save()
             if(userData){
                 if(req.session.refferal == null){
