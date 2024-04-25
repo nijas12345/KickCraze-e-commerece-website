@@ -621,35 +621,35 @@ console.log("nijas");
     });
   });
 
-  document.querySelector("#week").addEventListener("click", (e) => {
-    var startOfWeek = moment().startOf("week");
-    var endOfWeek = moment().endOf("week");
-    var startOfWeekFormatted = startOfWeek.format("MMMM Do YYYY");
-    var endOfWeekFormatted = endOfWeek.format("MMMM Do YYYY");
-    minDate.val(startOfWeekFormatted); // this is the mistake i did in previous code
-    maxDate.val(endOfWeekFormatted);
-    table.draw();
-  });
+//   document.querySelector("#week").addEventListener("click", (e) => {
+//     var startOfWeek = moment().startOf("week");
+//     var endOfWeek = moment().endOf("week");
+//     var startOfWeekFormatted = startOfWeek.format("MMMM Do YYYY");
+//     var endOfWeekFormatted = endOfWeek.format("MMMM Do YYYY");
+//     minDate.val(startOfWeekFormatted); // this is the mistake i did in previous code
+//     maxDate.val(endOfWeekFormatted);
+//     table.draw();
+//   });
 
-  document.querySelector("#month").addEventListener("click", (e) => {
-    var startOfMonth = moment().startOf("month");
-    var endOfMonth = moment().endOf("month");
-    var startOfMonthFormatted = startOfMonth.format("MMMM Do YYYY");
-    var endOfMonthFormatted = endOfMonth.format("MMMM Do YYYY");
-    minDate.val(startOfMonthFormatted);
-    maxDate.val(endOfMonthFormatted);
-    table.draw();
-  });
+//   document.querySelector("#month").addEventListener("click", (e) => {
+//     var startOfMonth = moment().startOf("month");
+//     var endOfMonth = moment().endOf("month");
+//     var startOfMonthFormatted = startOfMonth.format("MMMM Do YYYY");
+//     var endOfMonthFormatted = endOfMonth.format("MMMM Do YYYY");
+//     minDate.val(startOfMonthFormatted);
+//     maxDate.val(endOfMonthFormatted);
+//     table.draw();
+//   });
 
-  document.querySelector("#year").addEventListener("click", (e) => {
-    var startOfYear = moment().startOf("year");
-    var endOfYear = moment().endOf("year");
-    var startOfYearFormatted = startOfYear.format("MMMM Do YYYY");
-    var endOfYearFormatted = endOfYear.format("MMMM Do YYYY");
-    minDate.val(startOfYearFormatted);
-    maxDate.val(endOfYearFormatted);
-    table.draw();
-  });
+//   document.querySelector("#year").addEventListener("click", (e) => {
+//     var startOfYear = moment().startOf("year");
+//     var endOfYear = moment().endOf("year");
+//     var startOfYearFormatted = startOfYear.format("MMMM Do YYYY");
+//     var endOfYearFormatted = endOfYear.format("MMMM Do YYYY");
+//     minDate.val(startOfYearFormatted);
+//     maxDate.val(endOfYearFormatted);
+//     table.draw();
+//   });
 </script>
 <script>
     document.getElementById('submit').addEventListener('click',(event)=>{

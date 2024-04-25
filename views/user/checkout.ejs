@@ -1701,6 +1701,7 @@
     if(!pinRegext.test(pin)){
         isValid = false
         alert("Please enter a valid pincode")
+        return
     }  
     
         data = {name,HouseName,phoneNo,pin,paymentId,selectedId,addressId,total,totalPrice}
@@ -1821,6 +1822,7 @@ razorpayObject.open();
   
 
     }else if(paymentId == "wallet-payment"){
+        
         if(addressId == null){
         console.log("hai");
         

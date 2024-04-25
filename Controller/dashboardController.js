@@ -25,7 +25,7 @@ const userProfile = async(req,res)=>{
     try {
         
        const userId = req.id
-       console.log("user",userId);
+       
        const address = await Address.find({userId:userId})
        const user = await User.find({_id:userId})
        const orders = await Order.find({userId:userId}).populate("products.productId").sort({createdAt: -1})
@@ -34,11 +34,11 @@ const userProfile = async(req,res)=>{
     //    console.log("user",user);
         
        const wishlistData = await wishlist.find({userId:userId}).populate("userId").populate("productId")
-       console.log("wishlistdata",wishlistData);
+       
        
        const wallets = await Wallet.findOne({userId:userId})
 
-       console.log("wallets",wallets);
+       
        let creditedAmount = 0
        let debitedAmount = 0
        if(wallets){
@@ -53,10 +53,9 @@ const userProfile = async(req,res)=>{
          })
        }
       
-      console.log("credited",creditedAmount);
-      console.log("debited",debitedAmount);
+      
        totalAmount = creditedAmount - debitedAmount
-       console.log("totalAmount",totalAmount);
+       
       
        res.render("userProfile",{addressData:address,user:user,orders:orders,wishlistData:wishlistData,totalAmount:totalAmount,wallets:wallets})
         
@@ -114,7 +113,7 @@ const addEdit = async(req,res)=>{
 deleteAddres = async(req,res)=>{
     try {
         const addressId = req.query.id
-        console.log(addressId);
+        
         const address =await Address.findByIdAndDelete(addressId)     
             res.redirect('/userProfile')
   
@@ -132,7 +131,7 @@ const editUserProfile = async (req,res)=>{
       const {name,email,mobile,password} = req.body
       const spassword = await securePassword(password)
       const user = await User.findByIdAndUpdate(id,{name:name,email:email,mobile:mobile,password:spassword})
-     console.log(user);
+     
      userData = user.save()
      if(userData){
         res.status(200).json({success:true})

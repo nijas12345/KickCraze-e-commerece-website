@@ -48,7 +48,7 @@ adminRoute.get('/add-product',auth.adminAuth,adminController.addProduct)
 adminRoute.post('/add-products',multerStorage.any(),adminController.insertProduct)
 adminRoute.get('/product-edit',auth.adminAuth,adminController.editProduct)
 
-adminRoute.put('/product-edit',auth.adminAuth,adminController.insertEditedProduct)
+adminRoute.post('/product-edit',auth.adminAuth,adminController.insertEditedProduct)
 adminRoute.get("/product-delete",auth.adminAuth,adminController.deleteProduct)
 
 // coupond
@@ -56,7 +56,7 @@ adminRoute.get("/product-delete",auth.adminAuth,adminController.deleteProduct)
 adminRoute.get('/add-coupon',auth.adminAuth,adminController.loadCoupon)
 adminRoute.post('/add-coupon',auth.adminAuth,adminController.insertCoupon)
 adminRoute.get('/edit-coupon',auth.adminAuth,adminController.editCoupon)
-adminRoute.put('/edit-coupon',auth.adminAuth,adminController.insertEditedCoupon)
+adminRoute.post('/edit-coupon',auth.adminAuth,adminController.insertEditedCoupon)
 adminRoute.get('/delete-coupon',auth.adminAuth,adminController.deleteCoupon)
 
 //orders

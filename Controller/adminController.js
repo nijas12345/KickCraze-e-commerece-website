@@ -73,7 +73,7 @@ const adminVerify = async (req,res)=>{
             const token = createToken({id:adminData._id})
             res.cookie("Adminjwt",token,{httpOnly:true,maxAge:60000000})
                 res.redirect('/admin/dashboard')
-                console.log(token);
+             
             }
             else{
                 res.render("adminLogin",{message:"Password is incorrect"})
@@ -123,12 +123,12 @@ const   adminDashboard = async (req,res)=>{
     try {
        
        let year = parseInt(req.query.selectedYear) 
-       console.log("year",year);
+      
        if (isNaN(year)) {
         year = 2024;
     }
     
-       console.log("year",year);
+       
       const order = await Order.find()
       
       const orderData = await Order.aggregate([
@@ -140,7 +140,7 @@ const   adminDashboard = async (req,res)=>{
         },
       ])
          const currentYear = new Date().getFullYear();
-         console.log("curr",currentYear);
+        
 
 
         // console.log(selectedYear);
@@ -176,7 +176,7 @@ const   adminDashboard = async (req,res)=>{
           { $sort: { _id: 1 } }
         ]);
   
-        console.log("monthly",monthlyData);
+        
         
         const yearlyData = await Order.aggregate([
             { $unwind: "$products" },
@@ -243,7 +243,7 @@ const   adminDashboard = async (req,res)=>{
               },
           },
       ])
-      console.log("best",bestCategory);
+   
   
   
       const bestSellingProduct = await Order.aggregate([
@@ -288,13 +288,7 @@ const   adminDashboard = async (req,res)=>{
             },
           },
         ]);
-      //  console.log("brand",bestBrand);
-      // console.log("product",product);
-      // console.log("balskdjfl",bestSellingProduct);
-      //  console.log("best",bestCategory);
-      //   console.log(orderData);
-      //   console.log("monthlydata",monthlyData);
-      //   console.log("yearlydata",yearlyData);
+     
     const yearlyDatas = ["2022","2023","2024","2025","2026"]  
         res.render('dashboard',{orderData,monthlyData,yearlyData,bestSellingProduct,bestBrand,bestCategory,yearlyDatas})
 
@@ -327,18 +321,18 @@ const userList = async (req,res)=>{
 const  userBlock= async (req,res)=>{
     try {
     const userId = req.query.id
-    console.log(userId);
+  
     const user = await User.find({_id:userId})
-    console.log(user);
+  
     userStatus = user[0].status
     if(userStatus == true){
-        console.log("hai");
+       
         await User.findOneAndUpdate({_id:userId},{status:false})   
         const users = await User.find({})        
         res.render("userlist",{users:users})
     }
     else{  
-        console.log("hai2"); 
+        
         await User.findOneAndUpdate({_id:userId},{status:true})
         const users = await User.find({})
         res.render("userlist",{users:users})  
@@ -357,7 +351,7 @@ const  userBlock= async (req,res)=>{
 const productCategories = async (req,res)=>{
     try {
         const categories =await Category.find()
-        console.log("categories",categories);
+       
         res.render('categories',{categories:categories})
     }
      catch (error) {
@@ -403,7 +397,7 @@ const editCategories = async (req,res)=>{
    try {
     //  req.session.temp = req.query.id
      const categoryId = req.query.id
-     console.log("hello",req.query.id);  
+ 
      const category = await Category.findOne({_id:categoryId}) 
      
      res.render('CategoryEdit',{category:category})     
@@ -418,14 +412,14 @@ const editCategories = async (req,res)=>{
 
 const updateCategories = async (req,res)=>{
     try {
-        console.log("req.body",req.body);
+       
         // const data = req.session.temp
         const name = req.body.name 
         const description = req.body.description
         const Id = req.body.dataId
-        console.log(Id);
+        
         const category = await Category.findOne({name:name})
-        console.log(category);
+       
             if(category){
                 console.log("hai");
              res.status(200).json({message:"Category Name is already exists "})
@@ -495,8 +489,7 @@ const addProduct = async (req,res)=>{
 const insertProduct = async (req,res)=>{
 
     try { 
-        console.log(req.files);
-        console.log(req.body);
+       
       
        const fileNames = req.files.map(file=>file.filename)
       
@@ -509,7 +502,7 @@ const insertProduct = async (req,res)=>{
         image.push(outputPath2);
       });
 
-      console.log("imsges",image);
+     
          
     //   for(let file of req.files){
     //     const randomInteger = Math.floor(Math.random() * 20000001)
@@ -527,21 +520,20 @@ const insertProduct = async (req,res)=>{
     const discount = req.body.discount
       const category = req.body.category
       const categoryy = await Category.findOne({name:req.body.category})
-      console.log("category",categoryy);
+      
       const offer = categoryy.offer
     
       const price =req.body.price
-      console.log(price);
       
-      console.log("offer",offer);
+      
+      
 
       if(offer>discount){
-        console.log("hai");
-        console.log("dsj",req.body.price);
+       
         const discounts= parseInt(offer)
         const disprice = req.body.price-(discounts/100)*req.body.price
         
-            console.log("disprice",disprice);
+           
             const product = new Product({
               name:req.body.name,
               price:price,
@@ -561,10 +553,10 @@ const insertProduct = async (req,res)=>{
 
       
       else{
-        console.log("hello");
+      
         const discounts= parseInt(discount)
         const disprice = req.body.price-(discounts/100)*req.body.price
-        console.log("disprice",disprice);
+      
         const product = new Product({
           name:req.body.name,
           price:price,
@@ -593,11 +585,13 @@ const insertProduct = async (req,res)=>{
 
 const editProduct = async (req,res)=>{
     try {
+     
       const editId = req.query.id
-      console.log(editId);
+     
       const categories = await Category.find()
       const products = await Product.findOne({_id:editId})
-      console.log(products);
+      console.log("product",products);
+     
       res.render("editProduct",{categories:categories,products:products})
       
     } catch (error) {
@@ -611,6 +605,7 @@ const editProduct = async (req,res)=>{
 const insertEditedProduct = async (req,res)=>{
 
     try {
+        console.log("2");
         const id = req.query.id
         const price = req.body.price
         
@@ -666,7 +661,7 @@ const insertEditedProduct = async (req,res)=>{
 const   deleteProduct = async (req,res)=>{
     try {
         const deleteId = req.query.id
-        console.log(deleteId);
+        
         await Product.findByIdAndUpdate(deleteId,{status:false})
         const products = await Product.find()
        
@@ -684,7 +679,7 @@ const listOrders = async(req,res)=>{
      
     try {
         const orders = await Order.find().populate("userId").populate("addressId").populate("products.productId").sort({orderedDate:1})
-        console.log(orders);
+      
         res.render("orders",{orders:orders})
     } catch (error) {
         console.log(error);
@@ -696,10 +691,10 @@ const listOrders = async(req,res)=>{
 
 const viewOrders = async(req,res)=>{
     const orderId = req.query.id
-     console.log(orderId);
+     
     try {
         const order = await Order.findOne({_id:orderId}).populate('userId')
-        console.log("order",order);
+       
         
     
       
@@ -715,10 +710,10 @@ const statusOrders = async(req,res)=>{
     try {
         const orderId = req.body.orderId
         const option = req.body.selectedOption
-        console.log("selectedOption",option);
+        
     
         const orders= await Order.findByIdAndUpdate(orderId,{status:option})
-        console.log("orderData",orders);
+       
         res.status(200).json({redirect:'/admin/view-orders?id='+orderId})
     } catch (error) {
         console.log(error);
@@ -731,7 +726,7 @@ const statusOrders = async(req,res)=>{
 const loadCoupon = async(req,res)=>{
     try {
         const coupons = await Coupon.find({isCoupon:true})
-        console.log(coupons);
+        
         res.render('coupon',{coupons:coupons,message:undefined})
     } catch (error) {
         console.log(error);
@@ -741,12 +736,12 @@ const loadCoupon = async(req,res)=>{
 }
 const insertCoupon = async (req,res)=>{
     try {
-        console.log(req.body);
+     
         couponCode = req.body.code
         couponDescription = req.body.description
         couponDiscount = req.body.discount,
         couponExpiry = req.body.exp
-        console.log("exp",couponExpiry);
+        
         
         maximumAmount = req.body.max
         minimumAmount = req.body.min
@@ -784,10 +779,10 @@ const insertCoupon = async (req,res)=>{
 const editCoupon = async(req,res)=>{
     try {
         const couponId = req.query.id
-        console.log(req.body);
+        
       
         const coupon = await Coupon.findOne({_id:couponId})
-        console.log(coupon);
+        
         res.render('editCoupon',{coupon:coupon,message:undefined})
     } catch (error) {
         console.log(error);
@@ -797,7 +792,7 @@ const editCoupon = async(req,res)=>{
 }
 const insertEditedCoupon = async(req,res)=>{
     try {
-        console.log(req.body);
+   
         let couponId = req.body.id
         let couponCode = req.body.code
         let  couponDescription = req.body.description
@@ -832,7 +827,7 @@ const insertEditedCoupon = async(req,res)=>{
                 minimumAmount:minimumAmount,
             })
             
-            console.log(coupon);
+           
             res.redirect('/admin/add-coupon')
         }
    
@@ -875,7 +870,7 @@ const addCategoryOffer = async (req,res)=>{
        const name = req.body.name
        const offer = req.body.offer
        const category = await Category.findOne({name:name})
-       console.log("category",category);
+       
        if(category){
         const categoryData = await Category.findOneAndUpdate({name:name},{$set:{offer:offer}})
         const products = await Product.find({category:req.body.name})
@@ -891,7 +886,7 @@ const addCategoryOffer = async (req,res)=>{
                 product.disprice = product.price - (product.discount/100)*product.price
                 await product.save()
             }
-            console.log("productData",product);
+            
         })
       
        
@@ -951,10 +946,10 @@ const addCategoryOffer = async (req,res)=>{
 
 const salesReport = async (req,res)=>{
    try {
-    console.log("hai");
+  
     const orders = await Order.find({status:"delivered"}).populate('userId')
     const status = await Order.find({status:"delivered"}).count()
-    console.log("orders",orders);
+    
 
     let orderOriginalPrice = 0
     let orderDiscountPrice = 0
@@ -969,8 +964,8 @@ const salesReport = async (req,res)=>{
   
        
     })
-    console.log("original",orderOriginalPrice);
-    console.log(orderDiscountPrice);
+    
+    
     totalDiscount = orderOriginalPrice - orderDiscountPrice
   
     

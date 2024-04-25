@@ -557,10 +557,29 @@
                                         </div>
                                     </li>
                                     <li class="onhover-dropdown">
-                                        <div class="cart-media">
+                                        <% if(typeof userId =="undefined"){ %>
+                                            <li class="onhover-dropdown">
+                                                <div class="cart-media">
+                                                    <i data-feather="user"></i>
+                                                </div>
+                                                <div class="onhover-div profile-dropdown">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="/login" class="d-block">Login</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="/register" class="d-block">Register</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        <% }else{ %>
+                                            <div class="cart-media">
                                             
-                                            <a href="/logout" class="d-block">Logout</a>
-                                        </div>
+                                                <a href="/logout" class="d-block">Logout</a>
+                                            </div>
+                                        <% } %>
+                                       
                                         <!-- <div class="">
                                             <ul>
                                                 <li>
@@ -573,12 +592,12 @@
                                         </div>  -->
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
-                                        <!-- <div class="cart-media">
-                                            <a href="/user/wishlist.html">
+                                        <div class="cart-media">
+                                            <a href="/insert-wishlist">
                                                 <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill">5</span>
+                                                <span class=""></span>
                                             </a>
-                                        </div> -->
+                                        </div>
                                         <!-- <div class="onhover-div">
                                             <a href="/user/wishlist.html">
                                                 <div class="wislist-empty">
@@ -2396,6 +2415,7 @@
         const productId = document.getElementById("product-id").value
         const size = document.querySelector("input[name='size']:checked").value
         let quantity = document.getElementById("quantity").value
+        console.log("quantity",quantity);
         
         const stock = document.getElementById("stock").value
         console.log(stock);

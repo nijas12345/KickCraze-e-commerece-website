@@ -250,15 +250,8 @@
             <div class="card mb-4">
                 <article class="card-body">
                     <h5 class="card-title">Yearly statistics</h5>
-                    <label for="yearSelector1">Select Year:</label>
-                   
-                    <select id="yearSelector1" name="selectedYear">
-                        <option value="">selectYear</option>
-                        <% yearlyDatas.forEach(function(item) { %>
-                            <option value="<%= item %>"><%= item %></option>
-                            
-                        <% }); %>
-                    </select>
+                    <!-- <label for="yearSelector1">Select Year:</label> -->
+<!--              -->
                    
                     <canvas id="yearlySales" height="120px"></canvas>
                     <input type="hidden" value="<%= JSON.stringify(yearlyData) %>" id="yearlyReport">
@@ -343,7 +336,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("yearSelector1").addEventListener("change", function() {
         const selectedYear = this.value; // Get the selected value of the <select> element
-            console.log(selectedYear);
+            
         const url = `/admin/dashboard?selectedYear=${selectedYear}`; // Construct the URL with the selected year as a query parameter
 
         // Redirect the page to the constructed URL
@@ -356,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Doughnut Chart
         var ctxDoughnut = document.getElementById('myDoughnutChart').getContext('2d');
         const orderString = document.getElementById("order").value
-        console.log(orderString);
+        
         const order = JSON.parse(orderString)
         const colory =  [
               'rgb(20, 229, 34)',
@@ -552,8 +545,8 @@ for (let i = 0; i < category.length; i++) {
 
 const brandCtx = document.getElementById('brand').getContext('2d');
  const branddstring = document.getElementById("branddata").value
- console.log(document.getElementById('branddata'));
- console.log(branddstring);
+
+ 
  const brand = JSON.parse(branddstring)
  let counts =[]
  const bColor = [

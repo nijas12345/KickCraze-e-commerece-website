@@ -18,8 +18,10 @@ const dashboardController = require('../Controller/dashboardController')
 const orderController = require('../Controller/orderController')
 const Auth = require("../middleware/userAuth")
 
-// user Registration
 
+
+// user Registration
+userRoute.get('/',userController.loadHome)
 userRoute.get('/register',userController.loadRegister)
 userRoute.post('/register',userController.insertUser)
 userRoute.get("/loadOtp",userController.loadOtp)
@@ -50,7 +52,7 @@ userRoute.get('/forgotPassword',userController.forgotPassword)
 //user home
 
 userRoute.get('/home',Auth.requireAuth,Auth.isBlocked,userController.loadHome)
-userRoute.get('/product-profile',Auth.requireAuth,Auth.isBlocked,userController.productProfile)
+userRoute.get('/product-profile',Auth.jwtVerify,userController.productProfile)
 
 //wishlist
 userRoute.post('/insert-wishlist',Auth.requireAuth,Auth.isBlocked,userController.insertWishlist)
