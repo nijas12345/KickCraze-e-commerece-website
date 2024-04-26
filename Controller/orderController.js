@@ -124,6 +124,9 @@ const insertOrder = async (req, res) => {
           // Retrieve cart items
           const cart = await Cart.find({ userId: userId });
 
+          let orderedDate = new Date(Date.now());
+          console.log(orderedDate.toISOString()); // This will print the current timestamp in ISO 8601 format
+
           // Check if coupon is applied
           if (couponId === null) {
               // Create order without coupon
@@ -142,14 +145,16 @@ const insertOrder = async (req, res) => {
                   wcTotal:total,
                   addressId: orderAddress[0]._id,
                   payment: req.body.paymentId,
-                  orderedDate:Date.now()
+                  orderedDate:orderedDate
               });
+              
               const orderData = await order.save();
               return res.status(200).json({ success: true, redirect: `/order-success?orderId=${orderData._id}` });
           } else {
               // Fetch coupon details
               
-             
+              let orderedDate = new Date(Date.now());
+              console.log(orderedDate.toISOString()); // This will print the current timestamp in ISO 8601 format
               const couponData = await Coupon.findByIdAndUpdate(couponId,
                 { $addToSet: { users: { userId: userId } } }
             )
@@ -168,10 +173,10 @@ const insertOrder = async (req, res) => {
                   couponId:couponId,
                   addressId: orderAddress[0]._id,
                   payment: req.body.paymentId,
-                  orderedDate:Date.now()
+                  orderedDate:orderedDate
               });
               
-              
+              console.log("order",order.orderedDate);
               const orderData = await order.save();
               return res.status(200).json({ success: true, redirect: `/order-success?orderId=${orderData._id}` });
           }
@@ -185,6 +190,9 @@ const insertOrder = async (req, res) => {
           const addressId = req.body.addressId
           const cart = await Cart.find({userId:userId})
           const address = await Address.findOne({_id:addressId})
+
+          let orderedDate = new Date(Date.now());
+          console.log(orderedDate.toISOString()); // This will print the current timestamp in ISO 8601 format
           
           const order = new Order({
             userId: userId,
@@ -198,8 +206,9 @@ const insertOrder = async (req, res) => {
             wcTotal:total,
             addressId: addressId,
             payment: req.body.paymentId,
-            orderedDate:Date.now()
+            orderedDate:orderedDate
         });
+     
         const orderData = await order.save();
         return res.status(200).json({ success: true, redirect: `/order-success?orderId=${orderData._id}` });
 
@@ -216,6 +225,9 @@ const insertOrder = async (req, res) => {
         // let couponID = new mongoose.Types.ObjectId(couponId)
         // console.log(typeof couponID);
         // Create order with coupon
+        let orderedDate = new Date(Date.now());
+        console.log(orderedDate.toISOString()); // This will print the current timestamp in ISO 8601 format
+
         
             const order = new Order({
             userId: userId,
@@ -230,9 +242,9 @@ const insertOrder = async (req, res) => {
             couponId:couponId,
             addressId: addressId,
             payment: req.body.paymentId,
-            orderedDate:Date.now()
+            orderedDate:orderedDate
         });
-        
+       
         
         const orderData = await order.save();
         
@@ -299,7 +311,7 @@ const walletPayment = async (req,res)=>{
         let total = req.body.total;
         total = parseInt(total)
        
-        c
+        
         
         let wallets = await Wallet.findOne({userId:userId})
         if(wallets){
@@ -505,6 +517,15 @@ const onlineSuccess = async (req,res)=>{
         let total = req.body.total;
         
         let totalPrice = req.body.totalPrice
+        const orderedMoment = moment.utc("2024-04-25T20:00:02.434Z");
+
+// Convert to local timezone
+       const localOrderedMoment = orderedMoment.local();
+
+// Convert the moment to a JavaScript Date object
+       const orderedDate = localOrderedMoment.toDate();
+        console.log("ordedata",orderedDate);; // This will print the current timestamp in ISO 8601 format
+        
             
         // Check if address ID is provided
         if (req.body.addressId === null) {
@@ -529,6 +550,7 @@ const onlineSuccess = async (req,res)=>{
             });
   
             // Retrieve cart items
+         
             const cart = await Cart.find({ userId: userId });
   
             // Check if coupon is applied
@@ -549,7 +571,8 @@ const onlineSuccess = async (req,res)=>{
                     wcTotal:total,
                     addressId: orderAddress[0]._id,
                     payment: req.body.paymentId,
-                    orderedDate:Date.now()
+                    orderedDate:orderedDate
+                    
                 });
                 const orderData = await order.save();
                 return res.status(200).json({ success: true, redirect: `/order-success?orderId=${orderData._id}` });
@@ -577,7 +600,7 @@ const onlineSuccess = async (req,res)=>{
                     couponId:couponId,
                     addressId: orderAddress[0]._id,
                     payment: req.body.paymentId,
-                    orderedDate:Date.now()
+                    orderedDate:orderedDate
                 });
                 
                 
@@ -608,7 +631,7 @@ const onlineSuccess = async (req,res)=>{
               wcTotal:total,
               addressId: addressId,
               payment: req.body.paymentId,
-              orderedDate:Date.now()
+              orderedDate:orderedDate
           });
           const orderData = await order.save();
           return res.status(200).json({ success: true, redirect: `/order-success?orderId=${orderData._id}` });
@@ -642,7 +665,7 @@ const onlineSuccess = async (req,res)=>{
               couponId:couponId,
               addressId: addressId,
               payment: req.body.paymentId,
-              orderedDate:Date.now()
+              orderedDate:orderedDate
           });
           
           
@@ -883,10 +906,8 @@ const cancelOrder = async (req,res)=>{
         const newWallet = new Wallet({
             userId: userId,
             details: [{
-                amount: 500,
-                transactionType: "Credited",
-                method: "refferal",
-                date: Date.now()
+                amount: 0,
+                
             }]
         });
         

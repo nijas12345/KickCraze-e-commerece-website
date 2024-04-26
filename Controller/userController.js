@@ -51,6 +51,7 @@ const insertUser = async(req,res)=>{
             res.status(200).render("register",{message:"Email already exists"})
         }   
         else{
+            
             if(req.body.referal){
                 let user = await User.findOne({referal:req.body.referal})
                 

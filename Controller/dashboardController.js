@@ -28,7 +28,7 @@ const userProfile = async(req,res)=>{
        
        const address = await Address.find({userId:userId})
        const user = await User.find({_id:userId})
-       const orders = await Order.find({userId:userId}).populate("products.productId").sort({createdAt: -1})
+       const orders = await Order.find({userId:userId}).populate("products.productId").sort({orderedDate: -1})
     //    console.log(orders);
     //    console.log(userId);
     //    console.log("user",user);

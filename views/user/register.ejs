@@ -244,12 +244,12 @@
         isValid = false;
     }
 
-    // Mobile validation
+        
     if (mobile === '') {
         phoneError.textContent = 'Phone number is required';
         isValid = false;
     } else if (!isValidMobile(mobile)) {
-        phoneError.textContent = 'Phone number must contain at least 10 digits';
+        phoneError.textContent = 'Phone number must contain at least 10 digits and should not contain 10 zeros';
         isValid = false;
     }
 
@@ -286,9 +286,11 @@ function isValidEmail(email) {
 
 // Function to validate mobile number
 function isValidMobile(mobile) {
-    // Regular expression for mobile number validation
-    const mobileRegex = /^\d{10}$/;
-    return mobileRegex.test(mobile);
+    // Regular expression to check if the mobile number contains only digits
+    const regex = /^[0-9]+$/;
+
+    // Check if the mobile number contains at least 10 digits and doesn't contain 10 zeros
+    return regex.test(mobile) && mobile.length >= 10 && !/^0{10}$/.test(mobile);
 }
 
 
