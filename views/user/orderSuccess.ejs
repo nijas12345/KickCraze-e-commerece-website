@@ -1177,25 +1177,29 @@ body {
                         <tr>
                             <th>Product</th>
                             <th>Quantity</th>
-                            <th>total</th>
+                            <th>Item Price</th>
+                            <th>Total Price</th>
                             <th>Discounted Price</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% orders.products.forEach((product) => { %>
+                        <% orders.products.forEach((product, index) => { %>
                         <tr>
                             <td><%= product.productId.name %></td>
                             <td><%= product.quantity %></td>
-                            <td><%= product.totalPrice %></td>
-                            <% if (orders.discountTotal) { %>
-                            <td><%= orders.discountTotal %></td>
-                            <% } else { %>
                             <td><%= product.total %></td>
-                            <% } %>
                         </tr>
                         <% }) %>
+                        <!-- Display Total Price and Discounted Total in separate rows -->
+                        <tr>
+                            <td colspan="3"></td> <!-- Empty cells to align with the Product, Quantity, and Item Price columns -->
+                            <td><%= orders.totalPrice %></td> <!-- Total Price -->
+                            <td><%= orders.discountTotal ? orders.discountTotal : orders.wcTotal %></td> <!-- Discounted Total -->
+                        </tr>
                     </tbody>
                 </table>
+                
+                
             </div>
             <!-- Invoice total -->
             <p style="margin-left: 500px;">Total: <% if (orders.discountTotal) { %>₹ <%= orders.discountTotal %> <% } else { %>₹ <%= total %> <% } %></p>
@@ -1275,7 +1279,7 @@ body {
                                         <h5 class="font-light">Subtotal :</h5>
                                     </td>
                                     <td>
-                                        <h4>₹ <%= total %></h4>
+                                      
                                     </td>
                                 </tr>  -->
 

@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 const { concurrency } = require('sharp')
 const {razorpayInstance} = require('../helpers/razorpay')
 const Wallet = require('../model/walletModel')
-const moment = require('moment')
+
 
 
 
@@ -20,11 +20,13 @@ const loadSuccess = async (req,res)=>{
   try {
     
     const userId = req.id
+    console.log("id",req.query.orderId);
     const orderId = req.query.orderId
     const categories = await Category.find({delete: true})
-
+    
      
      const orders = await Order.findById(orderId).populate("products.productId").populate("addressId")
+     console.log("orders",orders);
      if(orders.isPayment == false){
        const orderData = await Order.findByIdAndUpdate(orderId,{isPayment:true})
      }
@@ -233,6 +235,7 @@ const insertOrder = async (req, res) => {
                 size: cartItem.size,
                 quantity: cartItem.quantity,
                 total: cartItem.total
+                
             })),
             totalPrice:totalPrice,
             discountTotal: total,

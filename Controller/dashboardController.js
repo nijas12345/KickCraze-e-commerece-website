@@ -41,6 +41,7 @@ const userProfile = async(req,res)=>{
        
        
        const wallets = await Wallet.findOne({userId:userId})
+       
        const categories = await Category.find({delete: true})
        
        let creditedAmount = 0
@@ -59,6 +60,7 @@ const userProfile = async(req,res)=>{
       
       
        totalAmount = creditedAmount - debitedAmount
+       console.log("wallets ",wallets);
         
        console.log("orders",orders);
        res.render("userProfile",{addressData:address,user:user,orders:orders,wishlistData:wishlistData,totalAmount:totalAmount,wallets:wallets,categories:categories,orderCount:orderCount,wishlistCount:wishlistCount,orderPending:orderPending})

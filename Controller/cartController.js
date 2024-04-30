@@ -12,9 +12,9 @@ const wishlist = require('../model/wishlistModel')
 const loadCart = async(req,res)=>{
     try {
         const  userId = req.id
-      
-       
+        
         const carts = await Cart.find({userId:userId}).populate('productId')
+        console.log("asdfasd",carts);
         const categories = await Category.find({delete: true})
         
         let totalCart = 0
