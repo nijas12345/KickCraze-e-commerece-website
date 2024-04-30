@@ -1048,6 +1048,26 @@ const returnOrder = async (req,res)=>{
     await orders.save()
 
     const order = await Order.findOne({_id:orderId})
+    
+    let wallet 
+     
+     wallet = await Wallet.findOne({userId:userId})
+    
+     if(wallet){
+        
+     }
+     else{
+        const newWallet = new Wallet({
+            userId: userId,
+            details: [{
+                amount: 0,
+                
+            }]
+        });
+        
+        await newWallet.save();
+        
+     }
    
     
     if(orders){
@@ -1104,7 +1124,7 @@ const daySales = async (req,res)=>{
     const endDate = req.body.endDate
  
 
-    if(date =="month"){
+    if(date == "month"){
 
 
         try {
@@ -1250,8 +1270,6 @@ const daySales = async (req,res)=>{
             $lte: endOfYearFormatted    // Less than or equal to the end date of the year
         },status:"delivered"
         });
-
-        
         
         
         let orderOriginalPrice = 0
