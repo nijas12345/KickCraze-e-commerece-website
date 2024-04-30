@@ -319,7 +319,7 @@ try {
         })
         const categories = await Category.find()
         const products = await Product.find({         
-        }).sort({price:1}).skip(skip).limit(limit)
+        }).sort({disprice:1}).skip(skip).limit(limit)
        
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -335,7 +335,7 @@ try {
         const categories = await Category.find()
         
         const products = await Product.find({         
-        }).sort({price:-1}).skip(skip).limit(limit)
+        }).sort({disprice:-1}).skip(skip).limit(limit)
         
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -403,7 +403,7 @@ try {
        else if(selectedValue =="option3"){
               
         const products = await Product.find({ name:{$regex:new RegExp(searchQuery,"i")},       
-        }).sort({price:1}).skip(skip).limit(limit)
+        }).sort({disprice:1}).skip(skip).limit(limit)
         
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -411,7 +411,7 @@ try {
        
         
         const products = await Product.find({  name:{$regex:new RegExp(searchQuery,"i")},        
-        }).sort({price:-1}).skip(skip).limit(limit)
+        }).sort({disprice:-1}).skip(skip).limit(limit)
        
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -452,7 +452,7 @@ try {
        else if(selectedValue =="option3"){
               
         const products = await Product.find({ category:categoryName       
-        }).sort({price:1}).skip(skip).limit(limit)
+        }).sort({disprice:1}).skip(skip).limit(limit)
        
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -460,7 +460,7 @@ try {
        
         
         const products = await Product.find({  category:categoryName        
-        }).sort({price:-1}).skip(skip).limit(limit)
+        }).sort({disprice:-1}).skip(skip).limit(limit)
       
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -503,7 +503,7 @@ try {
        else if(selectedValue =="option3"){
               
         const products = await Product.find({ category:categoryName ,name:{$regex:new RegExp(searchQuery,"i")}      
-        }).sort({price:1}).skip(skip).limit(limit)
+        }).sort({disprice:1}).skip(skip).limit(limit)
        
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -511,7 +511,7 @@ try {
        
         
         const products = await Product.find({  category:categoryName ,name:{$regex:new RegExp(searchQuery,"i")}      
-        }).sort({price:-1}).skip(skip).limit(limit)
+        }).sort({disprice:-1}).skip(skip).limit(limit)
         
         res.render('shop',{products:products,quantity:quantity,total:total,categories:categories,searchQuery:searchQuery,categoryName:categoryName,selectedValue:selectedValue})
         }
@@ -613,7 +613,7 @@ const loadSearch = async (req,res)=>{
     
         const products = await Product.find({category:name,
             name:{$regex:new RegExp(searchQuery,"i")}
-        }).sort({price:1})
+        }).sort({disprice:1})
       
         res.json(products)
     }
@@ -627,7 +627,7 @@ const loadSearch = async (req,res)=>{
     
         const products = await Product.find({category:name,
             name:{$regex:new RegExp(searchQuery,"i")}
-        }).sort({price:-1})
+        }).sort({disprice:-1})
         
         res.json(products)
     }
@@ -696,7 +696,7 @@ const SearchInput = async (req,res)=>{
         
             const products = await Product.find({
                 name:{$regex:new RegExp(searchQuery,"i")}
-            }).sort({price:1})
+            }).sort({disprice:1})
             
             res.json(products)
         }
@@ -706,7 +706,7 @@ const SearchInput = async (req,res)=>{
         
             const products = await Product.find({
                 name:{$regex:new RegExp(searchQuery,"i")}
-            }).sort({price:-1})
+            }).sort({disprice:-1})
             
             res.json(products)
         }
