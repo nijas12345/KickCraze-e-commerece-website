@@ -82,14 +82,7 @@
     
                     <div class="input">
                         <input type="text" name="mno" id="mobileno" placeholder="Phone Number">
-                        <% 
-    
-                   if(typeof message1 !=="undefined"){
-                    %> 
-                 <p style="color:red; margin-left: -135px ;"><%=message %></p>
-                 <%
-                  }
-                  %> 
+                      
                         
                     </div>
                           <div class="spin error" id="phone-error"></div>
@@ -102,6 +95,14 @@
                         <input type="password" name="cpass" id="compass" placeholder="Confirm Password" required>
                        
                     </div>
+                    <% 
+    
+                        if(typeof message1 !=="undefined"){
+                            %> 
+                            <p style="color:red; margin-left: -135px ;"><%=message1 %></p>
+                            <%
+                        }
+                        %> 
                     <div class="input">
                         <input type="refferal" name="referal" id="refer" placeholder="referal Code">
                        

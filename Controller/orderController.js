@@ -12,6 +12,7 @@ const mongoose = require('mongoose')
 const { concurrency } = require('sharp')
 const {razorpayInstance} = require('../helpers/razorpay')
 const Wallet = require('../model/walletModel')
+const moment = require('moment')
 
 
 
@@ -109,7 +110,7 @@ const insertOrder = async (req, res) => {
           const address = new Address({
               userId: userId,
               name: req.body.name,
-              houseName: req.body.houseName,
+              houseName: req.body.HouseName,
               state: "kerala",
               pin: req.body.pin,
               mobile: req.body.phoneNo
@@ -119,7 +120,7 @@ const insertOrder = async (req, res) => {
           // Retrieve order address
           let orderAddress = await Address.find({
               name: req.body.name,
-              houseName: req.body.houseName,
+              houseName: req.body.HouseName,
               pin: req.body.pin
           });
 
@@ -360,7 +361,7 @@ const walletPayment = async (req,res)=>{
                     const address = new Address({
                         userId: userId,
                         name: req.body.name,
-                        houseName: req.body.houseName,
+                        houseName: req.body.HouseName,
                         state: "kerala",
                         pin: req.body.pin,
                         mobile: req.body.phoneNo
@@ -370,7 +371,7 @@ const walletPayment = async (req,res)=>{
                     // Retrieve order address
                     let orderAddress = await Address.find({
                         name: req.body.name,
-                        houseName: req.body.houseName,
+                        houseName: req.body.HouseName,
                         pin: req.body.pin
                     });
           
@@ -530,7 +531,7 @@ const onlineSuccess = async (req,res)=>{
             const address = new Address({
                 userId: userId,
                 name: req.body.name,
-                houseName: req.body.houseName,
+                houseName: req.body.HouseName,
                 state: "kerala",
                 pin: req.body.pin,
                 mobile: req.body.phoneNo
@@ -540,7 +541,7 @@ const onlineSuccess = async (req,res)=>{
             // Retrieve order address
             let orderAddress = await Address.find({
                 name: req.body.name,
-                houseName: req.body.houseName,
+                houseName: req.body.HouseName,
                 pin: req.body.pin
             });
   
@@ -695,7 +696,7 @@ const failureOrder = async (req,res)=>{
             const address = new Address({
                 userId: userId,
                 name: req.body.name,
-                houseName: req.body.houseName,
+                houseName: req.body.HouseName,
                 state: "kerala",
                 pin: req.body.pin,
                 mobile: req.body.phoneNo
@@ -705,7 +706,7 @@ const failureOrder = async (req,res)=>{
             // Retrieve order address
             let orderAddress = await Address.find({
                 name: req.body.name,
-                houseName: req.body.houseName,
+                houseName: req.body.HouseName,
                 pin: req.body.pin
             });
   
@@ -1103,41 +1104,54 @@ const daySales = async (req,res)=>{
     const endDate = req.body.endDate
  
 
-    if(date == "month"){
-        const currentDate = moment()
-    
-        const startOfMonth = currentDate.clone().startOf('month').date(1)
-    
-        const endOfMonth = currentDate.clone().endOf('month')
-    
-        const startOfMonthFormatted = startOfMonth.format('YYYY-MM-DD');
-        const endOfMonthFormatted = endOfMonth.format('YYYY-MM-DD');
-    
-        
-    
-      const orders = await Order.find({orderedDate:{
-        $gte: startOfMonthFormatted, // Greater than or equal to the start date
-        $lte: endOfMonthFormatted},status:"delivered"
-      })
-      let orderOriginalPrice = 0
-      let orderDiscountPrice = 0
-      orders.forEach((order)=>{
-         orderOriginalPrice+= parseInt(order.totalPrice) 
-         if(order.discountTotal){
-            orderDiscountPrice += parseInt(order.discountTotal)
-         }
-        else{
-            orderDiscountPrice += parseInt(order.wcTotal)
-        }
-    
+    if(date =="month"){
+
+
+        try {
+            const currentDate = moment()
+            console.log(currentDate);
+           const startOfMonth = currentDate.clone().startOf('month')
+           console.log(startOfMonth);
+       
+           const endOfMonth = currentDate.clone().endOf('month')
+            console.log(endOfMonth);
+           const startOfMonthFormatted = startOfMonth.format('YYYY-MM-DD');
+           console.log(startOfMonthFormatted);
+           const endOfMonthFormatted = endOfMonth.format('YYYY-MM-DD');
+           console.log(typeof endOfMonthFormatted);
+       
+           
+       
+           const orders = await Order.find({
+               orderedDate: {
+                 $gte: startOfMonthFormatted,
+                 $lte:endOfMonthFormatted 
+               },status:"delivered"
+             });
+         console.log("orders",orders);
+         let orderOriginalPrice = 0
+         let orderDiscountPrice = 0
+         orders.forEach((order)=>{
+            orderOriginalPrice+= parseInt(order.totalPrice) 
+            if(order.discountTotal){
+               orderDiscountPrice += parseInt(order.discountTotal)
+            }
+           else{
+               orderDiscountPrice += parseInt(order.wcTotal)
+           }
+       
+            
+         })
+       
+         totalDiscount = orderOriginalPrice - orderDiscountPrice
+       
+       
          
-      })
-    
-      totalDiscount = orderOriginalPrice - orderDiscountPrice
-    
-    
-      
-     res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount}) 
+        res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
+        } catch (error) {
+           console.log(error); 
+        }
+     
     }
     
    
@@ -1188,7 +1202,7 @@ const daySales = async (req,res)=>{
         
         const startOfWeekFormatted = startOfWeek.format('YYYY-MM-DD');
         const endOfWeekFormatted = endOfWeek.format('YYYY-MM-DD');
-        
+        console.log(startOfWeekFormatted);
        
         
         const orders = await Order.find({
@@ -1236,6 +1250,8 @@ const daySales = async (req,res)=>{
             $lte: endOfYearFormatted    // Less than or equal to the end date of the year
         },status:"delivered"
         });
+
+        
         
         
         let orderOriginalPrice = 0
@@ -1251,7 +1267,7 @@ const daySales = async (req,res)=>{
 
             })
 
-            
+            totalDiscount = orderOriginalPrice - orderDiscountPrice   
             res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
         }
 

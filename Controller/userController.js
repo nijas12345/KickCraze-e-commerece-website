@@ -94,7 +94,7 @@ const insertUser = async(req,res)=>{
                   }
                 }
                 else{
-                    res.status(200).render("register",{message:"referal code is not exist"})
+                    res.status(200).render("register",{message1:"referal code is not exist"})
                 }
             }
             
