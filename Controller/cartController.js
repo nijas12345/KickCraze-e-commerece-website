@@ -11,13 +11,11 @@ const wishlist = require('../model/wishlistModel')
 
 const loadCart = async(req,res)=>{
     try {
-         
-
         const  userId = req.id
       
        
         const carts = await Cart.find({userId:userId}).populate('productId')
-        
+        const categories = await Category.find({delete: true})
         
         let totalCart = 0
         let totalPrice = 0
@@ -28,7 +26,7 @@ const loadCart = async(req,res)=>{
         })  
         discount = totalPrice - totalCart
           
-        res.render("cart",{carts:carts,totalCart:totalCart,totalPrice:totalPrice,discount:discount})
+        res.render("cart",{carts:carts,totalCart:totalCart,totalPrice:totalPrice,discount:discount,categories:categories})
         
     } catch (error) {
         console.log(error);
@@ -40,6 +38,7 @@ const insertCart = async (req,res)=>{
     try {
         
         let userId = req.id
+        console.log("req.body11",req.body);
       
         const productId = req.body.productId  
          
@@ -50,10 +49,12 @@ const insertCart = async (req,res)=>{
         // console.log("carts",carts);
 
         const cart = await Cart.findOne({userId:userId,productId:productId,size:size}).populate("productId")
-      
+        console.log("cart",cart);
         if(cart){  
       
-       
+        if(cart.quantity>=6){
+            
+        }else{
         const disprice  = parseInt(cart.productId.disprice)
         const price = parseInt(cart.productId.price)
         
@@ -64,6 +65,7 @@ const insertCart = async (req,res)=>{
         cart.totalPrice = cart.quantity * price
         
         await cart.save()
+        }
     }
         else{
 
@@ -101,7 +103,10 @@ const updateCart = async (req,res)=>{
         const userId = req.id
         
         const {quantity,productId,size} = req.body
-        
+        console.log("req.body22",req.body);
+        if(req.body.quantity == ""){
+        console.log("hai");
+        }else{
         const updateCart = await Cart.findOne({userId:userId,productId:productId,size:size}).populate("productId")
       
         if(updateCart){
@@ -132,7 +137,7 @@ const updateCart = async (req,res)=>{
         discount = totalPrice - totalCart
        
         res.status(200).json({total:updateCart.total,quantity:updateCart.quantity,totalCart:totalCart,totalPrice:totalPrice,discount:discount})
-                    
+    }            
     }
     } catch (error) {
         console.log(error);
@@ -158,11 +163,21 @@ const deleteCart = async (req,res)=>{
      
 }
 
+const clearCart = async (req,res)=>{
+    try {
+        const userId = req.id
+        const cartData = await Cart.deleteMany({userId:userId})
+        res.redirect('/home')
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const checkOut = async (req,res)=>{
          try {
         
 
-            
+            const categories = await Category.find({delete: true})
             const userId = req.id
             const wishlistCount = await wishlist.countDocuments({userId:userId})
             
@@ -180,12 +195,15 @@ const checkOut = async (req,res)=>{
                 totalCart = totalCart+cart.total
                 totalPrice = totalPrice+cart.totalPrice
             })
+            if(totalCart == 0){
+                res.redirect('/home')
+            }
             
             let coupons = await Coupon.find({
                 "users.userId": { $nin: [userId] },
                 isCoupon: true
               });
-                        
+           console.log("coupons",coupons);            
            if(coupons){
            
             
@@ -206,10 +224,10 @@ const checkOut = async (req,res)=>{
             
              
             
-             res.render("checkout",{address:address,carts:carts,totalCart:totalCart,couponData:couponData,totalPrice:totalPrice,wishlistCount:wishlistCount}) 
+             res.render("checkout",{address:address,carts:carts,totalCart:totalCart,couponData:couponData,totalPrice:totalPrice,wishlistCount:wishlistCount,categories:categories}) 
          }
          else{
-            res.render("checkout",{address:address,carts:carts,totalCart:totalCart,couponData:couponData,totalPrice:totalPrice,wishlistCount:wishlistCount})
+            res.render("checkout",{address:address,carts:carts,totalCart:totalCart,couponData:couponData,totalPrice:totalPrice,wishlistCount:wishlistCount,categories:categories})
          }
 
         
@@ -291,6 +309,7 @@ module.exports = {
     deleteCart,
     checkOut,
     applyCoupon,
-    removeCoupon
+    removeCoupon,
+    clearCart
 
 }

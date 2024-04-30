@@ -49,8 +49,6 @@ const requireAuth1 = async (req,res,next)=>{
 const isBlocked = async (req,res,next)=>{
     const userId = req.id
     const user = await User.findOne({_id:userId})
-    console.log("user",user);
-    console.log(user.status);
     if(user.status == false){
        await res.cookie("jwt","",{maxAge:1})
        res.redirect('/login')

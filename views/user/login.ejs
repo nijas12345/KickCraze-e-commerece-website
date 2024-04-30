@@ -60,14 +60,23 @@
                     %> </div>
                 <div class="input">
                     <label for="name">Username</label>
-                    <input type="text" name="name" id="name" required>
+                    <input type="text" name="name" id="name" >
                     <span class="spin"></span>
                     <div class="valid-feedback">
                         Please fill the name
                     </div>
                 </div>
+                <div> <% 
+                
+                if(typeof message1 !=="undefined"){
+                    %> 
+                    <p style="color:red; margin-left: -135px ;"><%=message1 %></p>
+                    <%
+                }
+                %> </div>
 
                 <div class="input">
+                  
                     <label for="pass">Password</label>
                     <input type="password" name="pass" id="pass">
                     <span class="spin"></span>
@@ -109,7 +118,7 @@
                     <span>Don't have an account?</span>
                   </p>
                     <div class="button login">
-                    <button onclick="location.href = '/register';" type="submit" style="width: 150px; margin-left: 130px;">
+                    <button onclick="location.href = '/register';" type="button" style="width: 150px; margin-left: 130px;">
                         <span>Sign Up</span>
                         <i class="fa fa-check"></i>
                     </button>

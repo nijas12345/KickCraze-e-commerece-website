@@ -68,7 +68,7 @@
                         <div class="main-menu">
                             <div class="menu-left">
                                 <div class="brand-logo">
-                                    <a href="/user/index.html">
+                                    <a href="/product-profile?id=<%=products._id%>">
                                         <svg class="svg-icon">
                                             <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
                                         </svg>
@@ -593,7 +593,7 @@
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
-                                            <a href="/insert-wishlist">
+                                            <a href="/show-wishlist">
                                                 <i data-feather="heart"></i>
                                                 <span class=""></span>
                                             </a>
@@ -608,7 +608,7 @@
                                             </a>
                                         </div> -->
                                     </li>
-                                    <li class="onhover-dropdown cart-dropdown">
+                                    <li class="">
                                         <a href="/cart" class="btn btn-solid-default btn-spacing">
                                             <i data-feather="shopping-cart" class="pe-2"></i>
                                             <span>Cart</span>
@@ -785,7 +785,8 @@
                                     <i class="fas fa-home"></i>
                                 </a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Product Details</li>
+                            &nbsp;
+                            <li class="" aria-current="page">Product Details</li>
                         </ol>
                     </nav>
                 </div>
@@ -882,13 +883,13 @@
                                             <li>
                                                 <img src="/user/assets/images/gif/fire.gif" class="img-fluid blur-up lazyload"
                                                     alt="image">
-                                                <span class="p-counter">37</span>
-                                                <span class="lang">orders in last 24 hours</span>
+                                                <span class="p-counter"></span>
+                                                <span class="lang">Popular Brand</span>
                                             </li>
                                             <li>
                                                 <img src="/user/assets/images/gif/person.gif" class="img-fluid user_img"
                                                     alt="image">
-                                                <span class="p-counter">44</span>
+                                                <span class="p-counter"></span>
                                                 <span class="lang">active view this</span>
                                             </li>
                                         </ul>
@@ -991,7 +992,7 @@
                                                 </span>
                                                 
                                                 <input type="number" name="quantity" class="form-control input-number"
-                                                    value="1" id="quantity" min="1" max="6">
+                                                    value="1" id="quantity" min="1" readonly >
                                                 <span class="input-group-prepend">
                                                     <button type="button"  class="btn quantity-right-plus"
                                                         data-type="plus" data-field="" id="increased-qty"  >
@@ -1021,68 +1022,24 @@
                                         <li>
                                             <img src="/user/assets/images/gif/truck.png" class="img-fluid blur-up lazyload"
                                                 alt="image">
-                                            <span class="lang">Free shipping for orders above $500 USD</span>
+                                            <span class="lang">Free shipping </span>
                                         </li>
                                     </ul>
-
-                                    <div class="mt-2 mt-md-3 border-product">
+                                    <%if(products.stock<10 && products.stock>0){%>
+                                        <div class="mt-2 mt-md-3 border-product">
                                         <h6 class="product-title hurry-title d-block">Hurry Up! Left <span>10</span>
                                             in
                                             stock</h6>
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar" style="width: 78%"></div>
                                         </div>
-                                        <div class="font-light timer-5">
-                                            <h5>Order in the next to get</h5>
-                                            <ul class="timer1">
-                                                <li class="counter">
-                                                    <h5 id="days">&#9251;</h5> Days :
-                                                </li>
-                                                <li class="counter">
-                                                    <h5 id="hours">&#9251;</h5> Hour :
-                                                </li>
-                                                <li class="counter">
-                                                    <h5 id="minutes">&#9251;</h5> Min :
-                                                </li>
-                                                <li class="counter">
-                                                    <h5 id="seconds">&#9251;</h5> Sec
-                                                </li>
-                                            </ul>
-                                        </div>
+                                     
                                     </div>
+                                    <%}%>
+                                    
+                                   
 
-                                    <div class="border-product">
-                                        <h6 class="product-title d-block">share it</h6>
-                                        <div class="product-icon">
-                                            <ul class="product-social">
-                                                <li>
-                                                    <a href="https://www.facebook.com/">
-                                                        <i class="fab fa-facebook-f"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://www.google.com/">
-                                                        <i class="fab fa-google-plus-g"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://twitter.com/">
-                                                        <i class="fab fa-twitter"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://www.instagram.com/">
-                                                        <i class="fab fa-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li class="pe-0">
-                                                    <a href="https://www.google.com/">
-                                                        <i class="fas fa-rss"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -1722,27 +1679,18 @@
                                     <div class="cart-wrap">
                                         <ul>
                                             <li>
-                                                <a href="/user/javascript:void(0)" class="addtocart-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#addtocart">
+                                                <a href="/product-profile?id=<%=products._id%>" >
+                                                    
                                                     <i data-feather="shopping-bag"></i>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="/user/javascript:void(0)" data-bs-toggle="modal"
-                                                    data-bs-target="#quick-view">
+                                                <a href="/product-profile?id=<%=products._id%>"
+                                                >
                                                     <i data-feather="eye"></i>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="/user/compare.html">
-                                                    <i data-feather="refresh-cw"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="/user/wishlist.html" class="wishlist">
-                                                    <i data-feather="heart"></i>
-                                                </a>
-                                            </li>
+                                        
                                         </ul>
                                     </div>
                                 </div>
@@ -1801,30 +1749,7 @@
     </section>
     <!-- product section end -->
 
-    <!-- Subscribe Section Start -->
-    <section class="subscribe-section section-b-space">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-6">
-                    <div class="subscribe-details">
-                        <h2 class="mb-3">Subscribe Our News</h2>
-                        <h6 class="font-light">Subscribe and receive our newsletters to follow the news about our fresh
-                            and fantastic Products.</h6>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
-                    <div class="subsribe-input">
-                        <div class="input-group">
-                            <input type="text" class="form-control subscribe-input" placeholder="Your Email Address">
-                            <button class="btn btn-solid-default" type="button">Button</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Subscribe Section End -->
+   
 
     <!-- footer start -->
     <footer class="footer-sm-space">
@@ -1834,38 +1759,35 @@
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-contact">
                             <div class="brand-logo">
-                                <a href="/user/index.html" class="footer-logo">
+                                <a href="/product-profile?id=<%=products._id%>" class="footer-logo">
                                     <svg class="svg-icon">
                                         <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
                                     </svg>
                                     <img src="/user/assets/images/logo.png" class="img-fluid blur-up lazyload" alt="logo">
                                 </a>
                             </div>
+
                             <ul class="contact-lists">
                                 <li>
                                     <span>
-                                        <b>phone:</b>
-                                        <span class="font-light"> + 185659635</span>
+                                        <b>phone:</b> <span class="font-light"> +91 8089765505</span>
                                     </span>
 
                                 </li>
                                 <li>
                                     <span>
-                                        <b>Address:</b>
-                                        <span class="font-light"> 1418 Riverwood Drive, Suite 3245
-                                            Cottonwood, CA 96052, United States</span>
+                                        <b>Address:</b><span class="font-light"> Melarvattath House Chentrappinni P.O</span>
                                     </span>
                                 </li>
                                 <li>
                                     <span>
-                                        <b>Email:</b>
-                                        <span class="font-light"> Voxo123@gmail.com</span>
+                                        <b>Email:</b><span class="">nijasbinabbas@gmail.com</span>
                                     </span>
-
                                 </li>
                             </ul>
                         </div>
                     </div>
+
                     <div class="col-lg-2 col-md-4 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
@@ -1877,47 +1799,37 @@
                                         <a href="/home" class="font-dark">Home</a>
                                     </li>
                                     <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Shop</a>
+                                        <a href="/shop" class="font-dark">Shop</a>
                                     </li>
-                                    <li>
-                                        <a href="/user/about-us.html" class="font-dark">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Blog</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Contact</a>
-                                    </li>
+                               
+                                
+                                
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
-                                <h3>New Categories</h3>
+                                <h3>Categories</h3>
                             </div>
-                            <div class="footer-content">
+
+                            <%categories.forEach((category)=>{%>
+                                <div class="footer-content">
                                 <ul>
                                     <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Latest Shoes</a>
+                                        
+                                        <a href="/sports-shoes?id=<%=category._id %>" class="font-dark"> <%=category.name%> </a>
                                     </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Branded Jeans</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">New Jackets</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Colorfull Hoodies</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Shiner Goggles</a>
-                                    </li>
+                                
                                 </ul>
                             </div>
+                            <%})%>
+                            
                         </div>
                     </div>
+
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
@@ -1926,35 +1838,42 @@
                             <div class="footer-content">
                                 <ul>
                                     <li>
-                                        <a href="/user/user-dashboard.html" class="font-dark">Your Orders</a>
+                                        <a href="/userProfile" class="font-dark">Your Orders</a>
                                     </li>
                                     <li>
-                                        <a href="/user/user-dashboard.html" class="font-dark">Your Account</a>
+                                        <a href="/userProfile" class="font-dark">Your Account</a>
                                     </li>
                                     <li>
-                                        <a href="/user/order-tracking.html" class="font-dark">Track Orders</a>
+                                        <a href="/userProfile" class="font-dark">Track Orders</a>
                                     </li>
                                     <li>
-                                        <a href="/user/wishlist.html" class="font-dark">Your Wishlist</a>
+                                        <a href="/userProfile" class="font-dark">Your Wishlist</a>
                                     </li>
-                                    <li>
-                                        <a href="/user/faq.html" class="font-dark">Shopping FAQs</a>
-                                    </li>
+                                
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-3 col-lg-4 col-sm-6 d-none d-sm-block">
                         <div class="footer-newsletter">
-                            <h3>Let’s stay in touch</h3>
-                            <div class="form-newsletter">
-                                <div class="input-group mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Email Address">
-                                    <span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-arrow-right"></i></span>
+                            <h3>Got Qustion ? Call Us 24/7</h3>
+                            <div class="footer-number">
+                                <div class="footer-number-image">
+                                    <img src="/user/assets/images/shoes/other/headphone.png"
+                                        class="img-fluid blur-up lazyload" alt="">
                                 </div>
-                                <p class="font-dark mb-0">Keep up to date with our latest news and special offers.
-                                </p>
+
+                                <div class="footer-number-container">
+                                    <h3>+91 8089765505</h3>
+                                </div>
+                            </div>
+
+                            <div class="footer-details">
+                                <p class="font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ab
+                                    dolorem nulla
+                                    impedit saepe esse et? Ea, totam recusandae doloribus ipsa esse voluptate quis nisi?
+                                    Voluptate.</p>
                             </div>
                         </div>
                     </div>
@@ -1968,29 +1887,29 @@
                         <ul>
                             <li class="font-dark">We accept:</li>
                             <li>
-                                <a href="/user/javascript:void(0)">
-                                    <img src="/user/assets/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                
+                                    <img src="/user/assets/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload">
+                                        
                             </li>
                             <li>
-                                <a href="/user/javascript:void(0)">
+                                
                                     <img src="/user/assets/images/payment-icon/2.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                        alt="payment icon">
                             </li>
                             <li>
-                                <a href="/user/javascript:void(0)">
+                                
                                     <img src="/user/assets/images/payment-icon/3.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                        alt="payment icon">
                             </li>
                             <li>
-                                <a href="/user/javascript:void(0)">
+                               
                                     <img src="/user/assets/images/payment-icon/4.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                        alt="payment icon">
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-0 font-dark">© 2022, Voxo Theme. Made with heart by Pixelstrap</p>
+                        <p class="mb-0 font-dark">© 2024, Kickzone.</p>
                     </div>
                 </div>
             </div>
@@ -1999,7 +1918,7 @@
     <!-- footer end -->
 
     <!-- sticky cart bottom start -->
-    <!-- <div class="sticky-bottom-cart">
+    <!--<div class="sticky-bottom-cart">
         <div class="container">
             <div class="cart-content">
                 <div class="product-image">
@@ -2043,21 +1962,7 @@
     <!-- sticky cart bottom end -->
 
     <!-- recently purchase product -->
-    <div class="recently-purchase d-md-flex d-none">
-        <img src="/user/assets/images/fashion/instagram/3.jpg" class="img-fluid blur-up lazyload" alt="">
-        <div class="media-body">
-            <div>
-                <h4>Some recently purchase this item</h4>
-                <a href="/user/javascript:void(0)">
-                    <span class="product-name">
-                        Casual Shoes
-                    </span>
-                </a>
-                <small class="timeAgo">50 minutes ago</small>
-            </div>
-        </div>
-        <a href="/user/javascript:void(0)" class="close-popup fa fa-times"></a>
-    </div>
+ 
     <!-- recently purchase product -->
 
     <!-- Quick view modal start -->
@@ -2404,6 +2309,8 @@
     <!-- script js -->
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
      <script>
 
 
@@ -2420,13 +2327,23 @@
         const stock = document.getElementById("stock").value
         console.log(stock);
         
-        if(stock<parseInt(quantity ) ){
-            alert('not enough stock Available')
-            return 
-        }
-        if(parseInt(quantity)>5){
-          alert("please select minimum quantity")
-        }
+        if (stock < parseInt(quantity)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Not enough stock available',
+            text: 'There is not enough stock available for this quantity.',
+        });
+        return;
+    }
+    if(parseInt(quantity)>6){
+        Swal.fire({
+            icon:'error',
+            title:"The Maximum Quantity for User is Six",
+            
+        })
+        return;
+    }
+
         console.log(parseInt(quantity)>3);
         console.log(stock);
         
@@ -2442,6 +2359,7 @@
                 body:JSON.stringify(data)
             })
             const responseData = response.json()
+            
         } catch (error) {
             console.log(error);
         }
@@ -2462,7 +2380,11 @@
    console.log(response);
    if(response.ok){
     const responseData = response.json
-    
+    swal.fire({
+        icon:"success",
+        title:'Product Added To Wishlist',
+        
+    })
    }
  
    })

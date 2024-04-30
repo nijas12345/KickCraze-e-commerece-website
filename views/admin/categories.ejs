@@ -150,22 +150,7 @@
                 </li> -->
             </ul>
             <hr>
-            <ul class="menu-aside">
-                <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/admin-#"> <i class="icon material-icons md-settings"></i>
-                        <span class="text">Settings</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/admin-page-settings-1.html">Setting sample 1</a>
-                        <a href="/admin/admin-page-settings-2.html">Setting sample 2</a>
-                    </div>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="/admin/admin-page-blank.html"> <i class="icon material-icons md-local_offer"></i>
-                        <span class="text"> Starter page </span>
-                    </a>
-                </li>
-            </ul>
+            
             <br>
             <br>
         </nav>
@@ -174,10 +159,7 @@
         <header class="main-header navbar">
             <div class="col-search">
                 <form class="searchform">
-                    <div class="input-group">
-                        <input list="search_terms" type="text" class="form-control" placeholder="Search term">
-                        <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i></button>
-                    </div>
+                   
                     <datalist id="search_terms">
                         <option value="Products">
                         <option value="New orders">
@@ -189,37 +171,10 @@
             <div class="col-nav">
                 <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon" href="/admin/admin-#">
-                            <i class="material-icons md-notifications animation-shake"></i>
-                            <span class="badge rounded-pill">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-icon darkmode" href="/admin/admin-#"> <i class="material-icons md-nights_stay"></i> </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/admin/admin-#" class="requestfullscreen nav-link btn-icon"><i class="material-icons md-cast"></i></a>
-                    </li>
+ 
                     <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="/admin/admin-#" id="dropdownLanguage" aria-expanded="false"><i class="material-icons md-public"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownLanguage">
-                            <a class="dropdown-item text-brand" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-us.png" alt="English">English</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-fr.png" alt="Français">Français</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-jp.png" alt="Français">日本語</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><img src="/admin/admin-assets/imgs/theme/flag-cn.png" alt="Français">中国人</a>
-                        </div>
-                    </li>
-                    <li class="dropdown nav-item">
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="/admin/admin-#" id="dropdownAccount" aria-expanded="false"> <img class="img-xs rounded-circle" src="/admin/admin-assets/imgs/people/avatar2.jpg" alt="User"></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownAccount">
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-perm_identity"></i>Edit Profile</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-settings"></i>Account Settings</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-account_balance_wallet"></i>Wallet</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-receipt"></i>Billing</a>
-                            <a class="dropdown-item" href="/admin/admin-#"><i class="material-icons md-help_outline"></i>Help center</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="/admin/admin-#"><i class="material-icons md-exit_to_app"></i>Logout</a>
+                       
+                            <a class="dropdown-item text-danger" href="/admin/logout"><i class="material-icons md-exit_to_app"></i>Logout</a>
                         </div>
                     </li>
                 </ul>
@@ -236,9 +191,7 @@
                     <p style="color: red;"><%= message %></p>
                 <%}%>
                
-                <div>
-                    <input type="text" placeholder="Search Categories" class="form-control bg-white">
-                </div>
+             
             </div>
             <div class="card">
                 <div class="card-body">
@@ -368,9 +321,9 @@
         }
     }  
     document.getElementById("submit-btn").addEventListener("click",function(){
-        const description = document.getElementById("description").value
+        const description = document.getElementById("description").value.trim()
         console.log(description);
-        const name = document.getElementById("category-name").value
+        const name = document.getElementById("category-name").value.trim()
         console.log(name);
         const nameError = document.getElementById("name-error")
         const descriptionError = document.getElementById("description-error")

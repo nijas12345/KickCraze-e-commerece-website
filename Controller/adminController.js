@@ -370,7 +370,7 @@ const insertCategories = async (req,res)=>{
         const categories = await Category.findOne({name:req.body.name})
         
         if(categories){
-           const categories =await Category.find()
+            const categories = await Category.find({delete: true})
             res.render('categories',{message:"This category is already exist",categories:categories})
         }
         else{
@@ -378,8 +378,9 @@ const insertCategories = async (req,res)=>{
                 name:req.body.name,
                 description:req.body.description
             }) 
-            const categories =await Category.find()
             const categoryData = await category.save()
+            const categories = await Category.find({delete: true})
+           
             res.render('categories',{categories:categories})
           
            
@@ -446,7 +447,7 @@ const deleteCategories = async (req,res)=>{
          
          const categoryId = req.query.id
          const editCategory = await Category.findByIdAndUpdate(categoryId,{delete:false})
-         const categories = await Category.find()
+         const categories = await Category.find({delete: true})
          res.render("categories",{categories:categories})
     }
 
@@ -463,7 +464,7 @@ const ListProduct = async (req,res)=>{
     try {
         const products = await Product.find()
        
-        const categories = await Category.find()
+        const categories = await Category.find({delete: true})
         res.render('productList',{product:products,categories:categories})
     } 
     catch (error) {
@@ -477,7 +478,7 @@ const ListProduct = async (req,res)=>{
 const addProduct = async (req,res)=>{
     try {
         
-        const categories = await Category.find()
+        const categories = await Category.find({delete: true})
         res.render("productAdd",{categories:categories})
     } catch (error) {
         console.log(error);
@@ -490,7 +491,7 @@ const insertProduct = async (req,res)=>{
 
     try { 
        
-      
+       console.log("req.files",req.files);
        const fileNames = req.files.map(file=>file.filename)
       
         console.log(fileNames);
@@ -588,8 +589,10 @@ const editProduct = async (req,res)=>{
      
       const editId = req.query.id
      
-      const categories = await Category.find()
+      const categories = await Category.find({delete: true})
       const products = await Product.findOne({_id:editId})
+      
+
       console.log("product",products);
      
       res.render("editProduct",{categories:categories,products:products})
@@ -605,6 +608,21 @@ const editProduct = async (req,res)=>{
 const insertEditedProduct = async (req,res)=>{
 
     try {
+         console.log("req.flies",req.files);
+        const fileNames = req.files.map(file=>file.filename)
+      
+        console.log(fileNames);
+      let image = [];
+
+      fileNames.forEach(filename => {
+        const outputPath2 = "/productImages/"+filename;
+        console.log("==================",outputPath2);
+        image.push(outputPath2);
+      });
+       console.log("image",image);
+        
+  
+        
         console.log("2");
         const id = req.query.id
         const price = req.body.price
@@ -616,7 +634,7 @@ const insertEditedProduct = async (req,res)=>{
         if(category.offer>discount){
             disprice = req.body.price - (category.offer/100)*req.body.price
             const productData = await Product.findByIdAndUpdate(id,
-                {
+                {   
                name:req.body.name,
                price:price,
                disprice:disprice,
@@ -625,8 +643,28 @@ const insertEditedProduct = async (req,res)=>{
                stock:req.body.stock,
                category:req.body.category,
                sizes:req.body.sizes,
-               offer:category.offer
+               offer:category.offer,
+            //    image:image
                  })
+                 if (req.body.imagesToRemove && req.body.imagesToRemove.length > 0) {
+                    // Convert strings to numbers
+                    const imageIndices = req.body.imagesToRemove.map(index => parseInt(index));
+    
+                    // Remove images from productData
+                    productData.image = productData.image.filter((image, index) => !imageIndices.includes(index));
+    
+                    
+    
+                    // Perform database update
+                    await productData.save();
+                }
+                if(image.length !==0 ){
+                    image.forEach(img =>{
+                        productData.image.push(img)
+                    })
+                    await productData.save();
+                }
+                console.log("product",productData);
         }
         else{
             const disprice = price - (discount/100) * price
@@ -640,9 +678,36 @@ const insertEditedProduct = async (req,res)=>{
                stock:req.body.stock,
                category:req.body.category,
                sizes:req.body.sizes,
-               offer:category.offer
+               offer:category.offer,
+            //    image:image
                  })
+                console.log("product data befor removing image",productData);
+
+                 if (req.body.imagesToRemove && req.body.imagesToRemove.length > 0) {
+                    // Convert strings to numbers
+                    const imageIndices = req.body.imagesToRemove.map(index => parseInt(index));
+                    console.log('index  ',imageIndices);
+    
+                    // Remove images from productData
+                    productData.image = productData.image.filter((image, index) => !imageIndices.includes(index));
+    
+                    
+    
+                    // Perform database update
+                    await productData.save();
+                }
+                if(image.length !==0 ){
+                    image.forEach(img =>{
+                        productData.image.push(img)
+                    })
+                    await productData.save();
+                }
+                
+                console.log("product data after removing image",productData);
+
         }
+        // Remove images selected for deletion
+       
         
           
           const products = await Product.find()
@@ -678,8 +743,8 @@ const   deleteProduct = async (req,res)=>{
 const listOrders = async(req,res)=>{
      
     try {
-        const orders = await Order.find().populate("userId").populate("addressId").populate("products.productId").sort({orderedDate:1})
-      
+        const orders = await Order.find().populate("userId").populate("addressId").populate("products.productId").sort({orderedDate:-1})
+       console.log("orders",orders);
         res.render("orders",{orders:orders})
     } catch (error) {
         console.log(error);

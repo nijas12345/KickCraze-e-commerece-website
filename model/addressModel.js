@@ -12,6 +12,10 @@ const addressSchema = new mongoose.Schema({
     houseName:{
         type:String
     },
+    isAddress:{
+        type:Boolean,
+        default:true
+    },
     street:{
         type:String
     },

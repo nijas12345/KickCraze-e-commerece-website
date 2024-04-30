@@ -62,9 +62,11 @@ userRoute.get('/wishlist-remove',Auth.requireAuth,Auth.isBlocked,userController.
 
 userRoute.get('/userProfile',Auth.requireAuth,Auth.isBlocked,dashboardController.userProfile)
 userRoute.post('/add-address',Auth.requireAuth,Auth.isBlocked,dashboardController.addAddress)
-userRoute.put('/add-edit',Auth.requireAuth,Auth.isBlocked,dashboardController.addEdit)
+userRoute.post('/add-edit',Auth.requireAuth,Auth.isBlocked,dashboardController.addEdit)
 userRoute.put("/userProfile-edit",Auth.requireAuth,Auth.isBlocked,dashboardController.editUserProfile)
 userRoute.get("/delete-address",Auth.requireAuth,Auth.isBlocked,dashboardController.deleteAddres)
+userRoute.put('/change-password',Auth.requireAuth,Auth.isBlocked,dashboardController.changePassword)
+userRoute.get('/delete-account',Auth.requireAuth,Auth.isBlocked,dashboardController.deleteUser)
 
 //usercart
 
@@ -76,9 +78,10 @@ userRoute.put("/update-quantity",Auth.requireAuth,Auth.isBlocked,cartController.
 
 
 userRoute.put("/delete-cart",Auth.requireAuth,Auth.isBlocked,cartController.deleteCart)
+userRoute.get('/clear-cart',Auth.requireAuth,Auth.isBlocked,cartController.clearCart)
 userRoute.get("/checkout",Auth.requireAuth,Auth.isBlocked,cartController.checkOut)
 
-
+ 
 //userorder
 userRoute.get("/order-success",Auth.requireAuth,Auth.isBlocked,orderController.loadSuccess)
 userRoute.post('/online-insert',Auth.requireAuth,Auth.isBlocked,orderController.onlineOrder)

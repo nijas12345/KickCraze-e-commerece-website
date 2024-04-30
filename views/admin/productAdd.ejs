@@ -51,35 +51,49 @@
     max-height: 200px; /* Set the maximum height */
     margin: 5px; /* Add some margin between images */
 }
+.error {
+        color: red; /* Set text color to red */
+        font-size: 14px; /* Set font size */
+        margin-top: 5px; /* Add some top margin */
+    }
         </style>
     </head>
     <body>
         <h1>Add New Product</h1>
         <form id="form" action="/admin/add-products" method="post" enctype="multipart/form-data">
+          <label for="">Enter Name</label>
             <div  class="spin error" id="name-error"></div>
-            <input type="text" name="name" placeholder="Enter Name" id="name" >
+            <input type="text" name="name" placeholder="Type here.." id="name" >
             <br>
+            <label for="">Enter Price</label>
             <div  class="spin error" id="price-error"></div>
-            <input type="text" name="price" placeholder="Enter Price" id="price" >
+            <input type="text" name="price" placeholder="Type here.." id="price" >
             
             <br>
+            <label for="">Enter Discount</label>
             <div  class="spin error" id="discount-error"></div>
-            <input type="text" name="discount" placeholder="Enter Discount Percentage" id="discount" >
+            <input type="text" name="discount" placeholder="Type here.." id="discount" >
             <br>
+            <label for="">Enter Color</label>
             <div  class="spin error" id="color-error"></div>
-            <input type="text" name="color" placeholder="Enter Color" id="color" >
+            <input type="text" name="color" placeholder="Type here.." id="color" >
             <br>
+            <label for="">Enter Stock</label>
             <div  class="spin error" id="stock-error"></div>
-            <input type="text" name="stock" placeholder="Enter Stock" id="stock" >
+            <input type="text" name="stock" placeholder="Type here.." id="stock" >
             <br>
+            <label for="">Enter Size 1</label>
             <div  class="spin error" id="size1-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 1" id="size1"><br>
+            <input type="text" name="sizes[]" placeholder="Type here.." id="size1"><br>
             <div  class="spin error" id="size2-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 2" id="size2"><br>
+            <label for="">Enter Size 2</label>
+            <input type="text" name="sizes[]" placeholder="Type here.." id="size2"><br>
             <div  class="spin error" id="size3-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 3" id="size3"><br>
+            <label for="">Enter Size 3</label>
+            <input type="text" name="sizes[]" placeholder="Type here.." id="size3"><br>
             <div  class="spin error" id="size4-error"></div>
-            <input type="text" name="sizes[]" placeholder="Size 4" id="size4"><br>
+            <label for="">Enter Size 4</label>
+            <input type="text" name="sizes[]" placeholder="Type here.." id="size4"><br>
             <br>
             <div  class="spin error" id="image-error"></div>
             <input type="file" id="image-upload" accept="image/*" multiple>
@@ -89,7 +103,7 @@
             <!-- Buttons for controlling cropping -->
             <button type="button" id="crop-button">Crop Image</button>
             <button type="button" id="cancel-crop-button">Cancel</button>
-            <input type="submit" name="cropped-image" id="cropped-image">
+            <!-- <input type="submit" name="cropped-image" id="cropped-image"> -->
             <select
                         class="form-select"
                         id="choices-category-input"
@@ -116,7 +130,7 @@
        
        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
        <script>
-   const form = document.getElementById("form")
+  const form = document.getElementById("form")
   let totalimages = 0;
 
   function imageupload(event) {
@@ -275,13 +289,13 @@
               else if (/\d|-/.test(name)) {
               nameError.textContent = 'Name cannot contain digits or hyphens';
              isValid = false;
-             
+            
               }
-              if (isNaN(price) || price === '' ||parseFloat(price) === 0 ) {
-               priceError.textContent = 'Please Enter a valid Price';
-              isValid = false;
-        
-                }
+              if (!/^\d+$/.test(price) || parseInt(price) <= 0) {
+                priceError.textContent = 'Please enter a valid positive integer for price';
+                isValid = false;
+              }
+
                 if(discount == ""){
                discountError.textContent = "discount is required"
                 isValid = false
@@ -293,37 +307,36 @@
                   isValid = false
                      
                 }
-              if (isNaN(stock) || stock === ''||parseFloat(stock)===0) {
-             stockError.textContent = 'Please Enter a valid stock';
-             isValid = false;
-      
-              }
+                if (!/^\d+$/.test(stock) || parseInt(stock) <= 0) {
+                    stockError.textContent = 'Please enter a valid positive integer for stock';
+                    isValid = false;
+                }
               
               if (/\d/.test(color)) {
               colorError.textContent = 'Color cannot contain numbers';
               isValid = false;
               
               }
-             if (isNaN(size1) || size1 === '' ||parseFloat(size1)===0) {
-             size1Error.textContent = 'Please Enter a valid size';
-             isValid = false;
-            
+              if (!/^\d+$/.test(size1) || parseInt(size1) <= 0) {
+                  size1Error.textContent = 'Please enter a valid positive integer for size';
+                  isValid = false;
               }
-              if (isNaN(size2) || size2 === '' ||parseFloat(size2)===0) {
-             size2Error.textContent = 'Please Enter a  size';
-             isValid = false;
-           
+
+              if (!/^\d+$/.test(size2) || parseInt(size2) <= 0) {
+                  size2Error.textContent = 'Please enter a valid positive integer for size';
+                  isValid = false;
               }
-              if (isNaN(size3) || size3 === ''||parseFloat(size3)===0) {
-             size3Error.textContent = 'Please Enter a  size';
-             isValid = false;
-      
+
+              if (!/^\d+$/.test(size3) || parseInt(size3) <= 0) {
+                  size3Error.textContent = 'Please enter a valid positive integer for size';
+                  isValid = false;
               }
-              if (isNaN(size4) || size4 === ''||parseFloat(size4)===0) {
-             size4Error.textContent = 'Please Enter a  size';
-             isValid = false;
-           
+
+              if (!/^\d+$/.test(size4) || parseInt(size4) <= 0) {
+                  size4Error.textContent = 'Please enter a valid positive integer for size';
+                  isValid = false;
               }
+
               
               const files = document.getElementById("image-upload").files;
               const imageError = document.getElementById("image-error");

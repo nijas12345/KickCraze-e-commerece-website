@@ -1072,7 +1072,7 @@ const verifyUser = async(req,res)=>{
         
                 }
                 else{
-                    res.render("login",{message:"your password is incorrect"})
+                    res.render("login",{message1:"your password is incorrect"})
                 }
             }
             else{
@@ -1103,7 +1103,7 @@ const forgotPassword = async (req,res)=>{
 }
 
 
-const loadHome = async (req,res)=>{
+const  loadHome = async (req,res)=>{
     try {
         const userId = req.id
         
@@ -1112,17 +1112,8 @@ const loadHome = async (req,res)=>{
         const wishlistCount = await wishlist.countDocuments({userId:userId})
         
         
-        const categories = await Category.find()
-        
-       
-       
-        
-        
-        // console.log("categories",categories);
-       
-
-
-        
+        const categories = await Category.find({delete: true})
+        console.log("categories",categories); 
         
         res.render('home',{product:products,wishlistCount:wishlistCount,categories:categories,userId:userId})
     } catch (error) {
@@ -1152,9 +1143,9 @@ const   productProfile = async(req,res)=>{
        const productId = req.query.id
        const products = await Product.findOne({_id:productId})
        const category = await Category.findOne({name:products.category})
-       
+       const categories = await Category.find({delete: true})
        const similarProducts = await Product.find({category:products.category})
-        res.render("productProfile",{products:products,similarProducts:similarProducts,category:category,userId:userId})
+        res.render("productProfile",{products:products,similarProducts:similarProducts,category:category,userId:userId,categories:categories})
     } catch (error) {
         console.log(error);
         const errorMessage = "internal Servor Error"
@@ -1195,10 +1186,10 @@ const insertWishlist = async (req,res)=>{
 const showWishlist = async (req,res)=>{
     try {
         const userId = req.id
-        
+        const categories = await Category.find({delete: true})
         const wishlistData = await wishlist.find({userId:userId}).populate("userId").populate("productId")
        
-        res.render("wishlist",{wishlistData:wishlistData})
+        res.render("wishlist",{wishlistData:wishlistData,categories:categories})
 
     } catch (error) {
         console.log(error);
@@ -1214,7 +1205,7 @@ const removeWishlist = async (req,res)=>{
         const wishlists = await wishlist.findOneAndDelete({productId:productId})
         
         const wishlistData = await wishlist.find({userId:userId}).populate("userId").populate("productId")
-        res.render('wishlist',{wishlistData:wishlistData}) 
+        res.redirect('/show-wishlist')
     } catch (error) {
         console.log(error);
         const errorMessage = "internal Servor Error"
@@ -1233,6 +1224,7 @@ const sportShoe = async (req,res)=>{
        const category = await Category.findOne({_id:req.query.id})
        const name = category.name
        const products = await Product.find({category:name})
+       const categories = await Category.find({delete: true})
        
        const carts = await Cart.find({userId:userId})
        
@@ -1242,7 +1234,7 @@ const sportShoe = async (req,res)=>{
            quantity = quantity +cart.quantity
            total = total + cart.total
        })
-       res.render('shopCategory',{products:products,total:total,quantity:quantity,category:categoryId})
+       res.render('shopCategory',{products:products,total:total,quantity:quantity,category:categoryId,categories:categories})
 
         
         

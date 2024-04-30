@@ -96,6 +96,29 @@
     border: none;
     cursor: pointer;
 }
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .headline {
+        text-align: center;
+        font-size: 36px;
+        color: #ff6347; /* Red color */
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 50px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .tagline {
+        text-align: center;
+        font-size: 20px;
+        color: #333;
+        margin-top: 10px;
+    }
 
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
@@ -114,7 +137,7 @@
                         <div class="main-menu">
                             <div class="menu-left">
                                 <div class="brand-logo">
-                                    <a href="/user/index.html">
+                                    <a href="/home">
                                         <svg class="svg-icon">
                                             <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
                                         </svg>
@@ -872,11 +895,7 @@
                             </nav>
                             <div class="menu-right">
                                 <ul>
-                                    <li>
-                                        <div class="search-box">
-                                            <i data-feather="search"></i>
-                                        </div>
-                                    </li>
+                                 
                                     <li class="onhover-dropdown">
                                         <div class="cart-media">
                                             
@@ -895,7 +914,7 @@
                                     </li>
                                     <li class="onhover-dropdown wislist-dropdown">
                                         <div class="cart-media">
-                                            <a href="/user/wishlist.html">
+                                            <a href="/show-wishlist">
                                                 <i data-feather="heart"></i>
                                                 <span class=""></span>
                                             </a>
@@ -1132,7 +1151,10 @@
     <!--Invoice Section start-->
 
     <div class="invoice-container" style="margin-left: 1100px;">
-        <div  class="invoice">
+        <div  class="invoice" id="invoice-hide" hidden>
+            <h1 class="headline">Kickzone<span style="color: #000;">.</span><span style="color: #6495ED;">online</span></h1>
+            <p class="tagline">The Ultimate Destination for Premium Shoes</p>
+            <br>
             <h2>Invoice</h2>
             <!-- Invoice details -->
             <div class="invoice-details">
@@ -1146,6 +1168,7 @@
                     <li>Customer Name: <%= orders.addressId.name %></li>
                     <!-- Add more invoice details as needed -->
                 </ul>
+             
             </div>
             <!-- Invoice table -->
             <div class="invoice-table">
@@ -1154,7 +1177,8 @@
                         <tr>
                             <th>Product</th>
                             <th>Quantity</th>
-                            <th>Price</th>
+                            <th>total</th>
+                            <th>Discounted Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1162,6 +1186,7 @@
                         <tr>
                             <td><%= product.productId.name %></td>
                             <td><%= product.quantity %></td>
+                            <td><%= product.totalPrice %></td>
                             <% if (orders.discountTotal) { %>
                             <td><%= orders.discountTotal %></td>
                             <% } else { %>
@@ -1173,9 +1198,19 @@
                 </table>
             </div>
             <!-- Invoice total -->
-            <p>Total: <% if (orders.discountTotal) { %>₹ <%= orders.discountTotal %> <% } else { %>₹ <%= total %> <% } %></p>
+            <p style="margin-left: 500px;">Total: <% if (orders.discountTotal) { %>₹ <%= orders.discountTotal %> <% } else { %>₹ <%= total %> <% } %></p>
                 <!-- Your invoice total here -->
+
+                <div >
+                    <p>Address:</p>
+                    <div style="display: flex;"><span>Name:   <%=orders.addressId.name %></span></div>
+                    <div style="display: flex;"><span>houseName:   <%=orders.addressId.houseName %></span></div>
+                    <div style="display: flex;"><span>state:   <%=orders.addressId.state %></span></div>
+                    <div style="display: flex;"><span>Phone:   <%=orders.addressId.mobile %></span></div>
+                    <div style="display: flex;"><span>Pincode:   <%=orders.addressId.pin %></span></div>
+                </div>
             </div>
+         
             <!-- Download button -->
             <div class="download-button">
                 <button onclick="downloadInvoice()">Download PDF</button>
@@ -1205,7 +1240,7 @@
                                
                                 <tr class="table-order">
                                     <td>
-                                        <a href="/user/javascript:void(0)">
+                                        <a href="/product-profile?id=<%= product.productId._id %>">
                                             <img src="<%= product.productId.image[0] %>"
                                                 class="img-fluid blur-up lazyload" alt="">
                                         </a>
@@ -1328,7 +1363,7 @@
                                  <span>Delivery Date: 
 
                                     <h3>expected date of delivery: <span><%= deliveryDate.toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }) %></span>%> </span></h3>
-                                    <a href="/user/order-tracking.html">track order</a>
+                                    <a href="/view-order?id=<%=orders._id %>">track order</a>
                                 </div>
                             </div>
                         </div>
@@ -1339,30 +1374,7 @@
     </section>
     <!-- Order Details Section End -->
 
-    <!-- Subscribe Section Start -->
-    <section class="subscribe-section section-b-space">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-md-6">
-                    <div class="subscribe-details">
-                        <h2 class="mb-3">Subscribe Our News</h2>
-                        <h6 class="font-light">Subscribe and receive our newsletters to follow the news about our fresh
-                            and fantastic Products.</h6>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
-                    <div class="subsribe-input">
-                        <div class="input-group">
-                            <input type="text" class="form-control subscribe-input" placeholder="Your Email Address">
-                            <button class="btn btn-solid-default" type="button">Button</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Subscribe Section End -->
+    
 
     <!-- footer start -->
     <footer class="footer-sm-space">
@@ -1372,38 +1384,35 @@
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-contact">
                             <div class="brand-logo">
-                                <a href="/user/index.html" class="footer-logo">
+                                <a href="/home" class="footer-logo">
                                     <svg class="svg-icon">
                                         <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
                                     </svg>
                                     <img src="/user/assets/images/logo.png" class="img-fluid blur-up lazyload" alt="logo">
                                 </a>
                             </div>
+
                             <ul class="contact-lists">
                                 <li>
                                     <span>
-                                        <b>phone:</b>
-                                        <span class="font-light"> + 185659635</span>
+                                        <b>phone:</b> <span class="font-light"> +91 8089765505</span>
                                     </span>
 
                                 </li>
                                 <li>
                                     <span>
-                                        <b>Address:</b>
-                                        <span class="font-light"> 1418 Riverwood Drive, Suite 3245
-                                            Cottonwood, CA 96052, United States</span>
+                                        <b>Address:</b><span class="font-light"> Melarvattath House Chentrappinni P.O</span>
                                     </span>
                                 </li>
                                 <li>
                                     <span>
-                                        <b>Email:</b>
-                                        <span class="font-light"> Voxo123@gmail.com</span>
+                                        <b>Email:</b><span class="">nijasbinabbas@gmail.com</span>
                                     </span>
-
                                 </li>
                             </ul>
                         </div>
                     </div>
+
                     <div class="col-lg-2 col-md-4 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
@@ -1412,50 +1421,40 @@
                             <div class="footer-content">
                                 <ul>
                                     <li>
-                                        <a href="/user/index.html" class="font-dark">Home</a>
+                                        <a href="/home" class="font-dark">Home</a>
                                     </li>
                                     <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Shop</a>
+                                        <a href="/shop" class="font-dark">Shop</a>
                                     </li>
-                                    <li>
-                                        <a href="/user/about-us.html" class="font-dark">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Blog</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Contact</a>
-                                    </li>
+                               
+                                
+                                
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
-                                <h3>New Categories</h3>
+                                <h3>Categories</h3>
                             </div>
-                            <div class="footer-content">
+
+                            <%categories.forEach((category)=>{%>
+                                <div class="footer-content">
                                 <ul>
                                     <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Latest Shoes</a>
+                                        
+                                        <a href="/sports-shoes?id=<%=category._id %>" class="font-dark"> <%=category.name%> </a>
                                     </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Branded Jeans</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">New Jackets</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Colorfull Hoodies</a>
-                                    </li>
-                                    <li>
-                                        <a href="/user/shop-left-sidebar.html" class="font-dark">Shiner Goggles</a>
-                                    </li>
+                                
                                 </ul>
                             </div>
+                            <%})%>
+                            
                         </div>
                     </div>
+
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="footer-links">
                             <div class="footer-title">
@@ -1464,35 +1463,42 @@
                             <div class="footer-content">
                                 <ul>
                                     <li>
-                                        <a href="/user/user-dashboard.html" class="font-dark">Your Orders</a>
+                                        <a href="/userProfile" class="font-dark">Your Orders</a>
                                     </li>
                                     <li>
-                                        <a href="/user/user-dashboard.html" class="font-dark">Your Account</a>
+                                        <a href="/userProfile" class="font-dark">Your Account</a>
                                     </li>
                                     <li>
-                                        <a href="/user/order-tracking.html" class="font-dark">Track Orders</a>
+                                        <a href="/userProfile" class="font-dark">Track Orders</a>
                                     </li>
                                     <li>
-                                        <a href="/user/wishlist.html" class="font-dark">Your Wishlist</a>
+                                        <a href="/userProfile" class="font-dark">Your Wishlist</a>
                                     </li>
-                                    <li>
-                                        <a href="/user/faq.html" class="font-dark">Shopping FAQs</a>
-                                    </li>
+                                
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-xl-3 col-lg-4 col-sm-6 d-none d-sm-block">
                         <div class="footer-newsletter">
-                            <h3>Let’s stay in touch</h3>
-                            <div class="form-newsletter">
-                                <div class="input-group mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Email Address">
-                                    <span class="input-group-text" id="basic-addon4"><i
-                                            class="fas fa-arrow-right"></i></span>
+                            <h3>Got Qustion ? Call Us 24/7</h3>
+                            <div class="footer-number">
+                                <div class="footer-number-image">
+                                    <img src="/user/assets/images/shoes/other/headphone.png"
+                                        class="img-fluid blur-up lazyload" alt="">
                                 </div>
-                                <p class="font-dark mb-0">Keep up to date with our latest news and special offers.
-                                </p>
+
+                                <div class="footer-number-container">
+                                    <h3>+91 8089765505</h3>
+                                </div>
+                            </div>
+
+                            <div class="footer-details">
+                                <p class="font-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ab
+                                    dolorem nulla
+                                    impedit saepe esse et? Ea, totam recusandae doloribus ipsa esse voluptate quis nisi?
+                                    Voluptate.</p>
                             </div>
                         </div>
                     </div>
@@ -1506,29 +1512,29 @@
                         <ul>
                             <li class="font-dark">We accept:</li>
                             <li>
-                                <a href="/user/javascript:void(0)">
-                                    <img src="/user/assets/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                
+                                    <img src="/user/assets/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload">
+                                        
                             </li>
                             <li>
-                                <a href="/user/javascript:void(0)">
+                                
                                     <img src="/user/assets/images/payment-icon/2.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                        alt="payment icon">
                             </li>
                             <li>
-                                <a href="/user/javascript:void(0)">
+                                
                                     <img src="/user/assets/images/payment-icon/3.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                        alt="payment icon">
                             </li>
                             <li>
-                                <a href="/user/javascript:void(0)">
+                               
                                     <img src="/user/assets/images/payment-icon/4.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon"></a>
+                                        alt="payment icon">
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-0 font-dark">© 2022, Voxo Theme. Made with heart by Pixelstrap</p>
+                        <p class="mb-0 font-dark">© 2024, Kickzone.</p>
                     </div>
                 </div>
             </div>
@@ -1604,9 +1610,12 @@ function updateInvoiceNumber(orderId) {
     invoiceNumberInput.value = invoiceNumber;
 }
   
-        function downloadInvoice() {
+        async function downloadInvoice() {
     const invoiceContainer = document.querySelector('.invoice');
-    html2pdf().from(invoiceContainer).save();
+    document.getElementById('invoice-hide').hidden = false
+    await html2pdf().from(invoiceContainer).save();
+    document.getElementById('invoice-hide').hidden = true
+    
 }
 
 

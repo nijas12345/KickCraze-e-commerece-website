@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt")
 const Order = require("../model/orderModel")
 const wishlist = require('../model/wishlistModel')
 const Wallet = require('../model/walletModel')
+const Category = require('../model/categoryModel')
 
 
 
@@ -27,17 +28,20 @@ const userProfile = async(req,res)=>{
        const userId = req.id
        
        const address = await Address.find({userId:userId})
-       const user = await User.find({_id:userId})
+       const user = await User.findOne({_id:userId})
+       
        const orders = await Order.find({userId:userId}).populate("products.productId").sort({orderedDate: -1})
-    //    console.log(orders);
-    //    console.log(userId);
-    //    console.log("user",user);
-        
+       console.log("orders",orders);
+       
+       const orderCount = await Order.findOne({userId:userId}).countDocuments()
+       const orderPending = await Order.findOne({userId:userId,status:"pending"}).countDocuments()
+
        const wishlistData = await wishlist.find({userId:userId}).populate("userId").populate("productId")
+       const wishlistCount = await wishlist.find({userId:userId}).countDocuments()
        
        
        const wallets = await Wallet.findOne({userId:userId})
-
+       const categories = await Category.find({delete: true})
        
        let creditedAmount = 0
        let debitedAmount = 0
@@ -55,9 +59,9 @@ const userProfile = async(req,res)=>{
       
       
        totalAmount = creditedAmount - debitedAmount
-       
-      
-       res.render("userProfile",{addressData:address,user:user,orders:orders,wishlistData:wishlistData,totalAmount:totalAmount,wallets:wallets})
+        
+       console.log("orders",orders);
+       res.render("userProfile",{addressData:address,user:user,orders:orders,wishlistData:wishlistData,totalAmount:totalAmount,wallets:wallets,categories:categories,orderCount:orderCount,wishlistCount:wishlistCount,orderPending:orderPending})
         
     } catch (error) {
         console.log(error);
@@ -67,18 +71,22 @@ const userProfile = async(req,res)=>{
 }
 const addAddress = async(req,res)=>{
     try {
-        
+        console.log(req.body);
+        const userId = req.id
+        const zip = req.body.pin
+        console.log("hai666");
        const address = new Address({
-           userId:req.id,
+           userId:userId,
            name:req.body.name,
            state:req.body.state,
-           houseName:req.body.houseName,
-           pin:req.body.zip,
+           houseName:req.body.housename,
+           pin:zip,
            mobile:req.body.mobile
        })
       
-        await address.save()
-       res.status(200).json({success:true,message:'Address saved'})
+       await address.save()
+       console.log("adres",address);
+       res.redirect('/userProfile')
 
     } catch (error) {
         res.status(500).json({ success: false, error: "Internal Server Error" });
@@ -87,22 +95,18 @@ const addAddress = async(req,res)=>{
 
 const addEdit = async(req,res)=>{
     try {
-        
-        const id = req.body.id
-        const addressId = new mongoose.Types.ObjectId(id)
-
-        
-        const address = await Address.findOneAndUpdate({_id:addressId},{
+        console.log("req",req.body);
+        const id = req.body.id    
+        const address = await Address.findByIdAndUpdate(id,{
         name:req.body.name,
         state:req.body.state,
         pin:req.body.zip,
-        houseName:req.body.houseName,
+        houseName:req.body.housename,
         mobile:req.body.mobile
     })
-    const addressData = await address.save()
-    if(addressData){
-        res.status(200).json({success:true})
-    }
+ 
+    
+    res.redirect('/userProfile')
     } catch (error) {
         console.log(error);
         const errorMessage = "Internal Server Error";
@@ -110,11 +114,13 @@ const addEdit = async(req,res)=>{
     }
 }
 
-deleteAddres = async(req,res)=>{
+const deleteAddres = async(req,res)=>{
     try {
         const addressId = req.query.id
         
-        const address =await Address.findByIdAndDelete(addressId)     
+        const address =await Address.findByIdAndUpdate(addressId,{
+            isAddress:false
+        })     
             res.redirect('/userProfile')
   
       
@@ -128,14 +134,13 @@ deleteAddres = async(req,res)=>{
 const editUserProfile = async (req,res)=>{
     try {
         const id = req.id
-      const {name,email,mobile,password} = req.body
-      const spassword = await securePassword(password)
-      const user = await User.findByIdAndUpdate(id,{name:name,email:email,mobile:mobile,password:spassword})
+      const {name,email,mobile} = req.body
+      const user = await User.findByIdAndUpdate(id,{name:name,email:email,mobile:mobile})
      
-     userData = user.save()
-     if(userData){
+     
+     
         res.status(200).json({success:true})
-     }
+     
     } catch (error) {
         console.log(error);
         const errorMessage = "Internal Server Error";
@@ -143,11 +148,48 @@ const editUserProfile = async (req,res)=>{
     }
 }
 
+const changePassword = async (req,res)=>{
+    try {
+        console.log(req.body);
+        const userId = req.id
+        console.log("userId",(userId));
+        let oldPassword = req.body.oldPassword
+        const user = await User.findOne({_id:userId})
+        const passwordMatch = await bcrypt.compare(oldPassword,user.password)
+        if(passwordMatch){
+            const spassword = await securePassword(oldPassword)
+           const userData = await User.findByIdAndUpdate(userId,{password:spassword})
+           res.status(200).json({success:true})
+        }
+        else{
+           res.status(200).json({success:false}) 
+        }
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
+    }
+}
+
+const deleteUser = async (req,res)=>{
+    try {
+        const userId = req.id
+        res.clearCookie("jwt")
+        const user = await User.deleteOne({_id:userId})
+        res.redirect('/')
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage }) 
+    }
+}
 
 module.exports = {
     userProfile,
     addAddress,
     addEdit,
     deleteAddres,
-    editUserProfile
+    editUserProfile,
+    changePassword,
+    deleteUser
 }

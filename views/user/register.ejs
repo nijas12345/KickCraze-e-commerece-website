@@ -114,7 +114,7 @@
                         </button>
                     </div>
                     <div class="button login">
-                        <button onclick="location.href = '/login'" type="button" id="s" style="width: 150px; margin-left: 250px;">
+                        <button onclick="location.href = '/login'" type="button"  style="width: 150px; margin-left: 250px;">
                             <span>login</span>
                             <i class="fa fa-check"></i>
                         </button>
@@ -257,10 +257,14 @@
     if (password === '') {
         passError.textContent = 'Password is required';
         isValid = false;
-    } else if (password.length < 6) {
-        passError.textContent = 'Password must be at least 6 characters long';
+    } else if (password.length < 8) {
+        passError.textContent = 'Password must be at least 8 characters long';
         isValid = false;
     }
+    else if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
+    passError.textContent = 'Confirm password must contain at least one uppercase and one lowercase letter';
+    isValid = false;
+}
 
     // Confirm Password validation
     if (confirmPassword === '') {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 
+
 const orderSchema = new mongoose.Schema({
 
     userId:{
@@ -43,9 +44,10 @@ const orderSchema = new mongoose.Schema({
     payment:{
         type:String,
         required:true
-    } ,
+    },
     orderedDate:{
         type:Date,
+        default:Date.now,
     },
         status:{
             type:String,

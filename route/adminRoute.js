@@ -48,7 +48,7 @@ adminRoute.get('/add-product',auth.adminAuth,adminController.addProduct)
 adminRoute.post('/add-products',multerStorage.any(),adminController.insertProduct)
 adminRoute.get('/product-edit',auth.adminAuth,adminController.editProduct)
 
-adminRoute.post('/product-edit',auth.adminAuth,adminController.insertEditedProduct)
+adminRoute.post('/product-edit',multerStorage.any(),adminController.insertEditedProduct)
 adminRoute.get("/product-delete",auth.adminAuth,adminController.deleteProduct)
 
 // coupond
