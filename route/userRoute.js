@@ -48,6 +48,11 @@ userRoute.get("/logout",userController.loadLogout)
 
 userRoute.get('/loginotp',userController.loadOtp)
 userRoute.get('/forgotPassword',userController.forgotPassword)
+userRoute.post('/forgot-email',userController.forgotEmail)
+userRoute.get('/verify-otp',userController.verifyOtp)
+userRoute.post('/verify-otp',userController.insertOtp)
+userRoute.get('/confirmation',userController.confirmation)
+userRoute.post('/confirm-password',userController.confirmPassword)
 
 //user home
 

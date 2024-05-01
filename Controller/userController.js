@@ -1102,6 +1102,119 @@ const forgotPassword = async (req,res)=>{
     }
 }
 
+const forgotEmail = async(req,res)=>{
+    try {
+        const email1 = req.body.name
+        const user = await User.findOne({email:email1})
+        console.log("user",user);
+        try {
+            if(user){
+                
+                let otpCode1 = Math.floor(1000 + Math.random() * 9000).toString();
+                req.session.email1 = email1
+                req.session.otp1 = otpCode1;
+                console.log(otpCode1);
+                
+               
+               
+                const isSend = await sendMail(email1,otpCode1);
+                       
+                if(isSend){           
+                        // console.log("Email sent:" +info.response)
+                        res.redirect("/verify-otp")
+                }
+                else{
+                      console.error("Error sending mail")
+                        const statusCode = 500;
+                        const errorMessage = "Failed to send OTP mail"
+                        res.status(statusCode).render("errorPage",{statusCode,errorMessage})
+                        
+                }
+            }
+            else{
+                res.render("forgot",{message:"Email doesnot exist"})
+            }    
+        
+        } catch (error) {
+            console.log(error);
+            const errorMessage = "Internal Server Error";
+            return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
+        }
+
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage }) 
+    }
+}
+
+const verifyOtp = async(req,res)=>{
+    try {
+        res.render('verifyOtp')
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage }) 
+    }
+}
+
+
+const insertOtp = async(req,res)=>{
+    try {
+        let OTPs = req.body.input
+        console.log(OTPs);
+        var loadOtp1 = req.session.otp1
+        console.log(loadOtp1);
+        if(loadOtp1 === OTPs){
+            res.status(200).json({redirect:'/confirmation'})
+        }
+        else{
+            res.status(200).json({message:"OTP is invalid"})
+        }
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })    
+    }
+}
+
+const confirmation= async (req,res)=>{
+    try {
+        res.render('changePassword')
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage }) 
+    }
+}
+
+const confirmPassword = async(req,res)=>{
+    try {
+        let email = req.session.email1
+        console.log(req.body);
+        console.log("email",email);
+        const user = await User.find({email:email})
+        console.log(user);
+        if(user){
+            const spassword = await securePassword('req.body.pass')
+            const userData = await User.findByIdAndUpdate(user._id,{password:spassword})
+            res.render('changePassword',{message:"Your Password Changed Successfully"})
+        }
+        else{
+            res.render('changePassword',{message:"Something error Please Login"})
+        }
+        
+    } catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })  
+    }
+}
+
+
+
+
+
 
 const  loadHome = async (req,res)=>{
     try {
@@ -1255,7 +1368,12 @@ module.exports = {
     loadLogin,
     verifyUser,
     forgotPassword,
+    forgotEmail,
     loadHome,
+    verifyOtp,
+    confirmation,
+    insertOtp,
+    confirmPassword,
     loadOtp,
     registerOtp,
     loadShop,

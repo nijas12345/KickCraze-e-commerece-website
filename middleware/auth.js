@@ -7,7 +7,7 @@ const GOOGLE_CLIENT_SECRET = "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"
 passport.use(new GoogleStrategy({
     clientID:     GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback",
+    callbackURL: "http://kickzone.online:3000/auth/google/callback",
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {

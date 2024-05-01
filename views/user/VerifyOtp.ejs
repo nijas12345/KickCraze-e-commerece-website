@@ -46,50 +46,47 @@
         <div class="materialContainer">
             <div class="box">
                 <div class="login-title">
-                    <h2>Forgot Password</h2>
+                    <h2>Verification</h2>
+                    <h6>An OTP send to your Email</h6>
                 </div>
-                <% 
-    
-                if(typeof message !=="undefined"){
-                    %> 
-                    <p style="color:red; margin-left: -135px ;"><%=message %></p>
-                    <%
-                 }
-                %> 
-                <form action="/forgot-email" method="post">
+                  <div id="otp-wrong" style="color: red; margin-top: 20px;"></div> 
+        <form action="" method="">
                 <div class="input">
-                    <label for="emailname">Enter Email Address</label>
-                    <input type="text" name="name" class="is-invalid" id="emailname">
+                   
+                    <input type="text" name="OTP" class="is-invalid" id="OTP" placeholder="Enter OTP">
+                   
                     <span class="spin"></span>
+                    
                 </div>
-             
-             
+                <br>
+                
+                <p style="margin-left: 120px; color: red; margin-top: 5px;">OTP expires in <span id="otp-timer" style="margin-left: 0px;"></span></p>
+                <a href="" id="resend-link"><input type="button" value="RESEND" style="border: 0; margin-left: 340px; color: grey;" id="resend-btn" ></a>
+                      
+               
+
                 <div class="button login button-1">
-                    <button onclick="location.href ='/forgot-email'">
-                        <span>Send</span>
-                        <i class="fa fa-check"></i>
-                    </button>
+                    <button type="button" id="submit">
+                            <span>Enter here</span>
+                            <i class="fa fa-check"></i>
+                        </button>
                 </div>
-            </form>
+        </form>
+            
+          
+           
             </div>
         </div>
     </div>
+     
+
+
+
     <!-- Sign Up Section End -->
 
     <!-- theme Setting Start -->
     <!-- <div class="theme-setting">
-        <ul>
-            <li>
-                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>
-            </li>
-            <li>
-                <button class="btn btn-sm rtl-button">RTL</button>
-            </li>
-            <li class="color-picker">
-                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#e22454"
-                    title="Choose your color">
-            </li>
-        </ul>
+
     </div> -->
     <!-- theme Setting End -->
 
@@ -116,7 +113,76 @@
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
     <script src="/user/assets/js/home-script.js"></script>
+    <script>
 
+
+// function to start the timer
+
+document.addEventListener("DOMContentLoaded", () => {
+    let timerInterval;
+
+    function startTimer() {
+        let timer = 60; // Reduced for testing purposes
+        let timeInterval = setInterval(() => {
+            let minutes = Math.floor(timer / 60);
+            let seconds = timer % 60;
+            let timeString = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+            document.getElementById("otp-timer").textContent = timeString;
+            timer--;
+
+            if (timer < 1) {
+                clearInterval(timeInterval);
+                document.getElementById("resend-btn").disabled = false; // Enable the button
+            }
+            else{
+                document.getElementById("resend-btn").disabled = true;
+            }
+        }, 1000);
+        return timeInterval;
+    }
+
+
+startTimer()
+  
+});
+
+    document.getElementById("submit").addEventListener("click", async function () {
+
+    const input = document.getElementById("OTP").value
+    const otpError = document.getElementById("otp-wrong")
+    console.log(input);
+    const data = {input}
+    try {
+        const response = await fetch ('/verify-otp',{
+            method : "POST",
+            headers :{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(data)
+
+        })
+        const responseData = await response.json()
+        
+        if(response.ok){
+            if(responseData.redirect){
+                window.location.href = responseData.redirect
+            }
+            else{
+                otpError.textContent = responseData.message
+            }
+           
+        }
+
+        
+    
+    } catch (error) {
+        console.log(error);
+    }
+    });
+
+       
+
+    </script>
 </body>
 
 

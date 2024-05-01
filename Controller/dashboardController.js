@@ -137,10 +137,12 @@ const editUserProfile = async (req,res)=>{
     try {
         const id = req.id
       const {name,email,mobile} = req.body
-      const user = await User.findByIdAndUpdate(id,{name:name,email:email,mobile:mobile})
-     
-     
-     
+      const user = await User.findOne({email:email})
+      
+      if(user){
+        res.status(200).json({success:false})
+      }
+      const userData = await User.findByIdAndUpdate(id,{name:name,email:email,mobile:mobile})
         res.status(200).json({success:true})
      
     } catch (error) {

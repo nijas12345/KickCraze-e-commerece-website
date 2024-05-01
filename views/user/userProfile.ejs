@@ -2515,8 +2515,14 @@ profileModal.addEventListener("show.bs.modal",function(event){
                 "Content-Type":"application/json"
             },body:JSON.stringify(data)
         })
+        
         const responseData = await response.json()
-        location.reload()
+        if(responseData.success){
+            location.reload()
+        }
+        else{
+            emailError.textContent = "Sorry... Email is already Exists"
+        }
         
     } catch (error) {
         console.log(error);
