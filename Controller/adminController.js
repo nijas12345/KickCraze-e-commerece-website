@@ -401,7 +401,7 @@ const editCategories = async (req,res)=>{
  
      const category = await Category.findOne({_id:categoryId}) 
      
-     res.render('CategoryEdit',{category:category})     
+     res.render('categoryEdit',{category:category})     
    }
     catch (error) {
         console.log(error);
