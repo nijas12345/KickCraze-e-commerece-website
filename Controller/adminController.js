@@ -5,20 +5,12 @@ const Product = require('../model/productModel')
 const Order = require("../model/orderModel")
 const Coupon = require('../model/couponModel')
 const mongoose = require("mongoose")
-const moment = require('moment')
-
-const sharp = require("sharp")
-const path=require('path')
 const jwt = require("jsonwebtoken")
-
 
 const createToken = (admin)=>{
     const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET
     return jwt.sign(admin,ADMIN_JWT_SECRET,{expiresIn:"1h"})
 }
-
-//Admin Authentication
-
 
 const adminRegister = async (req,res)=>{
     try {
@@ -42,7 +34,7 @@ const verifyRegister = async (req,res)=>{
         
         if(adminData){
             const token = createToken({id:adminData._id})
-            res.cookie("Adminjwt",token,{httpOnly:true,maxAge:6000000})
+            res.cookie("Adminjwt",token,{httpOnly:true,maxAge:3600000})
             res.redirect('/admin/dashboard')      
         }
     } catch (error) {
@@ -72,7 +64,7 @@ const adminVerify = async (req,res)=>{
             if(adminData.password===password){
             const token = createToken({id:adminData._id})
             res.cookie("Adminjwt",token,{httpOnly:true,maxAge:60000000})
-                res.redirect('/admin/dashboard')
+            res.redirect('/admin/dashboard')
              
             }
             else{
@@ -518,7 +510,7 @@ const insertProduct = async (req,res)=>{
     //     .toFile(outputPath1)
     //      image.push(outputPath2)
     //   }
-    const discount = req.body.discount
+      const discount = req.body.discount
       const category = req.body.category
       const categoryy = await Category.findOne({name:req.body.category})
       
@@ -532,7 +524,7 @@ const insertProduct = async (req,res)=>{
       if(offer>discount){
        
         const discounts= parseInt(offer)
-        const disprice = req.body.price-(discounts/100)*req.body.price
+        const disprice = Math.floor(req.body.price-(discounts/100)*req.body.price)
         
            
             const product = new Product({
@@ -556,7 +548,7 @@ const insertProduct = async (req,res)=>{
       else{
       
         const discounts= parseInt(discount)
-        const disprice = req.body.price-(discounts/100)*req.body.price
+        const disprice = Math.floor(req.body.price-(discounts/100)*req.body.price)
       
         const product = new Product({
           name:req.body.name,
@@ -569,9 +561,9 @@ const insertProduct = async (req,res)=>{
           sizes:req.body.sizes,
           image:image 
         })
-         const productData = await product.save()     
+         await product.save()     
          const products = await Product.find()    
-         const categories = await Category.find()
+         await Category.find()
          res.render("productList",{product:products})
       }
      
@@ -591,10 +583,7 @@ const editProduct = async (req,res)=>{
      
       const categories = await Category.find({delete: true})
       const products = await Product.findOne({_id:editId})
-      
 
-      console.log("product",products);
-     
       res.render("editProduct",{categories:categories,products:products})
       
     } catch (error) {
@@ -632,7 +621,7 @@ const insertEditedProduct = async (req,res)=>{
         const product = Product.findOne({_id:id})
         const category = Category.findOne({name:product.category})
         if(category.offer>discount){
-            disprice = req.body.price - (category.offer/100)*req.body.price
+            disprice = Math.floor(req.body.price - (category.offer/100)*req.body.price)
             const productData = await Product.findByIdAndUpdate(id,
                 {   
                name:req.body.name,
@@ -667,7 +656,7 @@ const insertEditedProduct = async (req,res)=>{
                 console.log("product",productData);
         }
         else{
-            const disprice = price - (discount/100) * price
+            const disprice = Math.floor(price - (discount/100) * price)
             const productData = await Product.findByIdAndUpdate(id,
                 {
                name:req.body.name,
@@ -705,10 +694,7 @@ const insertEditedProduct = async (req,res)=>{
                 
                 console.log("product data after removing image",productData);
 
-        }
-        // Remove images selected for deletion
-       
-        
+        }   
           
           const products = await Product.find()
      
@@ -1043,16 +1029,6 @@ const salesReport = async (req,res)=>{
    }
 }
 
-const chartTable = async (req,res)=>{
-    try {
-        const order = await Order.find()
-        
-    } catch (error) {
-        console.log(error);
-        const errorMessage = "Internal Server Error";
-        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
-    }
-}
 
 
 module.exports = {
@@ -1088,5 +1064,4 @@ module.exports = {
     categoryOffer,
     addCategoryOffer,
     salesReport,
-    chartTable
 }

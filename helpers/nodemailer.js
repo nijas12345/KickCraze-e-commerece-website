@@ -15,8 +15,6 @@ const transporter = nodemailer.createTransport({
         
   async function sendMail(email,otpCode){            
         try {
-            
-            
             const mailOptions = {
                 from : process.env.USER_NAME,
                 to : email,
@@ -28,9 +26,7 @@ const transporter = nodemailer.createTransport({
         } catch (error) {
             console.log(error);
             return false
-        }
-
-        
+        }    
     } 
 
     module.exports = {sendMail }  

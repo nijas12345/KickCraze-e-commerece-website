@@ -13,7 +13,6 @@ const requireAuth = async (req,res,next)=>{
                     res.redirect("/login")
                 }
                 else{
-                    console.log(decodedToken);
                    req.id=decodedToken.id
                     next()
                 }

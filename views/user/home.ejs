@@ -1094,50 +1094,25 @@
                         <img src="/user/assets/images/shoes/1-.png" class="shoes-1 img-fluid blur-up lazyload" alt="">
                     </div>
 
-                    <div class="sugestion-product d-xl-block d-none">
-                        <h3>Sugestion Product</h3>
-                        <h6>Our Collection</h6>
-                    
+                    <% if (product && product.length > 0 && product[0]) { %>
+  <div class="sugestion-product d-xl-block d-none">
+    <h3>Suggestion Product</h3>
+    <h6>Our Collection</h6>
 
-                        
- 
-                      
-                        <a href="/product-profile?id=<%=product[0]._id %>" class="slider-shoes-image d-block">
-                            
-                            
-                            <div class="relative-shoes">
-                                
+    <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
+      <div class="relative-shoes">
+        <img src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/default.jpg' %>" width="100px" alt="Product Image">
 
-                                <% for(i=0;i<1;i++){%>
-                                    <img src="<%= product[0].image[0]%> " width="100px" alt="" >
-                               <% } %>
-                                
-                                
-                                <div class="shoes-price">
+        <div class="shoes-price">
+          <h5><%= product[0].price %></h5>
+          <h6><%= product[0].name %></h6>
+        </div>
+      </div>
+    </a>
+  </div>
+<% } 
+ %>
 
-                                    <h5><%=product[0].price%></h5>
-                                    <h6><%=product[0].name%></h6>
-                                     <!-- <ul class="rating d-flex justify-content-between">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>  -->
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
                     <div class="price-number">
                         <h2>₹ 2499<span><del>₹ 2799</del></span></h2>
@@ -1195,50 +1170,27 @@
                         <img class="shoes-1 img-fluid blur-up lazyload" alt="" src="/user/assets/images/shoes/slider-2.png">
                     </div>
 
-                    <div class="sugestion-product d-xl-block d-none">
-                        <h3>Sugestion Product</h3>
-                        <h6>Our Collection</h6>
-                    
+                    <% if (product && product.length > 0 && product[0]) { %>
+  <div class="sugestion-product d-xl-block d-none">
+    <h3>Suggestion Product</h3>
+    <h6>Our Collection</h6>
 
-                        
- 
-                      
-                        <a href="/product-profile?id=<%=product[0]._id %>" class="slider-shoes-image d-block">
-                            
-                            
-                            <div class="relative-shoes">
-                                
+    <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
+      <div class="relative-shoes">
+        <img 
+          src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/images/default.jpg' %>" 
+          width="100px" 
+          alt="Product Image">
 
-                                <% for(i=0;i<1;i++){%>
-                                    <img src="<%= product[0].image[0]%> " width="100px" alt="" >
-                               <% } %>
-                                
-                                
-                                <div class="shoes-price">
+        <div class="shoes-price">
+          <h5><%= product[0].price %></h5>
+          <h6><%= product[0].name %></h6>
+        </div>
+      </div>
+    </a>
+  </div>
+<% } %>
 
-                                    <h5><%=product[0].price%></h5>
-                                    <h6><%=product[0].name%></h6>
-                                     <!-- <ul class="rating d-flex justify-content-between">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>  -->
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
                     <div class="price-number">
                         <h2>₹ 2499<span><del>₹ 2799</del></span></h2>
@@ -1296,50 +1248,27 @@
                         <img class="shoes-1 img-fluid blur-up lazyload" alt="" src="/user/assets/images/shoes/Slider.png">
                     </div>
 
-                    <div class="sugestion-product d-xl-block d-none">
-                        <h3>Sugestion Product</h3>
-                        <h6>Our Collection</h6>
-                    
+                    <% if (product && product.length > 0 && product[0]) { %>
+  <div class="sugestion-product d-xl-block d-none">
+    <h3>Suggestion Product</h3>
+    <h6>Our Collection</h6>
 
-                        
- 
-                      
-                        <a href="/product-profile?id=<%=product[0]._id %>" class="slider-shoes-image d-block">
-                            
-                            
-                            <div class="relative-shoes">
-                                
+    <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
+      <div class="relative-shoes">
+        <img 
+          src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/images/default.jpg' %>" 
+          width="100px" 
+          alt="Product Image">
 
-                                <% for(i=0;i<1;i++){%>
-                                    <img src="<%= product[0].image[0]%> " width="100px" alt="" >
-                               <% } %>
-                                
-                                
-                                <div class="shoes-price">
+        <div class="shoes-price">
+          <h5><%= product[0].price %></h5>
+          <h6><%= product[0].name %></h6>
+        </div>
+      </div>
+    </a>
+  </div>
+<% } %>
 
-                                    <h5><%=product[0].price%></h5>
-                                    <h6><%=product[0].name%></h6>
-                                     <!-- <ul class="rating d-flex justify-content-between">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>  -->
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
                     <div class="price-number">
                         <h2>2499<span><del>₹ 2799</del></span></h2>
@@ -1420,46 +1349,52 @@
 
     <!-- Poster Section Start -->
     <section class="poster-section ratio2_1">
-        <div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="poster-image">
-                            <img src="/user/assets/images/shoes/poster/1.png" class="img-fluid bg-img blur-up lazyload"
-                                alt="">
-                            <div class="poster-image-details">
-                                <div>
-                                    <h5>Get 25% Rewarded</h5>
-                                    <h2>Latest Sport Shoes</h2>
-                                    <p class="d-sm-block d-none my-1">Fully Comforable and Smooth Product</p>
-                                    <h3> ₹2200 <span><del> ₹2799</del></span></h3>
-                                    <button onclick="location.href ='/sports-shoes?id=<%=categories[0]._id %>';"
-                                        class="btn btn-solid-default">BUY NOW</button>
-                                </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <!-- First Poster -->
+                <div class="col-lg-6">
+                    <div class="poster-image">
+                        <img src="/user/assets/images/shoes/poster/1.png" class="img-fluid bg-img blur-up lazyload" alt="">
+
+                        <div class="poster-image-details">
+                            <div>
+                                <h5>Get 25% Rewarded</h5>
+                                <h2>Latest Sport Shoes</h2>
+                                <p class="d-sm-block d-none my-1">Fully Comfortable and Smooth Product</p>
+                                <h3>₹2200 <span><del>₹2799</del></span></h3>
+                                
+                                <% if (categories && categories.length > 0) { %>
+                                    <button onclick="location.href ='/sports-shoes?id=<%= categories[0]._id %>';" class="btn btn-solid-default">BUY NOW</button>
+                                <% } else { %>
+                                    <button class="btn btn-solid-default disabled">Category Unavailable</button>
+                                <% } %>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-lg-6 mt-lg-0 mt-4">
-                        <div class="poster-image">
-                            <img src="/user/assets/images/shoes/poster/2.png" class="img-fluid bg-img blur-up lazyload"
-                                alt="">
-                            <div class="poster-image-details">
-                                <div>
-                                    <h5>Get 38% Rewarded</h5>
-                                    <h2>Perfect Mixture Shoes</h2>
-                                    <p class="d-sm-block d-none my-1">Fully Comforable and Smooth Product</p>
-                                    <h3> ₹2300 <span><del> ₹3099</del></span></h3>
-                                    <button onclick="location.href = '/shop';"
-                                        class="btn btn-solid-default">BUY NOW</button>
-                                </div>
+                <!-- Second Poster -->
+                <div class="col-lg-6 mt-lg-0 mt-4">
+                    <div class="poster-image">
+                        <img src="/user/assets/images/shoes/poster/2.png" class="img-fluid bg-img blur-up lazyload" alt="">
+
+                        <div class="poster-image-details">
+                            <div>
+                                <h5>Get 38% Rewarded</h5>
+                                <h2>Perfect Mixture Shoes</h2>
+                                <p class="d-sm-block d-none my-1">Fully Comfortable and Smooth Product</p>
+                                <h3>₹2300 <span><del>₹3099</del></span></h3>
+                                <button onclick="location.href = '/shop';" class="btn btn-solid-default">BUY NOW</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
     <!-- Poster Section End -->
 
     <!-- New Arrival Section Start -->
@@ -1557,43 +1492,57 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-6 ratio2_1">
-                    <div class="collection-banner p-right text-right">
-                        <a href="/user/shop-left-sidebar.html" class="banner-img">
-                            <img src="/user/assets/images/shoes/poster-2/1.jpg" class="bg-img blur-up lazyload" alt="">
-                        </a>
-                        <div class="banner-text">
-                            <div class="banner-content">
-                                <h6>New <span class="theme-color">Collections</span></h6>
-                                <h2> New Running <br> Shoes<span class="theme-color d-block">₹48</span></h2>
-                                <a id="shopNowLink" href="
-                                /sports-shoes?id=<%=categories[2]._id %>" class="btn default-light default-theme mt-md-2 mt-1 rounded">SHOP NOW</a>
+    <div class="collection-banner p-right text-right">
+        <a href="/user/shop-left-sidebar.html" class="banner-img">
+            <img src="/user/assets/images/shoes/poster-2/1.jpg" class="bg-img blur-up lazyload" alt="">
+        </a>
+        <div class="banner-text">
+            <div class="banner-content">
+                <h6>New <span class="theme-color">Collections</span></h6>
+                <h2>New Running <br>Shoes <span class="theme-color d-block">₹48</span></h2>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <% if (categories && categories.length > 2) { %>
+                    <a id="shopNowLink" href="/sports-shoes?id=<%= categories[2]._id %>" class="btn default-light default-theme mt-md-2 mt-1 rounded">SHOP NOW</a>
+                <% } else { %>
+                    <a id="shopNowLink" href="#" class="btn default-light default-theme mt-md-2 mt-1 rounded disabled">SHOP NOW</a>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
                 <div class="col-lg-6">
                     <div class="row gy-4">
                         <div class="col-lg-12 ratio_40">
-                            <div class="collection-banner p-left banner-title">
-                                <a href="/user/shop-left-sidebar.html" class="banner-img">
-                                    <img src="/user/assets/images/shoes/poster-2/2.jpg" class="bg-img blur-up lazyload"
-                                        alt="">
-                                </a>
+    <div class="collection-banner p-left banner-title">
+        <a href="/user/shop-left-sidebar.html" class="banner-img">
+            <img src="/user/assets/images/shoes/poster-2/2.jpg" class="bg-img blur-up lazyload" alt="">
+        </a>
 
-                                <div class="banner-text">
-                                    <div class="banner-content">
-                                        <h3 class="mb-md-2 mb-0 spacing-text">New Loafers from <span
-                                                class="theme-color">₹799</span>
-                                        </h3>
-                                        <button class=" btn default-light default-light-theme mt-md-2 mt-1 rounded" onclick="location.href='/sports-shoes?id=<%=categories[3]._id %>'">SHOP
-                                            NOW</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="banner-text">
+            <div class="banner-content">
+                <h3 class="mb-md-2 mb-0 spacing-text">
+                    New Loafers from <span class="theme-color">₹799</span>
+                </h3>
+
+                <% if (categories && categories.length > 3) { %>
+                    <button class="btn default-light default-light-theme mt-md-2 mt-1 rounded" 
+                            onclick="location.href='/sports-shoes?id=<%= categories[3]._id %>'">
+                        SHOP NOW
+                    </button>
+                <% } else { %>
+                    <button class="btn default-light default-light-theme mt-md-2 mt-1 rounded disabled">
+                        SHOP NOW
+                    </button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                         <div class="col-md-6 ratio2_3">
                             <div class="collection-banner p-center text-center">
@@ -1753,7 +1702,7 @@
                             <div class="product-box">
                                 <div class="img-wrapper text-center">
                                     <a href="/product-profile?id=<%= product._id%>">
-                                        <img width="250" src= "<%= product.image[0]%>"
+                                        <img width="200" src= "<%= product.image[0]%>"
                                              alt="">
                                     </a>
                                     <!-- <div class="cart-wrap">

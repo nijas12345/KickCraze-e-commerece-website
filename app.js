@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://nijasbinabbas:gGPV60STw86bkmok@kickzone.fo9ex9z.mongodb.net/Project-8');
-// mongoose.connect("mongodb+srv://nijasbinabbas:gGPV60STw86bkmok@cluster0.sgvgomu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+const dotenv = require('dotenv')
+dotenv.config()
+mongoose.connect(process.env.MONGODB_URI)
+.then(()=>console.log('MongoDB connected Successfully'))
 
 const express = require("express");
 const app = express();
 
 const session = require("express-session");
 const path = require('path');
-require("dotenv").config();
 const cookieParser = require("cookie-parser");
 
 const userRoute = require("./route/userRoute");
@@ -17,7 +18,6 @@ const adminRoute = require('./route/adminRoute');
 const nocache = require('nocache');
 const passport = require('passport');
 
-// Use the nocache middleware before defining routes
 app.use(nocache());
 
 // For session
@@ -47,3 +47,7 @@ app.use('/admin', adminRoute);
 app.listen(3000, () => {
     console.log("Server Created");
 });
+
+
+
+

@@ -78,6 +78,4 @@ adminRoute.get('/sales-report',auth.adminAuth,adminController.salesReport)
 
 adminRoute.post('/day-sales',auth.adminAuth,orderController.daySales)
 
-adminRoute.get('/chart-sales',auth.adminAuth,adminController.chartTable)
-
 module.exports = adminRoute

@@ -206,7 +206,7 @@ const verifyRegister = async(req,res)=>{
                 //     await newWallet.save()
                 // }
                const token = createToken({id:userData._id})
-               res.cookie("jwt",token,{httpOnly:true,maxAge:60000000})
+               res.cookie("jwt",token,{httpOnly:true,maxAge:3600000})
               
                res.status(200).json({redirect:"/home"})
             }   

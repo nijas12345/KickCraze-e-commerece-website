@@ -1114,218 +1114,218 @@ const returnOrder = async (req,res)=>{
     const errorMessage = "Internal Server Error";
     return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
  }
-}
+}   
 
-const daySales = async (req,res)=>{
-  try {
-      console.log(req.body);
-    const date = req.body.selectedOption
-    const startDate = req.body.startDate
-    const endDate = req.body.endDate
- 
+    const daySales = async (req,res)=>{
+    try {
+        console.log(req.body);
+        const date = req.body.selectedOption
+        const startDate = req.body.startDate
+        const endDate = req.body.endDate
+    
 
-    if(date == "month"){
+        if(date == "month"){
 
 
-        try {
-            const currentDate = moment()
-            console.log(currentDate);
-           const startOfMonth = currentDate.clone().startOf('month')
-           console.log(startOfMonth);
-       
-           const endOfMonth = currentDate.clone().endOf('month')
-            console.log(endOfMonth);
-           const startOfMonthFormatted = startOfMonth.format('YYYY-MM-DD');
-           console.log(startOfMonthFormatted);
-           const endOfMonthFormatted = endOfMonth.format('YYYY-MM-DD');
-           console.log(typeof endOfMonthFormatted);
-       
-           
-       
-           const orders = await Order.find({
-               orderedDate: {
-                 $gte: startOfMonthFormatted,
-                 $lte:endOfMonthFormatted 
-               },status:"delivered"
-             });
-         console.log("orders",orders);
-         let orderOriginalPrice = 0
-         let orderDiscountPrice = 0
-         orders.forEach((order)=>{
+            try {
+                const currentDate = moment()
+                console.log(currentDate);
+            const startOfMonth = currentDate.clone().startOf('month')
+            console.log(startOfMonth);
+        
+            const endOfMonth = currentDate.clone().endOf('month')
+                console.log(endOfMonth);
+            const startOfMonthFormatted = startOfMonth.format('YYYY-MM-DD');
+            console.log(startOfMonthFormatted);
+            const endOfMonthFormatted = endOfMonth.format('YYYY-MM-DD');
+            console.log(typeof endOfMonthFormatted);
+        
+            
+        
+            const orders = await Order.find({
+                orderedDate: {
+                    $gte: startOfMonthFormatted,
+                    $lte:endOfMonthFormatted 
+                },status:"delivered"
+                });
+            console.log("orders",orders);
+            let orderOriginalPrice = 0
+            let orderDiscountPrice = 0
+            orders.forEach((order)=>{
+                orderOriginalPrice+= parseInt(order.totalPrice) 
+                if(order.discountTotal){
+                orderDiscountPrice += parseInt(order.discountTotal)
+                }
+            else{
+                orderDiscountPrice += parseInt(order.wcTotal)
+            }
+        
+                
+            })
+        
+            totalDiscount = orderOriginalPrice - orderDiscountPrice
+        
+        
+            
+            res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
+            } catch (error) {
+            console.log(error); 
+            }
+        
+        }
+        
+    
+        if(date =="day"){
+
+            const currentDate = moment();
+            const startOfDay = currentDate.clone().startOf('day');
+            const endOfDay = currentDate.clone().endOf('day');
+            
+            const startOfDayFormatted = startOfDay.toDate();
+            const endOfDayFormatted = endOfDay.toDate();
+            
+        
+            
+            const orders = await Order.find({
+            orderedDate: {
+                $gte: startOfDayFormatted, // Greater than or equal to the start of the day
+                $lt: endOfDayFormatted     // Less than the end of the day
+            },status:"delivered"
+            });
+            
+        let orderOriginalPrice = 0
+        let orderDiscountPrice = 0
+        orders.forEach((order)=>{
             orderOriginalPrice+= parseInt(order.totalPrice) 
             if(order.discountTotal){
-               orderDiscountPrice += parseInt(order.discountTotal)
+                orderDiscountPrice += parseInt(order.discountTotal)
             }
-           else{
-               orderDiscountPrice += parseInt(order.wcTotal)
-           }
-       
+            else{
+                orderDiscountPrice += parseInt(order.wcTotal)
+            }
+        
             
-         })
-       
-         totalDiscount = orderOriginalPrice - orderDiscountPrice
-       
-       
-         
+        })
+        
+        totalDiscount = orderOriginalPrice - orderDiscountPrice
+        
+        
+        
         res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
-        } catch (error) {
-           console.log(error); 
         }
-     
-    }
-    
-   
-    if(date =="day"){
 
-        const currentDate = moment();
-        const startOfDay = currentDate.clone().startOf('day');
-        const endOfDay = currentDate.clone().endOf('day');
+        if(date =="weak"){
+            const currentDate = moment()
+            const startOfWeek = currentDate.clone().startOf('week');
         
-        const startOfDayFormatted = startOfDay.toDate();
-        const endOfDayFormatted = endOfDay.toDate();
+            const endOfWeek = currentDate.clone().endOf('week');
+            
+            const startOfWeekFormatted = startOfWeek.format('YYYY-MM-DD');
+            const endOfWeekFormatted = endOfWeek.format('YYYY-MM-DD');
+            console.log(startOfWeekFormatted);
         
-       
-        
-        const orders = await Order.find({
-          orderedDate: {
-            $gte: startOfDayFormatted, // Greater than or equal to the start of the day
-            $lt: endOfDayFormatted     // Less than the end of the day
-          },status:"delivered"
-        });
-        
-      let orderOriginalPrice = 0
-      let orderDiscountPrice = 0
-      orders.forEach((order)=>{
-         orderOriginalPrice+= parseInt(order.totalPrice) 
-         if(order.discountTotal){
-            orderDiscountPrice += parseInt(order.discountTotal)
-         }
-        else{
-            orderDiscountPrice += parseInt(order.wcTotal)
-        }
-    
-         
-      })
-     
-      totalDiscount = orderOriginalPrice - orderDiscountPrice
-    
-    
-     
-     res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
-    }
-
-    if(date =="weak"){
-        const currentDate = moment()
-        const startOfWeek = currentDate.clone().startOf('week');
-     
-        const endOfWeek = currentDate.clone().endOf('week');
-        
-        const startOfWeekFormatted = startOfWeek.format('YYYY-MM-DD');
-        const endOfWeekFormatted = endOfWeek.format('YYYY-MM-DD');
-        console.log(startOfWeekFormatted);
-       
-        
-        const orders = await Order.find({
-          orderedDate: {
-            $gte: startOfWeekFormatted, // Greater than or equal to the start date of the week
-            $lte: endOfWeekFormatted    // Less than or equal to the end date of the week
-          },status:"delivered"
-        });
-    
-       
-      let orderOriginalPrice = 0
-      let orderDiscountPrice = 0
-      orders.forEach((order)=>{
-         orderOriginalPrice+= parseInt(order.totalPrice) 
-         if(order.discountTotal){
-            orderDiscountPrice += parseInt(order.discountTotal)
-         }
-        else{
-            orderDiscountPrice += parseInt(order.wcTotal)
-        }
-    
-         
-      })
-      
-      totalDiscount = orderOriginalPrice - orderDiscountPrice
-    
-    
-      console.log("total",totalDiscount);
-     res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
-    }
-  
-
-       if(date == "year"){
-       const currentDate = moment(); // Get the current date
-        const startOfYear = currentDate.clone().startOf('year'); // Get the start of the current year
-        const endOfYear = currentDate.clone().endOf('year'); // Get the end of the current year
-
-        const startOfYearFormatted = startOfYear.format('YYYY-MM-DD'); // Format start of year
-        const endOfYearFormatted = endOfYear.format('YYYY-MM-DD'); // Format end of year
-
-      
-        const orders = await Order.find({
-        orderedDate: {
-            $gte: startOfYearFormatted, // Greater than or equal to the start date of the year
-            $lte: endOfYearFormatted    // Less than or equal to the end date of the year
-        },status:"delivered"
-        });
+            
+            const orders = await Order.find({
+            orderedDate: {
+                $gte: startOfWeekFormatted, // Greater than or equal to the start date of the week
+                $lte: endOfWeekFormatted    // Less than or equal to the end date of the week
+            },status:"delivered"
+            });
         
         
         let orderOriginalPrice = 0
         let orderDiscountPrice = 0
         orders.forEach((order)=>{
-        orderOriginalPrice+= parseInt(order.totalPrice) 
-        if(order.discountTotal){
-            orderDiscountPrice += parseInt(order.discountTotal)
-        }
-        else{
-            orderDiscountPrice += parseInt(order.wcTotal)
-        }
-
-            })
-
-            totalDiscount = orderOriginalPrice - orderDiscountPrice   
-            res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
-        }
-
-    if(startDate !==""){
-
-         const startdate = startDate
-         const enddate = endDate
+            orderOriginalPrice+= parseInt(order.totalPrice) 
+            if(order.discountTotal){
+                orderDiscountPrice += parseInt(order.discountTotal)
+            }
+            else{
+                orderDiscountPrice += parseInt(order.wcTotal)
+            }
         
-         
-         const orders = await Order.find({
+            
+        })
+        
+        totalDiscount = orderOriginalPrice - orderDiscountPrice
+        
+        
+        console.log("total",totalDiscount);
+        res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
+        }
+    
+
+        if(date == "year"){
+        const currentDate = moment(); // Get the current date
+            const startOfYear = currentDate.clone().startOf('year'); // Get the start of the current year
+            const endOfYear = currentDate.clone().endOf('year'); // Get the end of the current year
+
+            const startOfYearFormatted = startOfYear.format('YYYY-MM-DD'); // Format start of year
+            const endOfYearFormatted = endOfYear.format('YYYY-MM-DD'); // Format end of year
+
+        
+            const orders = await Order.find({
             orderedDate: {
-                $gte: startdate, // Greater than or equal to the start date of the year
-                $lte: enddate    // Less than or equal to the end date of the year
+                $gte: startOfYearFormatted, // Greater than or equal to the start date of the year
+                $lte: endOfYearFormatted    // Less than or equal to the end date of the year
             },status:"delivered"
             });
             
-            let orderOriginalPrice = 0
-        let orderDiscountPrice = 0
-        orders.forEach((order)=>{
-        orderOriginalPrice+= parseInt(order.totalPrice) 
-        if(order.discountTotal){
-            orderDiscountPrice += parseInt(order.discountTotal)
-        }
-        else{
-            orderDiscountPrice += parseInt(order.wcTotal)
-        }
-
-            })
-
             
-            res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
-    }
+            let orderOriginalPrice = 0
+            let orderDiscountPrice = 0
+            orders.forEach((order)=>{
+            orderOriginalPrice+= parseInt(order.totalPrice) 
+            if(order.discountTotal){
+                orderDiscountPrice += parseInt(order.discountTotal)
+            }
+            else{
+                orderDiscountPrice += parseInt(order.wcTotal)
+            }
 
-}
-   catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
-  }
-}
+                })
+
+                totalDiscount = orderOriginalPrice - orderDiscountPrice   
+                res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
+            }
+
+        if(startDate !==""){
+
+            const startdate = startDate
+            const enddate = endDate
+            
+            
+            const orders = await Order.find({
+                orderedDate: {
+                    $gte: startdate, // Greater than or equal to the start date of the year
+                    $lte: enddate    // Less than or equal to the end date of the year
+                },status:"delivered"
+                });
+                
+                let orderOriginalPrice = 0
+            let orderDiscountPrice = 0
+            orders.forEach((order)=>{
+            orderOriginalPrice+= parseInt(order.totalPrice) 
+            if(order.discountTotal){
+                orderDiscountPrice += parseInt(order.discountTotal)
+            }
+            else{
+                orderDiscountPrice += parseInt(order.wcTotal)
+            }
+
+                })
+
+                
+                res.render('salesReport',{orders:orders,orderOriginalPrice:orderOriginalPrice,orderDiscountPrice:orderDiscountPrice,totalDiscount:totalDiscount})
+        }
+
+    }
+    catch (error) {
+        console.log(error);
+        const errorMessage = "Internal Server Error";
+        return res.status(500).render("errorPage", { statusCode: 500, errorMessage })
+    }
+    }
 
 
 

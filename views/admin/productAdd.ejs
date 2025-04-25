@@ -104,18 +104,19 @@
             <button type="button" id="crop-button">Crop Image</button>
             <button type="button" id="cancel-crop-button">Cancel</button>
             <!-- <input type="submit" name="cropped-image" id="cropped-image"> -->
-            <select
-                        class="form-select"
-                        id="choices-category-input"
-                        name="category"
-                     >
-                        <% categories.forEach(category => { %>
-                        <option value="<%=category.name%>" name="category">
-                          <%=category.name%>
-                        </option>
-                        
-                        <% }); %>
-                     </select>
+            <div id="category-error" style="color: red;"></div>
+            <select class="form-select" id="choices-category-input" name="category">
+              <% if (categories.length === 0) { %>
+                <option value="" disabled selected>Please add a category</option>
+              <% } else { %>
+                <% categories.forEach(category => { %>
+                  <option value="<%= category.name %>" name="category">
+                    <%= category.name %>
+                  </option>
+                <% }); %>
+              <% } %>
+            </select>
+            
             <a  class="btn btn-sm btn-primary rounded font-sm mt-15" href="/admin/dashboard" >BACK</a>
             <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
         </form>
@@ -133,110 +134,110 @@
   const form = document.getElementById("form")
   let totalimages = 0;
 
-  function imageupload(event) {
+    function imageupload(event) {
 
-    const files = event.target.files;
-    const imagecontainer = document.getElementById("cropper-container");
-    const maximum = 5;
+      const files = event.target.files;
+      const imagecontainer = document.getElementById("cropper-container");
+      const maximum = 5;
 
-    const totalupload = totalimages + files.length;
-    if (totalupload > maximum) {
-     //   Swal.fire(Oops! Upload only ${maximum} files., "Sorry");
-        event.target.value = "";
-        return;
-    }
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-      if (!file.type.startsWith("image/")) {
-        console.log("File is not an image.", file.type);
-        continue;
+      const totalupload = totalimages + files.length;
+      if (totalupload > maximum) {
+      //   Swal.fire(Oops! Upload only ${maximum} files., "Sorry");
+          event.target.value = "";
+          return;
       }
 
-      const imgdiv = document.createElement("div");
-      imgdiv.classList.add("image-div");
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        if (!file.type.startsWith("image/")) {
+          console.log("File is not an image.", file.type);
+          continue;
+        }
 
-      const img = document.createElement("img");
-      img.style.height = "300px";
-      img.style.width = "300px";
-      img.setAttribute("name", "image");
-      img.classList.add("uploaded-image");
+        const imgdiv = document.createElement("div");
+        imgdiv.classList.add("image-div");
 
-      const deletebutton = document.createElement("button");
-      deletebutton.textContent = "Delete";
-      deletebutton.classList.add("btn", "btn-danger", "m-2");
+        const img = document.createElement("img");
+        img.style.height = "300px";
+        img.style.width = "300px";
+        img.setAttribute("name", "image");
+        img.classList.add("uploaded-image");
 
-      deletebutton.addEventListener("click", function () {
-        totalimages--;
-        imgdiv.remove();
-      });
+        const deletebutton = document.createElement("button");
+        deletebutton.textContent = "Delete";
+        deletebutton.classList.add("btn", "btn-danger", "m-2");
 
-      reader.onload = function (event) {
-        img.src = event.target.result;
-
-        const cropperdiv = document.createElement("div");
-        cropperdiv.classList.add("cropper-container");
-        cropperdiv.appendChild(img);
-
-        imgdiv.appendChild(cropperdiv);
-        const cropper = new Cropper(img, {
-          dragMode: "move",
-          aspectRatio: 1,
-          autoCropArea: 0.8,
-          restore: false,
-          guides: false,
-          center: false,
-          responsive:true,
-          highlight: false,
-          cropBoxMovable: false,
-          cropBoxResizable: false,
-          toggleDragModeOnDblclick: false,
+        deletebutton.addEventListener("click", function () {
+          totalimages--;
+          imgdiv.remove();
         });
 
-        const cropbtn = document.createElement("button");
-        cropbtn.classList.add("btn", "btn-primary", "m-2");
-        cropbtn.textContent = "Crop";
-        cropbtn.addEventListener("click", function (event) {
-          event.preventDefault();
-          const croppedCanvas = cropper.getCroppedCanvas();
+        reader.onload = function (event) {
+          img.src = event.target.result;
 
-          img.src = croppedCanvas.toDataURL()
+          const cropperdiv = document.createElement("div");
+          cropperdiv.classList.add("cropper-container");
+          cropperdiv.appendChild(img);
 
-          croppedCanvas.toBlob((blob) => {
-            const fileName = Date.now();
-            const file = new File([blob],` ${fileName}.jpg`, { type: 'image/jpeg' });
+          imgdiv.appendChild(cropperdiv);
+          const cropper = new Cropper(img, {
+            dragMode: "move",
+            aspectRatio: 1,
+            autoCropArea: 0.8,
+            restore: false,
+            guides: false,
+            center: false,
+            responsive:true,
+            highlight: false,
+            cropBoxMovable: false,
+            cropBoxResizable: false,
+            toggleDragModeOnDblclick: false,
+          });
 
-            if (window.FileList && window.DataTransfer) {
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.name =`image${i}`;
-                input.files = dataTransfer.files;
-               form.appendChild(input)
-               input.style.display = 'none'
-               
-            } else {
-                console.error('FileList and DataTransfer are not supported in this browser.');
-            }
-        })
-          cropper.destroy();
-          cropbtn.remove();
-    
+          const cropbtn = document.createElement("button");
+          cropbtn.classList.add("btn", "btn-primary", "m-2");
+          cropbtn.textContent = "Crop";
+          cropbtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            const croppedCanvas = cropper.getCroppedCanvas();
 
-        });
+            img.src = croppedCanvas.toDataURL()
+
+            croppedCanvas.toBlob((blob) => {
+              const fileName = Date.now();
+              const file = new File([blob],` ${fileName}.jpg`, { type: 'image/jpeg' });
+
+              if (window.FileList && window.DataTransfer) {
+                  const dataTransfer = new DataTransfer();
+                  dataTransfer.items.add(file);
+                  const input = document.createElement('input');
+                  input.type = 'file';
+                  input.name =`image${i}`;
+                  input.files = dataTransfer.files;
+                form.appendChild(input)
+                input.style.display = 'none'
+                
+              } else {
+                  console.error('FileList and DataTransfer are not supported in this browser.');
+              }
+          })
+            cropper.destroy();
+            cropbtn.remove();
       
-        imgdiv.appendChild(cropbtn);
-        imgdiv.appendChild(deletebutton);
-      };
 
-      reader.readAsDataURL(file);
+          });
+        
+          imgdiv.appendChild(cropbtn);
+          imgdiv.appendChild(deletebutton);
+        };
 
-      imagecontainer.appendChild(imgdiv);
+        reader.readAsDataURL(file);
+
+        imagecontainer.appendChild(imgdiv);
+      }
+      totalimages = totalupload;
     }
-    totalimages = totalupload;
-  }
 
   const imageInput = document.getElementById("image-upload");
 
@@ -253,7 +254,7 @@
             const size2 = document.getElementById("size2").value
             const size3 = document.getElementById("size3").value
             const size4 = document.getElementById("size4").value
-     
+            
            
             const nameError = document.getElementById("name-error")
             const priceError = document.getElementById("price-error")
@@ -264,7 +265,7 @@
             const size2Error = document.getElementById("size2-error")
             const size3Error = document.getElementById("size3-error")
             const size4Error = document.getElementById("size4-error")
-            
+            const categoryError = document.getElementById("category-error");
 
             nameError.textContent = "";
             priceError.textContent = "";
@@ -275,7 +276,7 @@
             size2Error.textContent = "";
             size3Error.textContent = "";
             size4Error.textContent = "";
-      
+
             console.log(name);
             console.log(price);
             console.log(color);
@@ -311,7 +312,11 @@
                     stockError.textContent = 'Please enter a valid positive integer for stock';
                     isValid = false;
                 }
-              
+                if(color == ""){
+                colorError.textContent = "Color is required"
+                isValid = false
+               
+                }
               if (/\d/.test(color)) {
               colorError.textContent = 'Color cannot contain numbers';
               isValid = false;
@@ -336,7 +341,11 @@
                   size4Error.textContent = 'Please enter a valid positive integer for size';
                   isValid = false;
               }
-
+              const category = document.getElementById("choices-category-input").value;
+              if (category === "") {
+                  categoryError.textContent = "Please select a category";
+                  isValid = false;
+              }
               
               const files = document.getElementById("image-upload").files;
               const imageError = document.getElementById("image-error");

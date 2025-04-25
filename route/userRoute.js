@@ -5,7 +5,6 @@ require("../middleware/auth")
 const passport = require("passport")
 
 
-
 userRoute.set("view engine","ejs")
 userRoute.set('views',path.join(__dirname,"../views/user"))
 const bodyparser = require("body-parser")
@@ -30,11 +29,6 @@ userRoute.post('/registerOtps',userController.verifyRegister)
 
 //google login
 
-userRoute.get('/auth/google',passport.authenticate("google",{scope:['email','profile']}))
-userRoute.get('/auth/google/callback',passport.authenticate("google",{ successRedirect:"/verify-google",failureRedirect:"/login"}))
-userRoute.get("/verify-google",userController.verifyGoogle)
-
-
 
 //user Login
 
@@ -56,11 +50,11 @@ userRoute.post('/confirm-password',userController.confirmPassword)
 
 //user home
 
-userRoute.get('/home',Auth.requireAuth,Auth.isBlocked,userController.loadHome)
+userRoute.get('/home',Auth.requireAuth,userController.loadHome)
 userRoute.get('/product-profile',Auth.jwtVerify,userController.productProfile)
 
 //wishlist
-userRoute.post('/insert-wishlist',Auth.requireAuth,Auth.isBlocked,userController.insertWishlist)
+userRoute.post('/insert-wishlist',Auth.requireAuth,userController.insertWishlist)
 userRoute.get('/show-wishlist',Auth.requireAuth,Auth.isBlocked,userController.showWishlist)
 userRoute.get('/wishlist-remove',Auth.requireAuth,Auth.isBlocked,userController.removeWishlist)
 
