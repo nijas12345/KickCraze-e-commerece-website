@@ -44,10 +44,6 @@ const insertCart = async (req,res)=>{
          
         const quantity = parseInt(req.body.quantity)
         const size = parseInt(req.body.size)
-        
-        // const carts = await Cart.find()
-        // console.log("carts",carts);
-
         const cart = await Cart.findOne({userId:userId,productId:productId,size:size}).populate("productId")
         console.log("cart",cart);
         if(cart){  
@@ -118,9 +114,6 @@ const updateCart = async (req,res)=>{
         updateCart.quantity = updateQuantity
         updateCart.total = updateCart.quantity * disprice
         updateCart.totalPrice = updateCart.quantity * price
-        
-
-
         const cart = await updateCart.save()
         
 
