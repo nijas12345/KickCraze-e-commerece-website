@@ -1121,7 +1121,7 @@ const forgotEmail = async(req,res)=>{
                        
                 if(isSend){           
                         // console.log("Email sent:" +info.response)
-                        res.redirect("/verify-otp")
+                        res.redirect("/Verify-otp")
                 }
                 else{
                       console.error("Error sending mail")
