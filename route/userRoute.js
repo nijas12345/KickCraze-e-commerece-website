@@ -28,6 +28,12 @@ userRoute.get('/registerOtp',userController.registerOtp)
 userRoute.post('/registerOtps',userController.verifyRegister)
 
 //google login
+userRoute.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+userRoute.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }), 
+  userController.verifyGoogle
+);
 
 
 //user Login

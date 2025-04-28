@@ -1,13 +1,15 @@
 const passport = require("passport")
 const  GoogleStrategy = require('passport-google-oauth2').Strategy;
+const dotenv = require('dotenv')
+dotenv.config()
 
-const GOOGLE_CLIENT_ID = "1091930843837-acj72867ufc24fg2j38inf1cpc56tlc6.apps.googleusercontent.com"
-const GOOGLE_CLIENT_SECRET = "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"
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
 
 passport.use(new GoogleStrategy({
     clientID:     GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "https://www.kickzone.online/auth/google/callback",
+    callbackURL: "https://kickzone.projecx.online/auth/google/callback",
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {

@@ -1004,13 +1004,11 @@ const loadLogout = async (req,res)=>{
 }
 const verifyGoogle = async (req,res)=>{
     try {
-        
-        
         const userData = await User.findOne({email:req.user.email})
         
         if(userData){
             const token = createToken({id:userData._id})
-            res.cookie("jwt",token,{httpOnly:true,maxAge:6000000000})
+            res.cookie("jwt",token,{httpOnly:true,maxAge:360000})
         res.redirect('/home')
             
         }
@@ -1117,10 +1115,8 @@ const forgotEmail = async(req,res)=>{
                 
                
                
-                const isSend = await sendMail(email1,otpCode1);
-                       
+                const isSend = await sendMail(email1,otpCode1);       
                 if(isSend){           
-                        // console.log("Email sent:" +info.response)
                         res.redirect("/Verify-otp")
                 }
                 else{

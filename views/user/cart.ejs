@@ -1014,7 +1014,7 @@
 
                         <div class="col-lg-4 col-sm-6 ">
                             <div class="checkout-button">
-                                <button href="" class="btn btn-solid-default btn fw-bold" type="submit" id="checkout">
+                                <button href="" class="btn btn-solid-default btn fw-bold">
                                     Check Out <i class="fas fa-arrow-right ms-1"></i></button>
                             </div>
                         </div>
@@ -1030,8 +1030,10 @@
                                                 <h6> Total <span id="total-price">₹ <%=totalCart%></span></h6>
                                                
                                         </div>
-                                        <div class="bottom-details">
-                                            <a href="/checkout">Process Checkout</a>
+                                        <div class="bottom-details" style="width: 100%;">
+                                            <button class="btn btn-solid-default btn" type="submit" id="checkout" style="width: 100%;">
+                                                Process to Check Out
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1455,6 +1457,7 @@ deleteButtons.forEach(async function(button) {
 const checkout = document.getElementById('checkout').addEventListener("click",async()=>{
     const quantityInputs = document.querySelectorAll("[id^='quantity']");
     const stockError = document.getElementById('stock-error')
+    console.log("stock",stockError);
     
     let isValid = true
        quantityInputs.forEach(input => {
@@ -1477,6 +1480,8 @@ const checkout = document.getElementById('checkout').addEventListener("click",as
             isValid = false
             return
         }
+        console.log("stock",stock);
+        console.log("quantity",quantity);
         
         if(quantity>stock){
             stockError.textContent = "No stock available"
