@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,29 +49,26 @@
                 <div class="login-title">
                     <h2>Forgot Password</h2>
                 </div>
-                <% 
-    
-                if(typeof message !=="undefined"){
-                    %> 
-                    <p style="color:red; margin-left: -135px ;"><%=message %></p>
-                    <%
-                 }
-                %> 
-                <form action="/forgot-email" method="post">
-                <div class="input">
-                    <label for="emailname">Enter Email Address</label>
-                    <input type="text" name="name" class="is-invalid" id="emailname">
-                    <span class="spin"></span>
-                </div>
-             
-             
-                <div class="button login button-1">
-                    <button onclick="location.href ='/forgot-email'">
-                        <span>Send</span>
-                        <i class="fa fa-check"></i>
-                    </button>
-                </div>
-            </form>
+                <% if(typeof message !=="undefined" ){ %>
+                    <p style="color:red; margin-left: -135px ;">
+                        <%=message %>
+                    </p>
+                    <% } %>
+                        <form action="/forgot-email" method="post">
+                            <div class="input">
+                                <label for="emailname">Enter Email Address</label>
+                                <input type="text" name="name" class="is-invalid" id="emailname">
+                                <span class="spin"></span>
+                            </div>
+
+
+                            <div class="button login button-1">
+                                <button onclick="location.href ='/forgot-email'">
+                                    <span>Send</span>
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </div>
+                        </form>
             </div>
         </div>
     </div>
@@ -121,4 +119,5 @@
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->
+
 </html>

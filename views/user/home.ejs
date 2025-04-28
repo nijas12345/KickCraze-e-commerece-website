@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/shoes-demo.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:01 GMT -->
+
 <head>
     <link rel="manifest" href="/user/.json">
     <link rel="icon" href="/user/assets/images/favicon/4.png" type="image/x-icon">
@@ -26,7 +27,8 @@
 
     <!-- Google font -->
     <link rel="preconnect" href="/user/https://fonts.gstatic.com/">
-    <link href="/user/https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="/user/https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
     <link href="/user/https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap"
         rel="stylesheet">
 
@@ -73,7 +75,7 @@
                     <div class="col-auto">
                         <ul class="border-list">
                             <li>
-                                <% if(typeof userId =="undefined"){%>
+                                <% if(typeof userId=="undefined" ){%>
                                     <div class="dropdown">
                                         <a class="dropdown-toggle" href="javascript:void(0)" role="button"
                                             id="dropdownMenuLink" data-bs-toggle="dropdown">
@@ -89,14 +91,14 @@
                                             </li>
                                         </ul>
                                     </div>
-                                <% }else{ %>
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle" href="/user/javascript:void(0)" role="button"
-                                            id="dropdownMenuLink" data-bs-toggle="dropdown">
-                                            <a href="/logout">Logout</a>
-                                            <!-- <i class="fas fa-chevron-down"></i> -->
-                                        </a>
-                                        <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                    <% }else{ %>
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" href="/user/javascript:void(0)" role="button"
+                                                id="dropdownMenuLink" data-bs-toggle="dropdown">
+                                                <a href="/logout">Logout</a>
+                                                <!-- <i class="fas fa-chevron-down"></i> -->
+                                            </a>
+                                            <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
                                             <li class="w-100">
                                                 <a class="dropdown-item" href="/user/log-in.html">Log In</a>
                                             </li>
@@ -104,9 +106,9 @@
                                                 <a class="dropdown-item" href="/user/sign-up.html">Ragistore</a>
                                             </li>
                                         </ul> -->
-                                    </div>
-                            <%}%>
-                                
+                                        </div>
+                                        <%}%>
+
                             </li>
 
                             <li>
@@ -169,7 +171,8 @@
                                         <svg class="svg-icon">
                                             <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
                                         </svg>
-                                        <img src="/user/assets/images/logo.png" class="img-fluid blur-up lazyload" alt="logo">
+                                        <img src="/user/assets/images/logo.png" class="img-fluid blur-up lazyload"
+                                            alt="logo">
                                     </a>
                                 </div>
                                 <div class="category-menu">
@@ -185,15 +188,17 @@
                                             </span>
                                         </div>
                                         <ul>
-                                            <%categories.forEach((category) => {%>
-                                                
-                                          
-                                            <li >
-                                                <a href="/sports-shoes?id=<%=category._id %>"><%=category.name %></a>
-                                                <ul class="category-mega-menu">
-                                                    <li>
-                                                        <div class="row">
-                                                            <!-- <div class="col-xl-3">
+                                            <%categories.forEach((category)=> {%>
+
+
+                                                <li>
+                                                    <a href="/sports-shoes?id=<%=category._id %>">
+                                                        <%=category.name %>
+                                                    </a>
+                                                    <ul class="category-mega-menu">
+                                                        <li>
+                                                            <div class="row">
+                                                                <!-- <div class="col-xl-3">
                                                                 <div class="category-childmenu">
                                                                     <div class="title-category">
                                                                         <h6>Watch Brands</h6>
@@ -220,7 +225,7 @@
                                                                     </ul>
                                                                 </div>
                                                             </div> -->
-                                                            <!-- <div class="col-xl-3">
+                                                                <!-- <div class="col-xl-3">
                                                                 <div class="category-childmenu">
                                                                     <div class="title-category">
                                                                         <h6>Watch Display</h6>
@@ -244,7 +249,7 @@
                                                                     </ul>
                                                                 </div>
                                                             </div> -->
-                                                            <!-- <div class="col-xl-3">
+                                                                <!-- <div class="col-xl-3">
                                                                 <div class="category-childmenu">
                                                                     <div class="title-category">
                                                                         <h6>Watch Style</h6>
@@ -265,19 +270,19 @@
                                                                     </ul>
                                                                 </div>
                                                             </div> -->
-                                                            <div class="col-xl-3">
-                                                                <!-- <div class="category-banner">
+                                                                <div class="col-xl-3">
+                                                                    <!-- <div class="category-banner">
                                                                     <img src="/user/assets/images/electronics/banner/4.jpg"
                                                                         class="img-fluid blur-up lazyload" alt="">
                                                                 </div> -->
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <% }) %>
-                                           
-                                          
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <% }) %>
+
+
                                         </ul>
                                     </div>
                                 </div>
@@ -299,7 +304,7 @@
                                                 <!-- <div class="mega-menu-container menu-content">
                                                     <div class="container-fluid">
                                                         <div class="row"> -->
-                                                            <!-- <div class="col mega-box">
+                                                <!-- <div class="col mega-box">
                                                                 <div class="link-section">
                                                                     <div class="opensubmegamenu">
                                                                         <ul>
@@ -314,13 +319,13 @@
                                                                         </ul>
                                                                     </div> -->
 
-                                                                    <!-- <div class="megamenu-image-title pb-0">
+                                                <!-- <div class="megamenu-image-title pb-0">
                                                                         <h5 class="mb-0">Fashion Demo</h5>
                                                                     </div> -->
-                                                                <!-- </div>
+                                                <!-- </div>
                                                             </div> -->
-                                                            <!-- <div class="col mega-box"> -->
-                                                                <!-- <div class="link-section">
+                                                <!-- <div class="col mega-box"> -->
+                                                <!-- <div class="link-section">
                                                                     <div class="opensubmegamenu">
                                                                         <ul>
                                                                             <li>
@@ -337,8 +342,8 @@
                                                                         <h5 class="mb-0">Flowers Demo</h5>
                                                                     </div>
                                                                 </div> -->
-                                                            <!-- </div> -->
-                                                            <!-- <div class="col mega-box">
+                                                <!-- </div> -->
+                                                <!-- <div class="col mega-box">
                                                                 <div class="link-section">
                                                                     <div class="opensubmegamenu">
                                                                         <ul>
@@ -357,7 +362,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div> -->
-                                                            <!-- <div class="col mega-box">
+                                                <!-- <div class="col mega-box">
                                                                 <div class="link-section">
                                                                     <div class="opensubmegamenu">
                                                                         <ul>
@@ -376,7 +381,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div> -->
-                                                            <!-- <div class="col mega-box">
+                                                <!-- <div class="col mega-box">
                                                                 <div class="link-section">
                                                                     <div class="opensubmegamenu">
                                                                         <ul>
@@ -395,7 +400,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div> -->
-                                                            <!-- <div class="col mega-box">
+                                                <!-- <div class="col mega-box">
                                                                 <div class="link-section">
                                                                     <div class="opensubmegamenu">
                                                                         <ul>
@@ -418,7 +423,7 @@
                                                     </div>
                                                 </div>
                                             </li> -->
-                                            <!-- <li class="dropdown">
+                                                <!-- <li class="dropdown">
                                                 <a href="/user/javascript:void(0)" class="nav-link menu-title">shop</a>
                                                 <ul class="nav-submenu menu-content">
                                                     <li>
@@ -455,7 +460,7 @@
                                                     </li>
                                                 </ul>
                                             </li> -->
-                                            <li >
+                                            <li>
                                                 <a href="/shop" class="nav-link menu-title">Shop</a>
                                                 <!-- <ul class="nav-submenu menu-content">
                                                     <li>
@@ -527,7 +532,8 @@
                                                                                     Template 2</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/https://themes.pixelstrap.com/voxo/email-template/offer.html">Offer
+                                                                                <a
+                                                                                    href="/user/https://themes.pixelstrap.com/voxo/email-template/offer.html">Offer
                                                                                     Template</a>
                                                                             </li>
                                                                             <li>
@@ -576,15 +582,18 @@
                                                                     <div class="submenu-content opensubmegamenu">
                                                                         <ul class="list">
                                                                             <li>
-                                                                                <a href="/user/https://themes.pixelstrap.com/voxo/invoice/invoice-1.html">Invoice
+                                                                                <a
+                                                                                    href="/user/https://themes.pixelstrap.com/voxo/invoice/invoice-1.html">Invoice
                                                                                     1 Template</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/https://themes.pixelstrap.com/voxo/invoice/invoice-2.html">Invoice
+                                                                                <a
+                                                                                    href="/user/https://themes.pixelstrap.com/voxo/invoice/invoice-2.html">Invoice
                                                                                     2 Template</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/https://themes.pixelstrap.com/voxo/invoice/invoice-3.html">Invoice
+                                                                                <a
+                                                                                    href="/user/https://themes.pixelstrap.com/voxo/invoice/invoice-3.html">Invoice
                                                                                     3 Template</a>
                                                                             </li>
                                                                         </ul>
@@ -604,7 +613,8 @@
                                                                                     2 Grid</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/portfolio-2-masonary.html">Portfolio
+                                                                                <a
+                                                                                    href="/user/portfolio-2-masonary.html">Portfolio
                                                                                     2 Masonary</a>
                                                                             </li>
                                                                             <li>
@@ -612,7 +622,8 @@
                                                                                     3 Grid</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/portfolio-3-masonary.html">Portfolio
+                                                                                <a
+                                                                                    href="/user/portfolio-3-masonary.html">Portfolio
                                                                                     3 Masonary</a>
                                                                             </li>
                                                                             <li>
@@ -620,7 +631,8 @@
                                                                                     4 Grid</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/portfolio-4-masonary.html">Portfolio
+                                                                                <a
+                                                                                    href="/user/portfolio-4-masonary.html">Portfolio
                                                                                     4 Masonary</a>
                                                                             </li>
                                                                             <li>
@@ -653,7 +665,8 @@
                                                                                     Collection Banner</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/element-deal-banner.html">Element
+                                                                                <a
+                                                                                    href="/user/element-deal-banner.html">Element
                                                                                     Deal Banner</a>
                                                                             </li>
                                                                             <li>
@@ -681,14 +694,16 @@
                                                                     <div class="submenu-content opensubmegamenu">
                                                                         <ul class="list">
                                                                             <li>
-                                                                                <a href="/user/furniture-demo.html">Bottom</a>
+                                                                                <a
+                                                                                    href="/user/furniture-demo.html">Bottom</a>
                                                                             </li>
                                                                             <li>
                                                                                 <a href="/user/electronic-demo.html">Bottom
                                                                                     Left</a>
                                                                             </li>
                                                                             <li>
-                                                                                <a href="/user/index.html">Bottom Right</a>
+                                                                                <a href="/user/index.html">Bottom
+                                                                                    Right</a>
                                                                             </li>
                                                                         </ul>
                                                                     </div>
@@ -735,7 +750,8 @@
                                                         <a href="/user/checkout.html">checkout</a>
                                                     </li>
                                                     <li>
-                                                        <a href="/user/coming-soon.html">coming soon<span>trending</span></a>
+                                                        <a href="/user/coming-soon.html">coming
+                                                            soon<span>trending</span></a>
                                                     </li>
                                                     <li>
                                                         <a href="/user/compare.html">compare</a>
@@ -773,7 +789,8 @@
                                                         <a href="/user/blog-details.html">Blog Details</a>
                                                     </li>
                                                     <li>
-                                                        <a href="/user/blog-infinite-scroll.html">Blog Infinite Scroll</a>
+                                                        <a href="/user/blog-infinite-scroll.html">Blog Infinite
+                                                            Scroll</a>
                                                     </li>
                                                     <li>
                                                         <a href="/user/blog-left-sidebar.html">Blog Left Sidebar</a>
@@ -782,7 +799,8 @@
                                                         <a href="/user/blog-listing.html">Blog Listing</a>
                                                     </li>
                                                     <li>
-                                                        <a href="/user/blog-masonary.html">blog Masonary <span>New</span></a>
+                                                        <a href="/user/blog-masonary.html">blog Masonary
+                                                            <span>New</span></a>
                                                     </li>
                                                     <li>
                                                         <a href="/user/blog-no-sidebar.html">blog No Sidebar</a>
@@ -814,56 +832,56 @@
                                             <i data-feather="search"></i>
                                         </div>
                                     </li> -->
-                                     <li class="onhover-dropdown wislist-dropdown">
+                                    <li class="onhover-dropdown wislist-dropdown">
                                         <a href="/show-wishlist">
-                                        <div class="cart-media">
-                                            <div class="cart-icon">
-                                                <i data-feather="heart"></i>
-                                                <span class="label label-theme rounded-pill"><%=wishlistCount %></span>
-                                            </a>
-                                            </div>
-                                            <div class="cart-content">
-                                                <h6></h6>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                        </li>
-                                        <li>
-                                        <% if(wishlistCount >0) {%>
-
-                                       
-                                        <div class="onhover-div">
-                                            <a href="/show-wishlist">
-                                                <div class="wislist-empty">
-                                                    <i class="fab fa-gratipay"></i>
-                                                    <h6 class="mb-1">Go wislist </h6>
-                                                    <p class="font-light mb-0">explore more</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <%}
-                                        else
-                                        {%>
-                                            <div class="onhover-div">
-                                                <a href="/show-wishlist">
-                                                    <div class="wislist-empty">
-                                                        <i class="fab fa-gratipay"></i>
-                                                        <h6 class="mb-1">Your wislist empty !!</h6>
-                                                        <p class="font-light mb-0">explore more and shortlist items.</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-
-                                            <% } %>
-                                    </li> 
-                                    <li class="onhover-dropdown cart-dropdown">
-                                        <a href="/cart" class="btn btn-solid-default btn-spacing">
-                                            <i data-feather="shopping-cart" class="pe-2"></i>
-                                            <span>CART</span>
+                                            <div class="cart-media">
+                                                <div class="cart-icon">
+                                                    <i data-feather="heart"></i>
+                                                    <span class="label label-theme rounded-pill">
+                                                        <%=wishlistCount %>
+                                                    </span>
                                         </a>
-                                        
-                                        
-                                        <!-- <div class="onhover-div">
+                            </div>
+                            <div class="cart-content">
+                                <h6></h6>
+                                <span></span>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                            <% if(wishlistCount>0) {%>
+
+
+                                <div class="onhover-div">
+                                    <a href="/show-wishlist">
+                                        <div class="wislist-empty">
+                                            <i class="fab fa-gratipay"></i>
+                                            <h6 class="mb-1">Go wislist </h6>
+                                            <p class="font-light mb-0">explore more</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <%} else {%>
+                                    <div class="onhover-div">
+                                        <a href="/show-wishlist">
+                                            <div class="wislist-empty">
+                                                <i class="fab fa-gratipay"></i>
+                                                <h6 class="mb-1">Your wislist empty !!</h6>
+                                                <p class="font-light mb-0">explore more and shortlist items.</p>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <% } %>
+                        </li>
+                        <li class="onhover-dropdown cart-dropdown">
+                            <a href="/cart" class="btn btn-solid-default btn-spacing">
+                                <i data-feather="shopping-cart" class="pe-2"></i>
+                                <span>CART</span>
+                            </a>
+
+
+                            <!-- <div class="onhover-div">
                                             <div class="cart-menu">
                                                 <div class="cart-title">
                                                     <h6>
@@ -926,11 +944,11 @@
                                                 </button>
                                             </div>
                                         </div> -->
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="search-full">
-                                <!-- <div class="input-group">
+                        </li>
+                        </ul>
+                    </div>
+                    <div class="search-full">
+                        <!-- <div class="input-group">
                                     <span class="input-group-text">
                                         <i data-feather="search" class="font-light"></i>
                                     </span>
@@ -939,73 +957,73 @@
                                         <i data-feather="x" class="font-light"></i>
                                     </span>
                                 </div> -->
-                                <div class="search-suggestion">
-                                    <ul class="custom-scroll">
-                                        <li>
-                                            <div class="product-cart media">
-                                                <img src="/user/assets/images/electronics/product/1.jpg"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                                <div class="media-body">
-                                                    <!-- <a href="/user/javascript:void(0)">
+                        <div class="search-suggestion">
+                            <ul class="custom-scroll">
+                                <li>
+                                    <div class="product-cart media">
+                                        <img src="/user/assets/images/electronics/product/1.jpg"
+                                            class="img-fluid blur-up lazyload" alt="">
+                                        <div class="media-body">
+                                            <!-- <a href="/user/javascript:void(0)">
                                                         <h6 class="mb-1">Latest Sports Shoes</h6>
                                                     </a> -->
-                                                    <ul class="rating mt-1">
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star"></i>
-                                                        </li>
-                                                    </ul>
-                                                    <p class="mb-0 mt-1">$28.00</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="product-cart media">
-                                                <img src="/user/assets/images/electronics/product/5.jpg"
-                                                    class="img-fluid blur-up lazyload" alt="">
-                                                <div class="media-body">
-                                                    <a href="/user/javascript:void(0)">
-                                                        <h6 class="mb-1">Powermatic 900 W Juicer</h6>
-                                                    </a>
-                                                    <ul class="rating mt-1">
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                        <li>
-                                                            <i class="fas fa-star theme-color"></i>
-                                                        </li>
-                                                    </ul>
-                                                    <p class="mb-0 mt-1">$35.00</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                                            <ul class="rating mt-1">
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star"></i>
+                                                </li>
+                                            </ul>
+                                            <p class="mb-0 mt-1">$28.00</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="product-cart media">
+                                        <img src="/user/assets/images/electronics/product/5.jpg"
+                                            class="img-fluid blur-up lazyload" alt="">
+                                        <div class="media-body">
+                                            <a href="/user/javascript:void(0)">
+                                                <h6 class="mb-1">Powermatic 900 W Juicer</h6>
+                                            </a>
+                                            <ul class="rating mt-1">
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star theme-color"></i>
+                                                </li>
+                                            </ul>
+                                            <p class="mb-0 mt-1">$35.00</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     </header>
     <!-- header end -->
@@ -1058,22 +1076,22 @@
                             <ul class="label-15">
                                 <li>
                                     <a href="https://www.facebook.com/">
-                                        <img src="/user/assets/images/social-icon/1.png" class="img-fluid blur-up lazyload"
-                                            alt="facebook">
+                                        <img src="/user/assets/images/social-icon/1.png"
+                                            class="img-fluid blur-up lazyload" alt="facebook">
                                         <h5 class="d-lg-block d-none">Facebook</h5>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://www.instagram.com/">
-                                        <img src="/user/assets/images/social-icon/2.png" class="img-fluid blur-up lazyload"
-                                            alt="Instagram">
+                                        <img src="/user/assets/images/social-icon/2.png"
+                                            class="img-fluid blur-up lazyload" alt="Instagram">
                                         <h5 class="d-lg-block d-none">Instagram</h5>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://twitter.com/">
-                                        <img src="/user/assets/images/social-icon/3.png" class="img-fluid blur-up lazyload"
-                                            alt="Twitter">
+                                        <img src="/user/assets/images/social-icon/3.png"
+                                            class="img-fluid blur-up lazyload" alt="Twitter">
                                         <h5 class="d-lg-block d-none">Twitter</h5>
                                     </a>
                                 </li>
@@ -1094,36 +1112,41 @@
                         <img src="/user/assets/images/shoes/1-.png" class="shoes-1 img-fluid blur-up lazyload" alt="">
                     </div>
 
-                    <% if (product && product.length > 0 && product[0]) { %>
-  <div class="sugestion-product d-xl-block d-none">
-    <h3>Suggestion Product</h3>
-    <h6>Our Collection</h6>
+                    <% if (product && product.length> 0 && product[0]) { %>
+                        <div class="sugestion-product d-xl-block d-none">
+                            <h3>Suggestion Product</h3>
+                            <h6>Our Collection</h6>
 
-    <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
-      <div class="relative-shoes">
-        <img src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/default.jpg' %>" width="100px" alt="Product Image">
+                            <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
+                                <div class="relative-shoes">
+                                    <img src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/default.jpg' %>"
+                                        width="100px" alt="Product Image">
 
-        <div class="shoes-price">
-          <h5><%= product[0].price %></h5>
-          <h6><%= product[0].name %></h6>
-        </div>
-      </div>
-    </a>
-  </div>
-<% } 
- %>
+                                    <div class="shoes-price">
+                                        <h5>
+                                            <%= product[0].price %>
+                                        </h5>
+                                        <h6>
+                                            <%= product[0].name %>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
 
 
-                    <div class="price-number">
-                        <h2>₹ 2499<span><del>₹ 2799</del></span></h2>
-                        <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae minima asperiores
-                            possimus ad quae.</h6>
-                    </div>
+                            <div class="price-number">
+                                <h2>₹ 2499<span><del>₹ 2799</del></span></h2>
+                                <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae minima
+                                    asperiores
+                                    possimus ad quae.</h6>
+                            </div>
 
-                    <div class="slider-arrow-2">
-                        <div class="left-arrow d-lg-block d-none"></div>
-                        <div class="right-arrow d-lg-block d-none"></div>
-                    </div>
+                            <div class="slider-arrow-2">
+                                <div class="left-arrow d-lg-block d-none"></div>
+                                <div class="right-arrow d-lg-block d-none"></div>
+                            </div>
                 </div>
                 <!-- Slider 1 End -->
 
@@ -1134,22 +1157,22 @@
                             <ul class="label-15">
                                 <li>
                                     <a href="/user/https://www.facebook.com/">
-                                        <img src="/user/assets/images/social-icon/1.png" class="img-fluid blur-up lazyload"
-                                            alt="facebook">
+                                        <img src="/user/assets/images/social-icon/1.png"
+                                            class="img-fluid blur-up lazyload" alt="facebook">
                                         <h5 class="d-lg-block d-none">Facebook</h5>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/user/https://www.instagram.com/">
-                                        <img src="/user/assets/images/social-icon/2.png" class="img-fluid blur-up lazyload"
-                                            alt="Instagram">
+                                        <img src="/user/assets/images/social-icon/2.png"
+                                            class="img-fluid blur-up lazyload" alt="Instagram">
                                         <h5 class="d-lg-block d-none">Instagram</h5>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/user/https://twitter.com/">
-                                        <img src="/user/assets/images/social-icon/3.png" class="img-fluid blur-up lazyload"
-                                            alt="Twitter">
+                                        <img src="/user/assets/images/social-icon/3.png"
+                                            class="img-fluid blur-up lazyload" alt="Twitter">
                                         <h5 class="d-lg-block d-none">Twitter</h5>
                                     </a>
                                 </li>
@@ -1167,41 +1190,45 @@
                         </div>
 
                         <div class="bg-circle red-gradient"></div>
-                        <img class="shoes-1 img-fluid blur-up lazyload" alt="" src="/user/assets/images/shoes/slider-2.png">
+                        <img class="shoes-1 img-fluid blur-up lazyload" alt=""
+                            src="/user/assets/images/shoes/slider-2.png">
                     </div>
 
-                    <% if (product && product.length > 0 && product[0]) { %>
-  <div class="sugestion-product d-xl-block d-none">
-    <h3>Suggestion Product</h3>
-    <h6>Our Collection</h6>
+                    <% if (product && product.length> 0 && product[0]) { %>
+                        <div class="sugestion-product d-xl-block d-none">
+                            <h3>Suggestion Product</h3>
+                            <h6>Our Collection</h6>
 
-    <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
-      <div class="relative-shoes">
-        <img 
-          src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/images/default.jpg' %>" 
-          width="100px" 
-          alt="Product Image">
+                            <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
+                                <div class="relative-shoes">
+                                    <img src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/images/default.jpg' %>"
+                                        width="100px" alt="Product Image">
 
-        <div class="shoes-price">
-          <h5><%= product[0].price %></h5>
-          <h6><%= product[0].name %></h6>
-        </div>
-      </div>
-    </a>
-  </div>
-<% } %>
+                                    <div class="shoes-price">
+                                        <h5>
+                                            <%= product[0].price %>
+                                        </h5>
+                                        <h6>
+                                            <%= product[0].name %>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
 
 
-                    <div class="price-number">
-                        <h2>₹ 2499<span><del>₹ 2799</del></span></h2>
-                        <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae minima asperiores
-                            possimus ad quae.</h6>
-                    </div>
+                            <div class="price-number">
+                                <h2>₹ 2499<span><del>₹ 2799</del></span></h2>
+                                <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae minima
+                                    asperiores
+                                    possimus ad quae.</h6>
+                            </div>
 
-                    <div class="slider-arrow-2">
-                        <div class="left-arrow d-lg-block d-none"></div>
-                        <div class="right-arrow d-lg-block d-none"></div>
-                    </div>
+                            <div class="slider-arrow-2">
+                                <div class="left-arrow d-lg-block d-none"></div>
+                                <div class="right-arrow d-lg-block d-none"></div>
+                            </div>
                 </div>
                 <!-- Slider 2 End -->
 
@@ -1212,22 +1239,22 @@
                             <ul class="label-15">
                                 <li>
                                     <a href="/user/javascript:void(0)">
-                                        <img src="/user/assets/images/social-icon/1.png" class="img-fluid blur-up lazyload"
-                                            alt="facebook">
+                                        <img src="/user/assets/images/social-icon/1.png"
+                                            class="img-fluid blur-up lazyload" alt="facebook">
                                         <h5 class="d-lg-block d-none">Facebook</h5>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/user/javascript:void(0)">
-                                        <img src="/user/assets/images/social-icon/2.png" class="img-fluid blur-up lazyload"
-                                            alt="Instagram">
+                                        <img src="/user/assets/images/social-icon/2.png"
+                                            class="img-fluid blur-up lazyload" alt="Instagram">
                                         <h5 class="d-lg-block d-none">Instagram</h5>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/user/javascript:void(0)">
-                                        <img src="/user/assets/images/social-icon/3.png" class="img-fluid blur-up lazyload"
-                                            alt="Twitter">
+                                        <img src="/user/assets/images/social-icon/3.png"
+                                            class="img-fluid blur-up lazyload" alt="Twitter">
                                         <h5 class="d-lg-block d-none">Twitter</h5>
                                     </a>
                                 </li>
@@ -1245,40 +1272,44 @@
                         </div>
 
                         <div class="bg-circle gradient-blue"></div>
-                        <img class="shoes-1 img-fluid blur-up lazyload" alt="" src="/user/assets/images/shoes/Slider.png">
+                        <img class="shoes-1 img-fluid blur-up lazyload" alt=""
+                            src="/user/assets/images/shoes/Slider.png">
                     </div>
 
-                    <% if (product && product.length > 0 && product[0]) { %>
-  <div class="sugestion-product d-xl-block d-none">
-    <h3>Suggestion Product</h3>
-    <h6>Our Collection</h6>
+                    <% if (product && product.length> 0 && product[0]) { %>
+                        <div class="sugestion-product d-xl-block d-none">
+                            <h3>Suggestion Product</h3>
+                            <h6>Our Collection</h6>
 
-    <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
-      <div class="relative-shoes">
-        <img 
-          src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/images/default.jpg' %>" 
-          width="100px" 
-          alt="Product Image">
+                            <a href="/product-profile?id=<%= product[0]._id %>" class="slider-shoes-image d-block">
+                                <div class="relative-shoes">
+                                    <img src="<%= product[0].image && product[0].image.length > 0 ? product[0].image[0] : '/images/default.jpg' %>"
+                                        width="100px" alt="Product Image">
 
-        <div class="shoes-price">
-          <h5><%= product[0].price %></h5>
-          <h6><%= product[0].name %></h6>
-        </div>
-      </div>
-    </a>
-  </div>
-<% } %>
+                                    <div class="shoes-price">
+                                        <h5>
+                                            <%= product[0].price %>
+                                        </h5>
+                                        <h6>
+                                            <%= product[0].name %>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
 
 
-                    <div class="price-number">
-                        <h2>2499<span><del>₹ 2799</del></span></h2>
-                        <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae minima asperiores
-                            possimus ad quae.</h6>
-                    </div>
-                    <div class="slider-arrow-2">
-                        <div class="left-arrow d-lg-block d-none"></div>
-                        <div class="right-arrow d-lg-block d-none"></div>
-                    </div>
+                            <div class="price-number">
+                                <h2>2499<span><del>₹ 2799</del></span></h2>
+                                <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae minima
+                                    asperiores
+                                    possimus ad quae.</h6>
+                            </div>
+                            <div class="slider-arrow-2">
+                                <div class="left-arrow d-lg-block d-none"></div>
+                                <div class="right-arrow d-lg-block d-none"></div>
+                            </div>
                 </div>
                 <!-- Slider 3 End -->
             </div>
@@ -1349,56 +1380,60 @@
 
     <!-- Poster Section Start -->
     <section class="poster-section ratio2_1">
-    <div>
-        <div class="container">
-            <div class="row">
-                <!-- First Poster -->
-                <div class="col-lg-6">
-                    <div class="poster-image">
-                        <img src="/user/assets/images/shoes/poster/1.png" class="img-fluid bg-img blur-up lazyload" alt="">
+        <div>
+            <div class="container">
+                <div class="row">
+                    <!-- First Poster -->
+                    <div class="col-lg-6">
+                        <div class="poster-image">
+                            <img src="/user/assets/images/shoes/poster/1.png" class="img-fluid bg-img blur-up lazyload"
+                                alt="">
 
-                        <div class="poster-image-details">
-                            <div>
-                                <h5>Get 25% Rewarded</h5>
-                                <h2>Latest Sport Shoes</h2>
-                                <p class="d-sm-block d-none my-1">Fully Comfortable and Smooth Product</p>
-                                <h3>₹2200 <span><del>₹2799</del></span></h3>
-                                
-                                <% if (categories && categories.length > 0) { %>
-                                    <button onclick="location.href ='/sports-shoes?id=<%= categories[0]._id %>';" class="btn btn-solid-default">BUY NOW</button>
-                                <% } else { %>
-                                    <button class="btn btn-solid-default disabled">Category Unavailable</button>
-                                <% } %>
+                            <div class="poster-image-details">
+                                <div>
+                                    <h5>Get 25% Rewarded</h5>
+                                    <h2>Latest Sport Shoes</h2>
+                                    <p class="d-sm-block d-none my-1">Fully Comfortable and Smooth Product</p>
+                                    <h3>₹2200 <span><del>₹2799</del></span></h3>
+
+                                    <% if (categories && categories.length> 0) { %>
+                                        <button onclick="location.href ='/sports-shoes?id=<%= categories[0]._id %>';"
+                                            class="btn btn-solid-default">BUY NOW</button>
+                                        <% } else { %>
+                                            <button class="btn btn-solid-default disabled">Category Unavailable</button>
+                                            <% } %>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Second Poster -->
-                <div class="col-lg-6 mt-lg-0 mt-4">
-                    <div class="poster-image">
-                        <img src="/user/assets/images/shoes/poster/2.png" class="img-fluid bg-img blur-up lazyload" alt="">
+                    <!-- Second Poster -->
+                    <div class="col-lg-6 mt-lg-0 mt-4">
+                        <div class="poster-image">
+                            <img src="/user/assets/images/shoes/poster/2.png" class="img-fluid bg-img blur-up lazyload"
+                                alt="">
 
-                        <div class="poster-image-details">
-                            <div>
-                                <h5>Get 38% Rewarded</h5>
-                                <h2>Perfect Mixture Shoes</h2>
-                                <p class="d-sm-block d-none my-1">Fully Comfortable and Smooth Product</p>
-                                <h3>₹2300 <span><del>₹3099</del></span></h3>
-                                <button onclick="location.href = '/shop';" class="btn btn-solid-default">BUY NOW</button>
+                            <div class="poster-image-details">
+                                <div>
+                                    <h5>Get 38% Rewarded</h5>
+                                    <h2>Perfect Mixture Shoes</h2>
+                                    <p class="d-sm-block d-none my-1">Fully Comfortable and Smooth Product</p>
+                                    <h3>₹2300 <span><del>₹3099</del></span></h3>
+                                    <button onclick="location.href = '/shop';" class="btn btn-solid-default">BUY
+                                        NOW</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Poster Section End -->
 
     <!-- New Arrival Section Start -->
-   
+
     <section class="ratio_asos">
         <div class="container-fluid p-sm-0">
             <div class="col-sm-12 p-0">
@@ -1409,27 +1444,27 @@
                 <div class="product-wrapper slide-6">
 
                     <!-- /////////////////////// -->
-        
-                        <% let newArrival = product.slice(0, 5).reverse() %>
-                        
-                        <% newArrival.forEach((product) => { %>
-                            <div>
-                        <div class="product-box">
-                            <div class="img-wrapper">
-                                <a href="/product-profile?id=<%=product._id%>">
-                                    <img height="200" width="200" src="<%=product.image[0] %>" alt="">
-                                </a>
-                                <div class="label-block">
-                                    <span class="label label-black">New</span>
-                                  
 
-                                    <%if(product.offer>product.discount){%>
-                                        <span class="label label-theme"> (<%=product.offer%>% off)</span>
-                                        <%}else{%>
-                                            <span class="label label-theme">(<%= product.discount%>% off)</span>
-                                        <%}%>
-                                </div>
-                                <!-- <div class="cart-wrap">
+                    <% let newArrival=product.slice(0, 5).reverse() %>
+
+                        <% newArrival.forEach((product)=> { %>
+                            <div>
+                                <div class="product-box">
+                                    <div class="img-wrapper">
+                                        <a href="/product-profile?id=<%=product._id%>">
+                                            <img height="200" width="200" src="<%=product.image[0] %>" alt="">
+                                        </a>
+                                        <div class="label-block">
+                                            <span class="label label-black">New</span>
+
+
+                                            <%if(product.offer>product.discount){%>
+                                                <span class="label label-theme"> (<%=product.offer%>% off)</span>
+                                                <%}else{%>
+                                                    <span class="label label-theme">(<%= product.discount%>% off)</span>
+                                                    <%}%>
+                                        </div>
+                                        <!-- <div class="cart-wrap">
                                     <ul>
                                         <li>
                                             <a href="/user/javascript:void(0)" class="addtocart-btn" data-bs-toggle="modal" data-bs-target="#addtocart">
@@ -1453,38 +1488,42 @@
                                         </li>
                                     </ul>
                                 </div> -->
-                            </div>
-                            
+                                    </div>
 
-                            <div class="product-details text-center">
-                                <h3 class="theme-color">
-                                    <%=product.disprice %>
-                                    <span class="font-light ml-1"><%=product.price %></span>           
-                                </h3>
-                                <a href="/product-profile?id=<%=product._id%>" class="font-default">
-                                    <h5><%=product.name %></h5>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                        <% }) %>
-                    
 
-<!-- ////////////////// -->
-                  
-                  
+                                    <div class="product-details text-center">
+                                        <h3 class="theme-color">
+                                            <%=product.disprice %>
+                                                <span class="font-light ml-1">
+                                                    <%=product.price %>
+                                                </span>
+                                        </h3>
+                                        <a href="/product-profile?id=<%=product._id%>" class="font-default">
+                                            <h5>
+                                                <%=product.name %>
+                                            </h5>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+
+
+                                <!-- ////////////////// -->
+
+
                 </div>
             </div>
         </div>
     </section>
-    
-    
-    
-    
-    
-    
-                        
-           
+
+
+
+
+
+
+
+
     <!-- New Arrival Section End -->
 
     <!-- Banner Style 2 Section Start -->
@@ -1492,56 +1531,61 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-6 ratio2_1">
-    <div class="collection-banner p-right text-right">
-        <a href="/user/shop-left-sidebar.html" class="banner-img">
-            <img src="/user/assets/images/shoes/poster-2/1.jpg" class="bg-img blur-up lazyload" alt="">
-        </a>
-        <div class="banner-text">
-            <div class="banner-content">
-                <h6>New <span class="theme-color">Collections</span></h6>
-                <h2>New Running <br>Shoes <span class="theme-color d-block">₹48</span></h2>
+                    <div class="collection-banner p-right text-right">
+                        <a href="/user/shop-left-sidebar.html" class="banner-img">
+                            <img src="/user/assets/images/shoes/poster-2/1.jpg" class="bg-img blur-up lazyload" alt="">
+                        </a>
+                        <div class="banner-text">
+                            <div class="banner-content">
+                                <h6>New <span class="theme-color">Collections</span></h6>
+                                <h2>New Running <br>Shoes <span class="theme-color d-block">₹48</span></h2>
 
-                <% if (categories && categories.length > 2) { %>
-                    <a id="shopNowLink" href="/sports-shoes?id=<%= categories[2]._id %>" class="btn default-light default-theme mt-md-2 mt-1 rounded">SHOP NOW</a>
-                <% } else { %>
-                    <a id="shopNowLink" href="#" class="btn default-light default-theme mt-md-2 mt-1 rounded disabled">SHOP NOW</a>
-                <% } %>
+                                <% if (categories && categories.length> 2) { %>
+                                    <a id="shopNowLink" href="/sports-shoes?id=<%= categories[2]._id %>"
+                                        class="btn default-light default-theme mt-md-2 mt-1 rounded">SHOP NOW</a>
+                                    <% } else { %>
+                                        <a id="shopNowLink" href="#"
+                                            class="btn default-light default-theme mt-md-2 mt-1 rounded disabled">SHOP
+                                            NOW</a>
+                                        <% } %>
 
-            </div>
-        </div>
-    </div>
-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
 
                 <div class="col-lg-6">
                     <div class="row gy-4">
                         <div class="col-lg-12 ratio_40">
-    <div class="collection-banner p-left banner-title">
-        <a href="/user/shop-left-sidebar.html" class="banner-img">
-            <img src="/user/assets/images/shoes/poster-2/2.jpg" class="bg-img blur-up lazyload" alt="">
-        </a>
+                            <div class="collection-banner p-left banner-title">
+                                <a href="/user/shop-left-sidebar.html" class="banner-img">
+                                    <img src="/user/assets/images/shoes/poster-2/2.jpg" class="bg-img blur-up lazyload"
+                                        alt="">
+                                </a>
 
-        <div class="banner-text">
-            <div class="banner-content">
-                <h3 class="mb-md-2 mb-0 spacing-text">
-                    New Loafers from <span class="theme-color">₹799</span>
-                </h3>
+                                <div class="banner-text">
+                                    <div class="banner-content">
+                                        <h3 class="mb-md-2 mb-0 spacing-text">
+                                            New Loafers from <span class="theme-color">₹799</span>
+                                        </h3>
 
-                <% if (categories && categories.length > 3) { %>
-                    <button class="btn default-light default-light-theme mt-md-2 mt-1 rounded" 
-                            onclick="location.href='/sports-shoes?id=<%= categories[3]._id %>'">
-                        SHOP NOW
-                    </button>
-                <% } else { %>
-                    <button class="btn default-light default-light-theme mt-md-2 mt-1 rounded disabled">
-                        SHOP NOW
-                    </button>
-                <% } %>
-            </div>
-        </div>
-    </div>
-</div>
+                                        <% if (categories && categories.length> 3) { %>
+                                            <button class="btn default-light default-light-theme mt-md-2 mt-1 rounded"
+                                                onclick="location.href='/sports-shoes?id=<%= categories[3]._id %>'">
+                                                SHOP NOW
+                                            </button>
+                                            <% } else { %>
+                                                <button
+                                                    class="btn default-light default-light-theme mt-md-2 mt-1 rounded disabled">
+                                                    SHOP NOW
+                                                </button>
+                                                <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div class="col-md-6 ratio2_3">
@@ -1600,7 +1644,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div>
+            <!-- <div>
                     <div class="category-wrap category-color">
                         <a href="/user/shop-category-slider.html">
                             <img src="/user/assets/images/shoes/category/2.png" class="img-fluid blur-up lazyload"
@@ -1613,7 +1657,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div>
+            <!-- <div>
                     <div class="category-wrap category-color">
                         <a href="/user/shop-category-slider.html">
                             <img src="/user/assets/images/shoes/category/3.png" class="img-fluid blur-up lazyload"
@@ -1626,7 +1670,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div>
+            <!-- <div>
                     <div class="category-wrap category-color">
                         <a href="/user/shop-category-slider.html">
                             <img src="/user/assets/images/shoes/category/4.png" class="img-fluid blur-up lazyload"
@@ -1639,7 +1683,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div>
+            <!-- <div>
                     <div class="category-wrap category-color">
                         <a href="/user/shop-category-slider.html">
                             <img src="/user/assets/images/shoes/category/5.png" class="img-fluid blur-up lazyload"
@@ -1652,7 +1696,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div>
+            <!-- <div>
                     <div class="category-wrap category-color">
                         <a href="/user/shop-category-slider.html">
                             <img src="/user/assets/images/shoes/category/6.png" class="img-fluid blur-up lazyload"
@@ -1665,7 +1709,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div>
+            <!-- <div>
                     <div class="category-wrap category-color">
                         <a href="/user/shop-category-slider.html">
                             <img src="/user/assets/images/shoes/category/7.png" class="img-fluid blur-up lazyload"
@@ -1677,7 +1721,7 @@
                         </a>
                     </div>
                 </div> -->
-            </div>
+        </div>
         </div>
     </section>
     <!-- category section end -->
@@ -1692,20 +1736,19 @@
                         <h5>Our collection</h5>
                     </div>
                     <div class="product-wrapper slide-5 light-arrow bottom-space">
-                        
+
                         <%product.forEach((product)=>{%>
 
-                     
 
-                            
-                        <div>
-                            <div class="product-box">
-                                <div class="img-wrapper text-center">
-                                    <a href="/product-profile?id=<%= product._id%>">
-                                        <img width="200" src= "<%= product.image[0]%>"
-                                             alt="">
-                                    </a>
-                                    <!-- <div class="cart-wrap">
+
+
+                            <div>
+                                <div class="product-box">
+                                    <div class="img-wrapper text-center">
+                                        <a href="/product-profile?id=<%= product._id%>">
+                                            <img width="200" src="<%= product.image[0]%>" alt="">
+                                        </a>
+                                        <!-- <div class="cart-wrap">
                                         <ul>
                                             <li>
                                                 <a href="/user/javascript:void(0)" class="addtocart-btn"
@@ -1731,16 +1774,20 @@
                                             </li>
                                         </ul>
                                     </div> -->
-                                </div>
-                                <div class="product-details text-center">
-                                    <h3 class="theme-color">
-                                        <%= product.price %>
-                                        <span class="font-light ml-1"><%=product.disprice%></span>
-                                    </h3>
-                                    <a href="/product-profile?id=<%=product._id%>" class="font-default">
-                                        <h5><%=product.name %></h5>
-                                    </a>
-                                </div>
+                                    </div>
+                                    <div class="product-details text-center">
+                                        <h3 class="theme-color">
+                                            <%= product.price %>
+                                                <span class="font-light ml-1">
+                                                    <%=product.disprice%>
+                                                </span>
+                                        </h3>
+                                        <a href="/product-profile?id=<%=product._id%>" class="font-default">
+                                            <h5>
+                                                <%=product.name %>
+                                            </h5>
+                                        </a>
+                                    </div>
                                     <!-- <ul class="rating mt-1">
                                         <li>
                                             <i class="fas fa-star theme-color"></i>
@@ -1758,10 +1805,10 @@
                                             <i class="fas fa-star"></i>
                                         </li>
                                     </ul> -->
-                                
+
+                                </div>
                             </div>
-                        </div>
-                        <% })%>       
+                            <% })%>
 
                     </div>
                 </div>
@@ -1790,9 +1837,10 @@
                                     <i class="fas fa-heart theme-color"></i>
                                 </div>
                                 <h5 class="mt-3">Special Discount <span class="theme-color">70% OFF</span></h5>
-                                <h2 class="my-3 deal-text">Deal Of The Day <br>from <span class="theme-color">₹1799</span>
+                                <h2 class="my-3 deal-text">Deal Of The Day <br>from <span
+                                        class="theme-color">₹1799</span>
                                 </h2>
-                        
+
                                 <button onclick="location.href = '/shop';" type="button"
                                     class="btn default-light-theme default-theme mt-2">Shop Now</button>
                             </div>
@@ -1805,7 +1853,7 @@
     <!-- Deal Day Section end -->
 
     <!-- Subscribe Section Start -->
-  
+
     <!-- Subscribe Section End -->
 
     <!-- brand section start -->
@@ -1875,7 +1923,8 @@
                                     <svg class="svg-icon">
                                         <use class="fill-color" xlink:href="/user/assets/svg/icons.svg#logo"></use>
                                     </svg>
-                                    <img src="/user/assets/images/logo.png" class="img-fluid blur-up lazyload" alt="logo">
+                                    <img src="/user/assets/images/logo.png" class="img-fluid blur-up lazyload"
+                                        alt="logo">
                                 </a>
                             </div>
 
@@ -1888,7 +1937,8 @@
                                 </li>
                                 <li>
                                     <span>
-                                        <b>Address:</b><span class="font-light"> Melarvattath House Chentrappinni P.O</span>
+                                        <b>Address:</b><span class="font-light"> Melarvattath House Chentrappinni
+                                            P.O</span>
                                     </span>
                                 </li>
                                 <li>
@@ -1913,9 +1963,9 @@
                                     <li>
                                         <a href="/shop" class="font-dark">Shop</a>
                                     </li>
-                               
-                                
-                                
+
+
+
                                 </ul>
                             </div>
                         </div>
@@ -1929,16 +1979,18 @@
 
                             <%categories.forEach((category)=>{%>
                                 <div class="footer-content">
-                                <ul>
-                                    <li>
-                                        
-                                        <a href="/sports-shoes?id=<%=category._id %>" class="font-dark"> <%=category.name%> </a>
-                                    </li>
-                                
-                                </ul>
-                            </div>
-                            <%})%>
-                            
+                                    <ul>
+                                        <li>
+
+                                            <a href="/sports-shoes?id=<%=category._id %>" class="font-dark">
+                                                <%=category.name%>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <%})%>
+
                         </div>
                     </div>
 
@@ -1961,7 +2013,7 @@
                                     <li>
                                         <a href="/userProfile" class="font-dark">Your Wishlist</a>
                                     </li>
-                                
+
                                 </ul>
                             </div>
                         </div>
@@ -1999,24 +2051,24 @@
                         <ul>
                             <li class="font-dark">We accept:</li>
                             <li>
-                                
-                                    <img src="/user/assets/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload">
-                                        
+
+                                <img src="/user/assets/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload">
+
                             </li>
                             <li>
-                                
-                                    <img src="/user/assets/images/payment-icon/2.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon">
+
+                                <img src="/user/assets/images/payment-icon/2.jpg" class="img-fluid blur-up lazyload"
+                                    alt="payment icon">
                             </li>
                             <li>
-                                
-                                    <img src="/user/assets/images/payment-icon/3.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon">
+
+                                <img src="/user/assets/images/payment-icon/3.jpg" class="img-fluid blur-up lazyload"
+                                    alt="payment icon">
                             </li>
                             <li>
-                               
-                                    <img src="/user/assets/images/payment-icon/4.jpg" class="img-fluid blur-up lazyload"
-                                        alt="payment icon">
+
+                                <img src="/user/assets/images/payment-icon/4.jpg" class="img-fluid blur-up lazyload"
+                                    alt="payment icon">
                             </li>
                         </ul>
                     </div>
@@ -2060,20 +2112,20 @@
                                 </div>
                                 <div class="quick-nav">
                                     <div>
-                                        <img src="/user/assets/images/shoes/product/1.jpg" class="img-fluid blur-up lazyload"
-                                            alt="product">
+                                        <img src="/user/assets/images/shoes/product/1.jpg"
+                                            class="img-fluid blur-up lazyload" alt="product">
                                     </div>
                                     <div>
-                                        <img src="/user/assets/images/shoes/product/2.jpg" class="img-fluid blur-up lazyload"
-                                            alt="product">
+                                        <img src="/user/assets/images/shoes/product/2.jpg"
+                                            class="img-fluid blur-up lazyload" alt="product">
                                     </div>
                                     <div>
-                                        <img src="/user/assets/images/shoes/product/3.jpg" class="img-fluid blur-up lazyload"
-                                            alt="product">
+                                        <img src="/user/assets/images/shoes/product/3.jpg"
+                                            class="img-fluid blur-up lazyload" alt="product">
                                     </div>
                                     <div>
-                                        <img src="/user/assets/images/shoes/product/4.jpg" class="img-fluid blur-up lazyload"
-                                            alt="product">
+                                        <img src="/user/assets/images/shoes/product/4.jpg"
+                                            class="img-fluid blur-up lazyload" alt="product">
                                     </div>
                                 </div>
                             </div>
@@ -2211,8 +2263,8 @@
                             </div>
                             <div class="modal-product">
                                 <div class="modal-contain-img">
-                                    <img src="/user/assets/images/fashion/instagram/4.jpg" class="img-fluid blur-up lazyload"
-                                        alt="">
+                                    <img src="/user/assets/images/fashion/instagram/4.jpg"
+                                        class="img-fluid blur-up lazyload" alt="">
                                 </div>
                                 <div class="modal-contain-details">
                                     <h4>Premier Cropped Skinny Jean</h4>
@@ -2400,4 +2452,5 @@
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/shoes-demo.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:09 GMT -->
+
 </html>

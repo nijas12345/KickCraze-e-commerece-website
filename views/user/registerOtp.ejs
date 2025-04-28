@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,36 +50,38 @@
                     <h2>Verification</h2>
                     <h6>An OTP send to your Email</h6>
                 </div>
-                  <div id="otp-wrong" style="color: red; margin-top: 20px;"></div> 
-        <form action="" method="">
-                <div class="input">
-                   
-                    <input type="text" name="OTP" class="is-invalid" id="OTP" placeholder="Enter OTP">
-                   
-                    <span class="spin"></span>
-                    
-                </div>
-                <br>
-                
-                <p style="margin-left: 120px; color: red; margin-top: 5px;">OTP expires in <span id="otp-timer" style="margin-left: 0px;"></span></p>
-                <a href="" id="resend-link"><input type="button" value="RESEND" style="border: 0; margin-left: 340px; color: grey;" id="resend-btn" ></a>
-                      
-               
+                <div id="otp-wrong" style="color: red; margin-top: 20px;"></div>
+                <form action="" method="">
+                    <div class="input">
 
-                <div class="button login button-1">
-                    <button type="button" id="submit">
+                        <input type="text" name="OTP" class="is-invalid" id="OTP" placeholder="Enter OTP">
+
+                        <span class="spin"></span>
+
+                    </div>
+                    <br>
+
+                    <p style="margin-left: 120px; color: red; margin-top: 5px;">OTP expires in <span id="otp-timer"
+                            style="margin-left: 0px;"></span></p>
+                    <a href="" id="resend-link"><input type="button" value="RESEND"
+                            style="border: 0; margin-left: 340px; color: grey;" id="resend-btn"></a>
+
+
+
+                    <div class="button login button-1">
+                        <button type="button" id="submit">
                             <span>Sign Up</span>
                             <i class="fa fa-check"></i>
                         </button>
-                </div>
-        </form>
-            
-          
-           
+                    </div>
+                </form>
+
+
+
             </div>
         </div>
     </div>
-     
+
 
 
 
@@ -116,75 +119,76 @@
     <script>
 
 
-// function to start the timer
+        // function to start the timer
 
-document.addEventListener("DOMContentLoaded", () => {
-    let timerInterval;
+        document.addEventListener("DOMContentLoaded", () => {
+            let timerInterval;
 
-    function startTimer() {
-        let timer = 60; // Reduced for testing purposes
-        let timeInterval = setInterval(() => {
-            let minutes = Math.floor(timer / 60);
-            let seconds = timer % 60;
-            let timeString = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
-            document.getElementById("otp-timer").textContent = timeString;
-            timer--;
+            function startTimer() {
+                let timer = 60; // Reduced for testing purposes
+                let timeInterval = setInterval(() => {
+                    let minutes = Math.floor(timer / 60);
+                    let seconds = timer % 60;
+                    let timeString = ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                    document.getElementById("otp-timer").textContent = timeString;
+                    timer--;
 
-            if (timer < 1) {
-                clearInterval(timeInterval);
-                document.getElementById("resend-btn").disabled = false; // Enable the button
+                    if (timer < 1) {
+                        clearInterval(timeInterval);
+                        document.getElementById("resend-btn").disabled = false; // Enable the button
+                    }
+                    else {
+                        document.getElementById("resend-btn").disabled = true;
+                    }
+                }, 1000);
+                return timeInterval;
             }
-            else{
-                document.getElementById("resend-btn").disabled = true;
+
+
+            startTimer()
+
+        });
+
+        document.getElementById("submit").addEventListener("click", async function () {
+
+            const input = document.getElementById("OTP").value
+            const otpError = document.getElementById("otp-wrong")
+            console.log(input);
+            const data = { input }
+            try {
+                const response = await fetch('/registerOtps', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+
+                })
+                const responseData = await response.json()
+
+                if (response.ok) {
+                    if (responseData.redirect) {
+                        window.location.href = responseData.redirect
+                    }
+                    else {
+                        otpError.textContent = responseData.message
+                    }
+
+                }
+
+
+
+            } catch (error) {
+                console.log(error);
             }
-        }, 1000);
-        return timeInterval;
-    }
+        });
 
 
-startTimer()
-  
-});
-
-    document.getElementById("submit").addEventListener("click", async function () {
-
-    const input = document.getElementById("OTP").value
-    const otpError = document.getElementById("otp-wrong")
-    console.log(input);
-    const data = {input}
-    try {
-        const response = await fetch ('/registerOtps',{
-            method : "POST",
-            headers :{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(data)
-
-        })
-        const responseData = await response.json()
-        
-        if(response.ok){
-            if(responseData.redirect){
-                window.location.href = responseData.redirect
-            }
-            else{
-                otpError.textContent = responseData.message
-            }
-           
-        }
-
-        
-    
-    } catch (error) {
-        console.log(error);
-    }
-    });
-
-       
 
     </script>
 </body>
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->
+
 </html>

@@ -1,8 +1,9 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +16,8 @@
 
     <!--Google font-->
     <link rel="preconnect" href="/user/https://fonts.gstatic.com/">
-    <link href="/user/https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="/user/https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
 
     <!-- bootstrap css -->
     <link id="rtl-link" rel="stylesheet" type="text/css" href="/user/assets/css/vendors/bootstrap.css">
@@ -36,19 +38,18 @@
     <!-- Theme css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="/user/assets/css/demo2.css">
     <style>
-       
-    .error {
-        color: red;
-    }
-</style>
-    
+        .error {
+            color: red;
+        }
+    </style>
+
 
 </head>
 
 <body class="signup-page theme-color2">
 
     <!-- Sign Up Section Start -->
-    
+
 
     <form action="/register" id="form" method="post">
         <div class="login-section">
@@ -57,102 +58,97 @@
                     <div class="login-title">
                         <h2>Register</h2>
                     </div>
-    
+
                     <div class="input">
                         <input type="text" name="name" id="name" placeholder="Name" required>
-                      
-                        
-                    </div>
-                    <div  class="spin error" id="name-error"></div>
-                   
-    
-                    <div class="input">
-                        <input type="email" name="email" id="email" placeholder="Email Address" required>      
-                    </div>
-                      <% 
-    
-                        if(typeof message !=="undefined"){
-                            %> 
-                            <p style="color:red; margin-left: -135px ;"><%=message %></p>
-                            <%
-                         }
-                        %> 
-                        
-                    <div class="spin error" id="email-error"></div>
-    
-                    <div class="input">
-                        <input type="text" name="mno" id="mobileno" placeholder="Phone Number">
-                      
-                        
-                    </div>
-                          <div class="spin error" id="phone-error"></div>
-                    <div class="input">
-                        <input type="password" name="pass" id="pass" placeholder="Password" required>
-                      
-                    </div>
-                            <div class="spin error" id="pass-error"></div>
-                    <div class="input">
-                        <input type="password" name="cpass" id="compass" placeholder="Confirm Password" required>
-                       
-                    </div>
-                    <% 
-    
-                        if(typeof message1 !=="undefined"){
-                            %> 
-                            <p style="color:red; margin-left: -135px ;"><%=message1 %></p>
-                            <%
-                        }
-                        %> 
-                    <div class="input">
-                        <input type="refferal" name="referal" id="refer" placeholder="referal Code">
-                       
-                    </div>
-                          <div class="spin error" id="compass-error"></div>
-                    <div class="button login">
-                        <button type="button" id="submitBtn">
-                            <span>Sign Up</span>
-                            <i class="fa fa-check"></i>
-                        </button>
-                    </div>
-                <div class="button login" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                    <p style="margin-bottom: 10px;">
-                        Already have an account? <a href="/login" style="color: #007bff; text-decoration: underline;">Click here</a>
-                    </p>
 
-                </div>
+
+                    </div>
+                    <div class="spin error" id="name-error"></div>
+
+
+                    <div class="input">
+                        <input type="email" name="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <% if(typeof message !=="undefined" ){ %>
+                        <p style="color:red; margin-left: -135px ;">
+                            <%=message %>
+                        </p>
+                        <% } %>
+
+                            <div class="spin error" id="email-error"></div>
+
+                            <div class="input">
+                                <input type="text" name="mno" id="mobileno" placeholder="Phone Number">
+
+
+                            </div>
+                            <div class="spin error" id="phone-error"></div>
+                            <div class="input">
+                                <input type="password" name="pass" id="pass" placeholder="Password" required>
+
+                            </div>
+                            <div class="spin error" id="pass-error"></div>
+                            <div class="input">
+                                <input type="password" name="cpass" id="compass" placeholder="Confirm Password"
+                                    required>
+
+                            </div>
+                            <% if(typeof message1 !=="undefined" ){ %>
+                                <p style="color:red; margin-left: -135px ;">
+                                    <%=message1 %>
+                                </p>
+                                <% } %>
+                                    <div class="input">
+                                        <input type="refferal" name="referal" id="refer" placeholder="referal Code">
+
+                                    </div>
+                                    <div class="spin error" id="compass-error"></div>
+                                    <div class="button login">
+                                        <button type="button" id="submitBtn">
+                                            <span>Sign Up</span>
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </div>
+                                    <div class="button login"
+                                        style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                        <p style="margin-bottom: 10px;">
+                                            Already have an account? <a href="/login"
+                                                style="color: #007bff; text-decoration: underline;">Click here</a>
+                                        </p>
+
+                                    </div>
                 </div>
             </div>
         </div>
     </form>
-  
 
-                <p class="sign-category">
-                    <span></span>
-                </p>
 
-                <div class="row gx-md-3 gy-3">
-                    <div class="col-md-6">
-                        <a href="/user/www.facebook.html">
-                            <div class="social-media fb-media">
-                                <img src="useassets/images/inner-page/facebook.png" class="img-fluid blur-up lazyload"
-                                    alt="">
-                                <h6></h6>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="/user/www.gmail.html">
-                            <div class="social-media google-media">
-                                <img src="/useassets/images/inner-page/google.png" class="img-fluid blur-up lazyload"
-                                    alt="">
-                                <h6></h6>
-                            </div>
-                        </a>
-                    </div>
+    <p class="sign-category">
+        <span></span>
+    </p>
+
+    <div class="row gx-md-3 gy-3">
+        <div class="col-md-6">
+            <a href="/user/www.facebook.html">
+                <div class="social-media fb-media">
+                    <img src="useassets/images/inner-page/facebook.png" class="img-fluid blur-up lazyload" alt="">
+                    <h6></h6>
                 </div>
-                <p><a href="/user/log-in.html" class="theme-color"></a></p>
-            </div>
+            </a>
         </div>
+        <div class="col-md-6">
+            <a href="/user/www.gmail.html">
+                <div class="social-media google-media">
+                    <img src="/useassets/images/inner-page/google.png" class="img-fluid blur-up lazyload" alt="">
+                    <h6></h6>
+                </div>
+            </a>
+        </div>
+    </div>
+    <p><a href="/user/log-in.html" class="theme-color"></a></p>
+    </div>
+    </div>
     </div>
 
     <!-- Sign Up Section End -->
@@ -200,110 +196,109 @@
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
     <script src="/user/assets/js/home-script.js"></script>
-   <script>
- document.getElementById('submitBtn').addEventListener('click', function() {
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const mobile = document.getElementById('mobileno').value.trim();
-    const password = document.getElementById('pass').value;
-    const confirmPassword = document.getElementById('compass').value;
-    const refferal = document.getElementById('refer').value.trim()
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobileno').value.trim();
+            const password = document.getElementById('pass').value;
+            const confirmPassword = document.getElementById('compass').value;
+            const refferal = document.getElementById('refer').value.trim()
 
-    const nameError = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
-    const phoneError = document.getElementById('phone-error');
-    const passError = document.getElementById('pass-error');
-    const compassError = document.getElementById('compass-error');
-   
-
-    // Reset error messages
-    nameError.textContent = '';
-    emailError.textContent = '';
-    phoneError.textContent = '';
-    passError.textContent = '';
-    compassError.textContent = '';
-
-    let isValid = true;
-
-    // Name validation
-    if (name === '') {
-        nameError.textContent = 'Name is required';
-        isValid = false;
-    }
-    else if (/\d|-/.test(name)) {
-    nameError.textContent = 'Name cannot contain digits or hyphens';
-    isValid = false;
-    }
-    
-
-    // Email validation
-    if (email === '') {
-        emailError.textContent = 'Email is required';
-        isValid = false;
-    } else if (!isValidEmail(email)) {
-        emailError.textContent = 'Invalid email format';
-        isValid = false;
-    }
-
-        
-    if (mobile === '') {
-        phoneError.textContent = 'Phone number is required';
-        isValid = false;
-    } else if (!isValidMobile(mobile)) {
-        phoneError.textContent = 'Phone number must contain at least 10 digits and should not contain 10 zeros';
-        isValid = false;
-    }
-
-    // Password validation
-    if (password === '') {
-        passError.textContent = 'Password is required';
-        isValid = false;
-    } else if (password.length < 8) {
-        passError.textContent = 'Password must be at least 8 characters long';
-        isValid = false;
-    }
-    else if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
-    passError.textContent = 'Confirm password must contain at least one uppercase and one lowercase letter';
-    isValid = false;
-}
-
-    // Confirm Password validation
-    if (confirmPassword === '') {
-        compassError.textContent = 'Confirm password is required';
-        isValid = false;
-    } else if (password !== confirmPassword) {
-        compassError.textContent = 'Passwords do not match';
-        isValid = false;
-    }
-
-    // If form is valid, proceed with submission
-    if (isValid) {
-        document.getElementById('form').submit();
-    }
-});
-
-// Function to validate email format
-function isValidEmail(email) {
-    // Regular expression for email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Function to validate mobile number
-function isValidMobile(mobile) {
-    // Regular expression to check if the mobile number contains only digits
-    const regex = /^[0-9]+$/;
-
-    // Check if the mobile number contains at least 10 digits and doesn't contain 10 zeros
-    return regex.test(mobile) && mobile.length >= 10 && !/^0{10}$/.test(mobile);
-}
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            const passError = document.getElementById('pass-error');
+            const compassError = document.getElementById('compass-error');
 
 
-   </script>
+            // Reset error messages
+            nameError.textContent = '';
+            emailError.textContent = '';
+            phoneError.textContent = '';
+            passError.textContent = '';
+            compassError.textContent = '';
+
+            let isValid = true;
+
+            // Name validation
+            if (name === '') {
+                nameError.textContent = 'Name is required';
+                isValid = false;
+            }
+            else if (/\d|-/.test(name)) {
+                nameError.textContent = 'Name cannot contain digits or hyphens';
+                isValid = false;
+            }
+
+
+            // Email validation
+            if (email === '') {
+                emailError.textContent = 'Email is required';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                emailError.textContent = 'Invalid email format';
+                isValid = false;
+            }
+
+
+            if (mobile === '') {
+                phoneError.textContent = 'Phone number is required';
+                isValid = false;
+            } else if (!isValidMobile(mobile)) {
+                phoneError.textContent = 'Phone number must contain at least 10 digits and should not contain 10 zeros';
+                isValid = false;
+            }
+
+            // Password validation
+            if (password === '') {
+                passError.textContent = 'Password is required';
+                isValid = false;
+            } else if (password.length < 8) {
+                passError.textContent = 'Password must be at least 8 characters long';
+                isValid = false;
+            }
+            else if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
+                passError.textContent = 'Confirm password must contain at least one uppercase and one lowercase letter';
+                isValid = false;
+            }
+
+            // Confirm Password validation
+            if (confirmPassword === '') {
+                compassError.textContent = 'Confirm password is required';
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                compassError.textContent = 'Passwords do not match';
+                isValid = false;
+            }
+
+            // If form is valid, proceed with submission
+            if (isValid) {
+                document.getElementById('form').submit();
+            }
+        });
+
+        // Function to validate email format
+        function isValidEmail(email) {
+            // Regular expression for email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Function to validate mobile number
+        function isValidMobile(mobile) {
+            // Regular expression to check if the mobile number contains only digits
+            const regex = /^[0-9]+$/;
+
+            // Check if the mobile number contains at least 10 digits and doesn't contain 10 zeros
+            return regex.test(mobile) && mobile.length >= 10 && !/^0{10}$/.test(mobile);
+        }
+
+
+    </script>
 </body>
 
 
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:40 GMT -->
+
 </html>
-
-
