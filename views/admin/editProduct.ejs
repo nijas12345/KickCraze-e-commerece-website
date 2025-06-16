@@ -1,392 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Evara Dashboard -Edit Product</title>
-        <link rel="stylesheet" href="/admin/admin-assets/css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f9f9f9;
-                padding: 20px;
-            }
-            h1 {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-            form {
-                max-width: 400px;
-                margin: 0 auto;
-                background-color: #ffffff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-            input[type="text"],
-            input[type="date"],
-            input[type="file"],
-            select {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-            }
-            input[type="submit"] {
-                background-color: #007bff;
-                color: #ffffff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-            input[type="submit"]:hover {
-                background-color: #0056b3;
-            }
-            .error{
-                color:red
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Edit Product</h1>
-        
-        <form id="form" action="/admin/product-edit?id=<%=products._id%>" method="post" enctype="multipart/form-data">
-            <div><label for="Name">Enter Name</label></div>
-            <div  class="spin error" id="name-error"></div>
-             
-            <input type="text" name="name" placeholder="Type here.." id="name" value="<%=products.name%>">
-            <br>
-            <div><label for="Name">Enter Price</label></div>
-            <div  class="spin error" id="price-error"></div>
-            <input type="text" name="price" placeholder="Type here.." id="price" value="<%=products.price%>" required>
-            <br>
-            <div><label for="Name">Enter Discount</label></div>
-            <div  class="spin error" id="discount-error"></div>
-            <input type="text" name="discount" placeholder="Type here.." id="discount" value="<%=products.discount%>" required>
-            <br>
-            <div><label for="Name">Enter Color</label></div>    
-            <div  class="spin error" id="color-error"></div>
-            <input type="text" name="color" placeholder="Type here.." id="color" value="<%=products.color%>" required>
-            <br>
-            <div><label for="Name">Enter Stock</label></div>
-            <div  class="spin error" id="stock-error"></div>
-            <input type="text" name="stock" placeholder="Type here.." id="stock" value="<%=products.stock%>" required>
-            <br>
-            <div><label for="Name">Enter Size 1</label></div>
-            <div  class="spin error" id="size1-error"></div>
-            <input type="text" name="sizes[]" placeholder="Type here.." id="size1" value="<%=products.sizes[0]%>"><br>
-            <div><label for="Name">Enter Size 2</label></div>
-            <div  class="spin error" id="size2-error"></div>
-            <input type="text" name="sizes[]" placeholder="Type here.." id="size2" value="<%=products.sizes[1]%>"><br>
-            <div><label for="Name">Enter Size 3</label></div>
-            <div  class="spin error" id="size3-error"></div>
-            <input type="text" name="sizes[]" placeholder="Type here.." id="size3" value="<%=products.sizes[2]%>"><br>
-            <div><label for="Name">Enter Size 4</label></div>
-            <div  class="spin error" id="size4-error"></div>
-            <input type="text" name="sizes[]" placeholder="Type here.." id="size4" value="<%=products.sizes[3]%>"><br>
-            <br>
-          
-            
-            <% products.image.forEach((image, index) => { %>
-                <div>
-                    <img src="<%= image %>" alt="Product Image">
-                    <!-- Add checkbox with image index -->
-                    <input type="checkbox" class="imageCheckbox"  name="imagesToRemove[]" value="<%= index %>"> Remove Image
-                    <br>
-                </div>
-            <% }); %>
-            <div  class="spin error" id="error"></div>
-            <input type="file" id="image-upload" accept="image/*" multiple>
-            <div id="cropper-container"></div>
 
-            <button type="button" id="crop-button">Crop Image</button>
-            <button type="button" id="cancel-crop-button">Cancel</button>
-            <br>
-            <select
-                        class="form-select"
-                        id="choices-category-input"
-                        name="category"
-                     >
-                   
-                            <% categories.forEach(category => { %>
-                            
-                            <option value="<%=category.name%>" <%= category.name === products.category ? 'selected' : '' %>  name="category">
-                            <%=category.name%>
-                            </option>
-
-                            <% }); %>
-                     </select>
-            
-            <br>
-            <!-- <button type="button" id="crop-button">Crop Image</button> -->
-           
-            <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
-        </form>
-       
-    
-        <!-- Include necessary scripts -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-
-
-      <script>
- const form = document.getElementById("form")
-  let totalimages = 0;
-
-  function imageupload(event) {
-
-    const files = event.target.files;
-    const imagecontainer = document.getElementById("cropper-container");
-    const maximum = 5;
-
-    const totalupload = totalimages + files.length;
-    if (totalupload > maximum) {
-     //   Swal.fire(Oops! Upload only ${maximum} files., "Sorry");
-        event.target.value = "";
-        return;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evara Dashboard -Edit Product</title>
+  <link rel="stylesheet" href="/admin/admin-assets/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
     }
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const reader = new FileReader();
-      if (!file.type.startsWith("image/")) {
-        console.log("File is not an image.", file.type);
-        continue;
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="file"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .error {
+      color: red
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Edit Product</h1>
+
+  <form id="form" action="/admin/product-edit?id=<%=products._id%>" method="post" enctype="multipart/form-data">
+    <div><label for="Name">Enter Name</label></div>
+    <div class="spin error" id="name-error"></div>
+
+    <input type="text" name="name" placeholder="Type here.." id="name" value="<%=products.name%>">
+    <br>
+    <div><label for="Name">Enter Price</label></div>
+    <div class="spin error" id="price-error"></div>
+    <input type="text" name="price" placeholder="Type here.." id="price" value="<%=products.price%>" required>
+    <br>
+    <div><label for="Name">Enter Discount</label></div>
+    <div class="spin error" id="discount-error"></div>
+    <input type="text" name="discount" placeholder="Type here.." id="discount" value="<%=products.discount%>" required>
+    <br>
+    <div><label for="Name">Enter Color</label></div>
+    <div class="spin error" id="color-error"></div>
+    <input type="text" name="color" placeholder="Type here.." id="color" value="<%=products.color%>" required>
+    <br>
+    <div><label for="Name">Enter Stock</label></div>
+    <div class="spin error" id="stock-error"></div>
+    <input type="text" name="stock" placeholder="Type here.." id="stock" value="<%=products.stock%>" required>
+    <br>
+    <div><label for="Name">Enter Size 1</label></div>
+    <div class="spin error" id="size1-error"></div>
+    <input type="text" name="sizes[]" placeholder="Type here.." id="size1" value="<%=products.sizes[0]%>"><br>
+    <div><label for="Name">Enter Size 2</label></div>
+    <div class="spin error" id="size2-error"></div>
+    <input type="text" name="sizes[]" placeholder="Type here.." id="size2" value="<%=products.sizes[1]%>"><br>
+    <div><label for="Name">Enter Size 3</label></div>
+    <div class="spin error" id="size3-error"></div>
+    <input type="text" name="sizes[]" placeholder="Type here.." id="size3" value="<%=products.sizes[2]%>"><br>
+    <div><label for="Name">Enter Size 4</label></div>
+    <div class="spin error" id="size4-error"></div>
+    <input type="text" name="sizes[]" placeholder="Type here.." id="size4" value="<%=products.sizes[3]%>"><br>
+    <br>
+
+
+    <% products.image.forEach((image, index)=> { %>
+      <div>
+        <img src="<%= image %>" alt="Product Image">
+        <!-- Add checkbox with image index -->
+        <input type="checkbox" class="imageCheckbox" name="imagesToRemove[]" value="<%= index %>"> Remove Image
+        <br>
+      </div>
+      <% }); %>
+        <div class="spin error" id="error"></div>
+        <input type="file" id="image-upload" accept="image/*" multiple>
+        <div id="cropper-container"></div>
+
+        <button type="button" id="crop-button">Crop Image</button>
+        <button type="button" id="cancel-crop-button">Cancel</button>
+        <br>
+        <select class="form-select" id="choices-category-input" name="category">
+
+          <% categories.forEach(category=> { %>
+
+            <option value="<%=category.name%>" <%=category.name===products.category ? 'selected' : '' %>
+              name="category">
+              <%=category.name%>
+            </option>
+
+            <% }); %>
+        </select>
+
+        <br>
+        <!-- <button type="button" id="crop-button">Crop Image</button> -->
+
+        <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
+  </form>
+
+
+  <!-- Include necessary scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+
+  <script>
+    const form = document.getElementById("form")
+    let totalimages = 0;
+
+    function imageupload(event) {
+
+      const files = event.target.files;
+      const imagecontainer = document.getElementById("cropper-container");
+      const maximum = 5;
+
+      const totalupload = totalimages + files.length;
+      if (totalupload > maximum) {
+        //   Swal.fire(Oops! Upload only ${maximum} files., "Sorry");
+        event.target.value = "";
+        return;
       }
 
-      const imgdiv = document.createElement("div");
-      imgdiv.classList.add("image-div");
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        if (!file.type.startsWith("image/")) {
+          console.log("File is not an image.", file.type);
+          continue;
+        }
 
-      const img = document.createElement("img");
-      img.style.height = "300px";
-      img.style.width = "300px";
-      img.setAttribute("name", "image");
-      img.classList.add("uploaded-image");
+        const imgdiv = document.createElement("div");
+        imgdiv.classList.add("image-div");
 
-      const deletebutton = document.createElement("button");
-      deletebutton.textContent = "Delete";
-      deletebutton.classList.add("btn", "btn-danger", "m-2");
+        const img = document.createElement("img");
+        img.style.height = "300px";
+        img.style.width = "300px";
+        img.setAttribute("name", "image");
+        img.classList.add("uploaded-image");
 
-      deletebutton.addEventListener("click", function () {
-        totalimages--;
-        imgdiv.remove();
-      });
+        const deletebutton = document.createElement("button");
+        deletebutton.textContent = "Delete";
+        deletebutton.classList.add("btn", "btn-danger", "m-2");
 
-      reader.onload = function (event) {
-        img.src = event.target.result;
-
-        const cropperdiv = document.createElement("div");
-        cropperdiv.classList.add("cropper-container");
-        cropperdiv.appendChild(img);
-
-        imgdiv.appendChild(cropperdiv);
-        const cropper = new Cropper(img, {
-          dragMode: "move",
-          aspectRatio: 1,
-          autoCropArea: 0.8,
-          restore: false,
-          guides: false,
-          center: false,
-          responsive:true,
-          highlight: false,
-          cropBoxMovable: false,
-          cropBoxResizable: false,
-          toggleDragModeOnDblclick: false,
+        deletebutton.addEventListener("click", function () {
+          totalimages--;
+          imgdiv.remove();
         });
 
-        const cropbtn = document.createElement("button");
-        cropbtn.classList.add("btn", "btn-primary", "m-2");
-        cropbtn.textContent = "Crop";
-        cropbtn.addEventListener("click", function (event) {
-          event.preventDefault();
-          const croppedCanvas = cropper.getCroppedCanvas();
+        reader.onload = function (event) {
+          img.src = event.target.result;
 
-          img.src = croppedCanvas.toDataURL()
+          const cropperdiv = document.createElement("div");
+          cropperdiv.classList.add("cropper-container");
+          cropperdiv.appendChild(img);
 
-          croppedCanvas.toBlob((blob) => {
-            const fileName = Date.now();
-            const file = new File([blob],` ${fileName}.jpg`, { type: 'image/jpeg' });
+          imgdiv.appendChild(cropperdiv);
+          const cropper = new Cropper(img, {
+            dragMode: "move",
+            aspectRatio: 1,
+            autoCropArea: 0.8,
+            restore: false,
+            guides: false,
+            center: false,
+            responsive: true,
+            highlight: false,
+            cropBoxMovable: false,
+            cropBoxResizable: false,
+            toggleDragModeOnDblclick: false,
+          });
 
-            if (window.FileList && window.DataTransfer) {
+          const cropbtn = document.createElement("button");
+          cropbtn.classList.add("btn", "btn-primary", "m-2");
+          cropbtn.textContent = "Crop";
+          cropbtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            const croppedCanvas = cropper.getCroppedCanvas();
+
+            img.src = croppedCanvas.toDataURL()
+
+            croppedCanvas.toBlob((blob) => {
+              const fileName = Date.now();
+              const file = new File([blob], ` ${fileName}.jpg`, { type: 'image/jpeg' });
+
+              if (window.FileList && window.DataTransfer) {
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
                 const input = document.createElement('input');
                 input.type = 'file';
-                input.name =`image${i}`;
+                input.name = `image${i}`;
                 input.files = dataTransfer.files;
-               form.appendChild(input)
-               input.style.display = 'none'
-               
-            } else {
+                form.appendChild(input)
+                input.style.display = 'none'
+
+              } else {
                 console.error('FileList and DataTransfer are not supported in this browser.');
-            }
-        })
-          cropper.destroy();
-          cropbtn.remove();
-    
+              }
+            })
+            cropper.destroy();
+            cropbtn.remove();
 
-        });
-      
-        imgdiv.appendChild(cropbtn);
-        imgdiv.appendChild(deletebutton);
-      };
 
-      reader.readAsDataURL(file);
+          });
 
-      imagecontainer.appendChild(imgdiv);
+          imgdiv.appendChild(cropbtn);
+          imgdiv.appendChild(deletebutton);
+        };
+
+        reader.readAsDataURL(file);
+
+        imagecontainer.appendChild(imgdiv);
+      }
+      totalimages = totalupload;
     }
-    totalimages = totalupload;
-  }
 
-  const imageInput = document.getElementById("image-upload");
+    const imageInput = document.getElementById("image-upload");
 
-     imageInput.addEventListener("change", imageupload);
+    imageInput.addEventListener("change", imageupload);
 
 
-        document.getElementById("submit-btn").addEventListener("click",async function(event){
-            event.preventDefault()
-            const name = document.getElementById("name").value
-            const price = document.getElementById("price").value
-            const discount = document.getElementById("discount").value
-            const color = document.getElementById("color").value.trim()
-            const stock = document.getElementById("stock").value
-            const size1 = document.getElementById("size1").value
-            const size2 = document.getElementById("size2").value
-            const size3 = document.getElementById("size3").value
-            const size4 = document.getElementById("size4").value
-            var checkboxes = document.querySelectorAll(".imageCheckbox");
-            var files = document.getElementById("image-upload").files;
-            
-            var errorDiv = document.getElementById("error");
-            console.log("check",checkboxes);
-            
+    document.getElementById("submit-btn").addEventListener("click", async function (event) {
+      event.preventDefault()
+      const name = document.getElementById("name").value
+      const price = document.getElementById("price").value
+      const discount = document.getElementById("discount").value
+      const color = document.getElementById("color").value.trim()
+      const stock = document.getElementById("stock").value
+      const size1 = document.getElementById("size1").value
+      const size2 = document.getElementById("size2").value
+      const size3 = document.getElementById("size3").value
+      const size4 = document.getElementById("size4").value
+      var checkboxes = document.querySelectorAll(".imageCheckbox");
+      var files = document.getElementById("image-upload").files;
 
-            const nameError = document.getElementById("name-error")
-            const priceError = document.getElementById("price-error")
-            const discountError = document.getElementById("discount-error")
-            const colorError = document.getElementById("color-error")
-            const stockError = document.getElementById("stock-error")
-            const size1Error = document.getElementById("size1-error")
-            const size2Error = document.getElementById("size2-error")
-            const size3Error = document.getElementById("size3-error")
-            const size4Error = document.getElementById("size4-error")
+      var errorDiv = document.getElementById("error");
+      console.log("check", checkboxes);
 
-            nameError.textContent = "";
-            priceError.textContent = "";
-            discountError.textContent = "";
-            colorError.textContent = "";
-            stockError.textContent = "";
-            size1Error.textContent = "";
-            size2Error.textContent = "";
-            size3Error.textContent = "";
-            size4Error.textContent = "";
-      
-           console.log(name);
-            let isValid = true
-            var allSelected = false;
 
-            let totalCheckbox = checkboxes.length;
-            let selected=0;
-              checkboxes.forEach(function(checkbox) {
-                if (checkbox.checked ) {
-                  selected++;               
-                }
-                
-              });
+      const nameError = document.getElementById("name-error")
+      const priceError = document.getElementById("price-error")
+      const discountError = document.getElementById("discount-error")
+      const colorError = document.getElementById("color-error")
+      const stockError = document.getElementById("stock-error")
+      const size1Error = document.getElementById("size1-error")
+      const size2Error = document.getElementById("size2-error")
+      const size3Error = document.getElementById("size3-error")
+      const size4Error = document.getElementById("size4-error")
 
-              if (totalCheckbox === selected) {
-                allSelected=true
-              }
+      nameError.textContent = "";
+      priceError.textContent = "";
+      discountError.textContent = "";
+      colorError.textContent = "";
+      stockError.textContent = "";
+      size1Error.textContent = "";
+      size2Error.textContent = "";
+      size3Error.textContent = "";
+      size4Error.textContent = "";
 
-              if (allSelected && files.length == 0 ) {
-                errorDiv.textContent = "Please select an image file.";
-                console.log("helloo");
-                isValid = false
-                event.preventDefault(); // Prevent form submission
-              }
-              else{
-                const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-              for (let i = 0; i < files.length; i++) {
-              if (!allowedTypes.includes(files[i].type)) {
-              imageError.textContent = "Please select only image files (JPEG, PNG, or GIF).";
-              isValid = false;
-              break;
-              }
-            }
-          }
-            if (name === '') {
-            nameError.textContent = 'Name is required';
+      console.log(name);
+      let isValid = true
+      var allSelected = false;
+
+      let totalCheckbox = checkboxes.length;
+      let selected = 0;
+      checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) {
+          selected++;
+        }
+
+      });
+
+      if (totalCheckbox === selected) {
+        allSelected = true
+      }
+
+      if (allSelected && files.length == 0) {
+        errorDiv.textContent = "Please select an image file.";
+        console.log("helloo");
+        isValid = false
+        event.preventDefault(); // Prevent form submission
+      }
+      else {
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+        for (let i = 0; i < files.length; i++) {
+          if (!allowedTypes.includes(files[i].type)) {
+            imageError.textContent = "Please select only image files (JPEG, PNG, or GIF).";
             isValid = false;
-            
-              }
-              else if (/\d|-/.test(name)) {
-              nameError.textContent = 'Name cannot contain digits or hyphens';
-             isValid = false;
-            
-              }
-              if (!/^\d+$/.test(price) || parseInt(price) <= 0) {
-                priceError.textContent = 'Please enter a valid positive integer for price';
-                isValid = false;
-              }
-
-                if(discount == ""){
-               discountError.textContent = "discount is required"
-                isValid = false
-               
-                }
-                const regex = /^\d{2}$/;
-                if(!regex.test(discount)){
-                  discountError.textContent = "discount contain only 2 digits"
-                  isValid = false
-                     
-                }
-                if (!/^\d+$/.test(stock) || parseInt(stock) <= 0) {
-                    stockError.textContent = 'Please enter a valid positive integer for stock';
-                    isValid = false;
-                }
-              
-              if (/\d/.test(color)) {
-              colorError.textContent = 'Color cannot contain numbers';
-              isValid = false;
-              
-              }
-              if (!/^\d+$/.test(size1) || parseInt(size1) <= 0) {
-                  size1Error.textContent = 'Please enter a valid positive integer for size';
-                  isValid = false;
-              }
-
-              if (!/^\d+$/.test(size2) || parseInt(size2) <= 0) {
-                  size2Error.textContent = 'Please enter a valid positive integer for size';
-                  isValid = false;
-              }
-
-              if (!/^\d+$/.test(size3) || parseInt(size3) <= 0) {
-                  size3Error.textContent = 'Please enter a valid positive integer for size';
-                  isValid = false;
-              }
-
-              if (!/^\d+$/.test(size4) || parseInt(size4) <= 0) {
-                  size4Error.textContent = 'Please enter a valid positive integer for size';
-                  isValid = false;
-              }
-
-               
-    
-          if(isValid){
-            console.log("ahai");
-            document.getElementById("form").submit()
+            break;
           }
-        })
+        }
+      }
+      if (name === '') {
+        nameError.textContent = 'Name is required';
+        isValid = false;
 
-     
+      }
+      else if (/\d|-/.test(name)) {
+        nameError.textContent = 'Name cannot contain digits or hyphens';
+        isValid = false;
+
+      }
+      if (!/^\d+$/.test(price) || parseInt(price) <= 0) {
+        priceError.textContent = 'Please enter a valid positive integer for price';
+        isValid = false;
+      }
+
+      if (discount == "") {
+        discountError.textContent = "discount is required"
+        isValid = false
+
+      }
+      const regex = /^\d{2}$/;
+      if (!regex.test(discount)) {
+        discountError.textContent = "discount contain only 2 digits"
+        isValid = false
+
+      }
+      if (!/^\d+$/.test(stock) || parseInt(stock) <= 0) {
+        stockError.textContent = 'Please enter a valid positive integer for stock';
+        isValid = false;
+      }
+
+      if (/\d/.test(color)) {
+        colorError.textContent = 'Color cannot contain numbers';
+        isValid = false;
+
+      }
+      if (!/^\d+$/.test(size1) || parseInt(size1) <= 0) {
+        size1Error.textContent = 'Please enter a valid positive integer for size';
+        isValid = false;
+      }
+
+      if (!/^\d+$/.test(size2) || parseInt(size2) <= 0) {
+        size2Error.textContent = 'Please enter a valid positive integer for size';
+        isValid = false;
+      }
+
+      if (!/^\d+$/.test(size3) || parseInt(size3) <= 0) {
+        size3Error.textContent = 'Please enter a valid positive integer for size';
+        isValid = false;
+      }
+
+      if (!/^\d+$/.test(size4) || parseInt(size4) <= 0) {
+        size4Error.textContent = 'Please enter a valid positive integer for size';
+        isValid = false;
+      }
 
 
-      
-      </script>
-            
-    </body>
-    </html>
+
+      if (isValid) {
+        console.log("ahai");
+        document.getElementById("form").submit()
+      }
+    })
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>

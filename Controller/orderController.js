@@ -2,29 +2,25 @@ const User = require("../model/userModel");
 const Admin = require("../model/adminModel");
 const Category = require("../model/categoryModel");
 const Product = require("../model/productModel");
-const jwt = require("jsonwebtoken");
 const Cart = require("../model/cartModel");
 const Address = require("../model/addressModel");
 const Order = require("../model/orderModel");
-const { loadLogin } = require("./userController");
 const Coupon = require("../model/couponModel");
-const mongoose = require("mongoose");
-const { concurrency } = require("sharp");
 const { razorpayInstance } = require("../helpers/razorpay");
 const Wallet = require("../model/walletModel");
 const moment = require("moment");
+const renderError = require("../helpers/errorHandling");
 
 const loadSuccess = async (req, res) => {
   try {
     const userId = req.id;
-    console.log("id", req.query.orderId);
+
     const orderId = req.query.orderId;
     const categories = await Category.find({ delete: true });
 
     const orders = await Order.findById(orderId)
       .populate("products.productId")
       .populate("addressId");
-    console.log("orders", orders);
     if (orders.isPayment == false) {
       const orderData = await Order.findByIdAndUpdate(orderId, {
         isPayment: true,
@@ -40,17 +36,13 @@ const loadSuccess = async (req, res) => {
       const product = await Product.findById(productId);
 
       if (!product) {
-        console.log("no productID");
       } else {
         product.stock -= quantity; // Subtract quantity from stock
         await product.save();
-        console.log(product.stock);
       }
     }
 
     const cart = await Cart.deleteMany({ userId: userId });
-
-    console.log(cart);
 
     let total = 0;
     orders.products.forEach((order) => {
@@ -63,11 +55,7 @@ const loadSuccess = async (req, res) => {
       categories: categories,
     });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -85,11 +73,7 @@ const loadUnSuccess = async (req, res) => {
 
     res.render("orderPending", { orders: orders, categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const insertOrder = async (req, res) => {
@@ -142,14 +126,11 @@ const insertOrder = async (req, res) => {
           addressId: orderAddress[0]._id,
           payment: req.body.paymentId,
         });
-        console.log("order", order.orderedDate);
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       } else {
         // Fetch coupon details
 
@@ -174,14 +155,11 @@ const insertOrder = async (req, res) => {
           payment: req.body.paymentId,
         });
 
-        console.log("order", order.orderedDate);
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       }
     } else {
       if (couponId == null) {
@@ -204,14 +182,11 @@ const insertOrder = async (req, res) => {
           addressId: addressId,
           payment: req.body.paymentId,
         });
-        console.log("order", order.orderedDate);
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       } else {
         const couponData = await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
@@ -222,7 +197,7 @@ const insertOrder = async (req, res) => {
         const address = await Address.findOne({ _id: addressId });
         const coupon = await Coupon.findById(couponId);
         // let couponID = new mongoose.Types.ObjectId(couponId)
-        // console.log(typeof couponID);
+        // typeof couponID);
         // Create order with coupon
 
         // This will print the current timestamp in ISO 8601 format
@@ -242,22 +217,16 @@ const insertOrder = async (req, res) => {
           payment: req.body.paymentId,
         });
 
-        console.log("order", order.orderedDate);
         const orderData = await order.save();
 
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       }
     }
   } catch (error) {
-    console.log(error);
-    return res
-      .status(500)
-      .json({ success: false, error: "Internal server error" });
+    return renderError(res, error);
   }
 };
 
@@ -291,11 +260,7 @@ const onlineOrder = async (req, res) => {
       }
     });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -385,12 +350,10 @@ const walletPayment = async (req, res) => {
               payment: req.body.paymentId,
             });
             const orderData = await order.save();
-            return res
-              .status(200)
-              .json({
-                success: true,
-                redirect: `/order-success?orderId=${orderData._id}`,
-              });
+            return res.status(200).json({
+              success: true,
+              redirect: `/order-success?orderId=${orderData._id}`,
+            });
           } else {
             // Fetch coupon details
 
@@ -415,12 +378,10 @@ const walletPayment = async (req, res) => {
             });
 
             const orderData = await order.save();
-            return res
-              .status(200)
-              .json({
-                success: true,
-                redirect: `/order-success?orderId=${orderData._id}`,
-              });
+            return res.status(200).json({
+              success: true,
+              redirect: `/order-success?orderId=${orderData._id}`,
+            });
           }
         } else {
           if (couponId == null) {
@@ -442,12 +403,10 @@ const walletPayment = async (req, res) => {
               payment: req.body.paymentId,
             });
             const orderData = await order.save();
-            return res
-              .status(200)
-              .json({
-                success: true,
-                redirect: `/order-success?orderId=${orderData._id}`,
-              });
+            return res.status(200).json({
+              success: true,
+              redirect: `/order-success?orderId=${orderData._id}`,
+            });
           } else {
             const couponData = await Coupon.findByIdAndUpdate(couponId, {
               $addToSet: { users: { userId: userId } },
@@ -458,7 +417,7 @@ const walletPayment = async (req, res) => {
             const address = await Address.findOne({ _id: addressId });
             const coupon = await Coupon.findById(couponId);
             // let couponID = new mongoose.Types.ObjectId(couponId)
-            // console.log(typeof couponID);
+            // typeof couponID);
             // Create order with coupon
 
             const order = new Order({
@@ -478,12 +437,10 @@ const walletPayment = async (req, res) => {
 
             const orderData = await order.save();
 
-            return res
-              .status(200)
-              .json({
-                success: true,
-                redirect: `/order-success?orderId=${orderData._id}`,
-              });
+            return res.status(200).json({
+              success: true,
+              redirect: `/order-success?orderId=${orderData._id}`,
+            });
           }
         }
       }
@@ -493,10 +450,7 @@ const walletPayment = async (req, res) => {
         .json({ success: true, message: "Wallet has insufficient balance" });
     }
   } catch (error) {
-    console.log(error);
-    return res
-      .status(500)
-      .json({ success: false, error: "Internal server error" });
+    return renderError(res, error);
   }
 };
 
@@ -551,12 +505,10 @@ const onlineSuccess = async (req, res) => {
           payment: req.body.paymentId,
         });
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       } else {
         // Fetch coupon details
 
@@ -582,12 +534,10 @@ const onlineSuccess = async (req, res) => {
         });
 
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       }
     } else {
       if (couponId == null) {
@@ -610,12 +560,10 @@ const onlineSuccess = async (req, res) => {
           payment: req.body.paymentId,
         });
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       } else {
         const couponData = await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
@@ -626,7 +574,7 @@ const onlineSuccess = async (req, res) => {
         const coupon = await Coupon.findById(couponId);
 
         // let couponID = new mongoose.Types.ObjectId(couponId)
-        // console.log(typeof couponID);
+        // typeof couponID);
         // Create order with coupon
 
         const order = new Order({
@@ -647,20 +595,14 @@ const onlineSuccess = async (req, res) => {
 
         const orderData = await order.save();
 
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-success?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-success?orderId=${orderData._id}`,
+        });
       }
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -715,12 +657,10 @@ const failureOrder = async (req, res) => {
           isPayment: false,
         });
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-unSuccess?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-unSuccess?orderId=${orderData._id}`,
+        });
       } else {
         // Fetch coupon details
 
@@ -746,12 +686,10 @@ const failureOrder = async (req, res) => {
         });
 
         const orderData = await order.save();
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-unSuccess?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-unSuccess?orderId=${orderData._id}`,
+        });
       }
     } else {
       if (couponId == null) {
@@ -776,12 +714,10 @@ const failureOrder = async (req, res) => {
         });
         const orderData = await order.save();
 
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-unSuccess?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-unSuccess?orderId=${orderData._id}`,
+        });
       } else {
         const couponData = await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
@@ -792,7 +728,7 @@ const failureOrder = async (req, res) => {
         const coupon = await Coupon.findById(couponId);
 
         // let couponID = new mongoose.Types.ObjectId(couponId)
-        // console.log(typeof couponID);
+        // typeof couponID);
         // Create order with coupon
 
         const order = new Order({
@@ -814,48 +750,45 @@ const failureOrder = async (req, res) => {
 
         const orderData = await order.save();
 
-        return res
-          .status(200)
-          .json({
-            success: true,
-            redirect: `/order-unSuccess?orderId=${orderData._id}`,
-          });
+        return res.status(200).json({
+          success: true,
+          redirect: `/order-unSuccess?orderId=${orderData._id}`,
+        });
       }
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
 const viewOrder = async (req, res) => {
-  let userId = req.id;
-  const categories = await Category.find({ delete: true });
-  const orderId = req.query.id;
+  try {
+    let userId = req.id;
+    const categories = await Category.find({ delete: true });
+    const orderId = req.query.id;
 
-  const order = await Order.findOne({ _id: orderId }).populate(
-    "products.productId"
-  );
-  let total = 0;
-  order.products.forEach((order) => {
-    total = total + order.total;
-  });
-
-  if (order) {
-    res.render("orderDetails", {
-      order: order,
-      total: total,
-      categories: categories,
+    const order = await Order.findOne({ _id: orderId }).populate(
+      "products.productId"
+    );
+    let total = 0;
+    order.products.forEach((order) => {
+      total = total + order.total;
     });
+
+    if (order) {
+      res.render("orderDetails", {
+        order: order,
+        total: total,
+        categories: categories,
+      });
+    }
+  } catch (error) {
+    return renderError(res, error);
   }
 };
 
 const cancelOrder = async (req, res) => {
   try {
-    console.log(req.body.reason);
     const userId = req.id;
     const status = req.body.status;
     if (req.body.reason == "reason1") {
@@ -872,10 +805,8 @@ const cancelOrder = async (req, res) => {
       reason: reason,
     });
     const orderOne = await Order.findByIdAndUpdate(orderId, {}, { new: true });
-    console.log("orders", orderOne);
     await orderOne.populate("products.productId");
     orderOne.products.forEach(async (product) => {
-      console.log("productId", product.productId._id);
       const productId = product.productId._id;
       const stock = product.productId.stock + product.quantity;
       product.quantity = 0;
@@ -884,7 +815,6 @@ const cancelOrder = async (req, res) => {
       });
     });
 
-    console.log("ordesroNe", orderOne);
     const order = await Order.findOne({ _id: orderId });
 
     let wallet;
@@ -964,7 +894,6 @@ const cancelOrder = async (req, res) => {
 
         res.status(200).json({ status: "cancelled", message: 1 });
       } else {
-        console.log("hai");
         const wallet = await Wallet.findOne({ userId: userId });
         const wallets = await Wallet.findByIdAndUpdate(
           wallet._id,
@@ -986,11 +915,7 @@ const cancelOrder = async (req, res) => {
       res.status(200).json({ status: "cancelled" });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -1051,13 +976,11 @@ const returnOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res
-          .status(200)
-          .json({
-            status: "returned",
-            message:
-              "Your order is returned and amount has been credited into wallet",
-          });
+        res.status(200).json({
+          status: "returned",
+          message:
+            "Your order is returned and amount has been credited into wallet",
+        });
       } else {
         const wallet = await Wallet.findOne({ userId: userId });
         const wallets = await Wallet.findByIdAndUpdate(
@@ -1074,27 +997,20 @@ const returnOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res
-          .status(200)
-          .json({
-            status: "returned",
-            message:
-              "Your order is returned and amount has been credited into wallet",
-          });
+        res.status(200).json({
+          status: "returned",
+          message:
+            "Your order is returned and amount has been credited into wallet",
+        });
       }
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
 const daySales = async (req, res) => {
   try {
-    console.log(req.body);
     const date = req.body.selectedOption;
     const startDate = req.body.startDate;
     const endDate = req.body.endDate;
@@ -1102,16 +1018,14 @@ const daySales = async (req, res) => {
     if (date == "month") {
       try {
         const currentDate = moment();
-        console.log(currentDate);
+
         const startOfMonth = currentDate.clone().startOf("month");
-        console.log(startOfMonth);
 
         const endOfMonth = currentDate.clone().endOf("month");
-        console.log(endOfMonth);
+
         const startOfMonthFormatted = startOfMonth.format("YYYY-MM-DD");
-        console.log(startOfMonthFormatted);
+
         const endOfMonthFormatted = endOfMonth.format("YYYY-MM-DD");
-        console.log(typeof endOfMonthFormatted);
 
         const orders = await Order.find({
           orderedDate: {
@@ -1120,7 +1034,7 @@ const daySales = async (req, res) => {
           },
           status: "delivered",
         });
-        console.log("orders", orders);
+
         let orderOriginalPrice = 0;
         let orderDiscountPrice = 0;
         orders.forEach((order) => {
@@ -1141,7 +1055,7 @@ const daySales = async (req, res) => {
           totalDiscount: totalDiscount,
         });
       } catch (error) {
-        console.log(error);
+        return renderError(res, error);
       }
     }
 
@@ -1190,7 +1104,6 @@ const daySales = async (req, res) => {
 
       const startOfWeekFormatted = startOfWeek.format("YYYY-MM-DD");
       const endOfWeekFormatted = endOfWeek.format("YYYY-MM-DD");
-      console.log(startOfWeekFormatted);
 
       const orders = await Order.find({
         orderedDate: {
@@ -1213,7 +1126,6 @@ const daySales = async (req, res) => {
 
       totalDiscount = orderOriginalPrice - orderDiscountPrice;
 
-      console.log("total", totalDiscount);
       res.render("salesReport", {
         orders: orders,
         orderOriginalPrice: orderOriginalPrice,
@@ -1289,11 +1201,7 @@ const daySales = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 

@@ -978,10 +978,11 @@
 
                                                         <input type="number" name="quantity" min="1" max="6"
                                                             class="form-control input-number" id="quantity<%= i %>"
-                                                            value="<%= carts[i].quantity%>"
+                                                            value="<%= carts[i].quantity %>"
                                                             data-product-id="<%= carts[i].productId._id %>"
-                                                            data-size="<%=carts[i].size %>"
-                                                            data-stock="<%=carts[i].productId.stock%>">
+                                                            data-size="<%= carts[i].size %>"
+                                                            data-stock="<%= carts[i].productId.stock %>"
+                                                            onkeydown="return false;" />
                                                     </div>
                                                     <% } else {%>
 

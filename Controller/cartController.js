@@ -7,13 +7,12 @@ const Cart = require("../model/cartModel");
 const Address = require("../model/addressModel");
 const Coupon = require("../model/couponModel");
 const wishlist = require("../model/wishlistModel");
+const renderError = require("../helpers/errorHandling");
 
 const loadCart = async (req, res) => {
   try {
     const userId = req.id;
 
-    const carts = await Cart.find({ userId: userId }).populate("productId");
-    console.log("asdfasd", carts);
     const categories = await Category.find({ delete: true });
 
     let totalCart = 0;
@@ -32,17 +31,12 @@ const loadCart = async (req, res) => {
       categories: categories,
     });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const insertCart = async (req, res) => {
   try {
     let userId = req.id;
-    console.log("req.body11", req.body);
 
     const productId = req.body.productId;
 
@@ -53,7 +47,6 @@ const insertCart = async (req, res) => {
       productId: productId,
       size: size,
     }).populate("productId");
-    console.log("cart", cart);
     if (cart) {
       if (cart.quantity >= 6) {
       } else {
@@ -83,11 +76,7 @@ const insertCart = async (req, res) => {
       await carts.save();
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -96,9 +85,7 @@ const updateCart = async (req, res) => {
     const userId = req.id;
 
     const { quantity, productId, size } = req.body;
-    console.log("req.body22", req.body);
     if (req.body.quantity == "") {
-      console.log("hai");
     } else {
       const updateCart = await Cart.findOne({
         userId: userId,
@@ -125,23 +112,17 @@ const updateCart = async (req, res) => {
         });
         discount = totalPrice - totalCart;
 
-        res
-          .status(200)
-          .json({
-            total: updateCart.total,
-            quantity: updateCart.quantity,
-            totalCart: totalCart,
-            totalPrice: totalPrice,
-            discount: discount,
-          });
+        res.status(200).json({
+          total: updateCart.total,
+          quantity: updateCart.quantity,
+          totalCart: totalCart,
+          totalPrice: totalPrice,
+          discount: discount,
+        });
       }
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -166,7 +147,7 @@ const clearCart = async (req, res) => {
     const cartData = await Cart.deleteMany({ userId: userId });
     res.redirect("/home");
   } catch (error) {
-    console.log(error);
+    return renderError(res, error);
   }
 };
 
@@ -195,7 +176,6 @@ const checkOut = async (req, res) => {
       "users.userId": { $nin: [userId] },
       isCoupon: true,
     });
-    console.log("coupons", coupons);
     if (coupons) {
       let couponData = [];
       coupons.forEach((coupon) => {
@@ -233,11 +213,7 @@ const checkOut = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -261,22 +237,13 @@ const applyCoupon = async (req, res) => {
       $addToSet: { users: { userId: userId } },
     });
 
-    // console.log(couponData);
-    // const coup = await Coupon.find()
-    // console.log("coup",coup);
-    res
-      .status(200)
-      .json({
-        total: total,
-        couponPercentage: couponPercentage,
-        couponDiscount: couponDiscount,
-      });
+    res.status(200).json({
+      total: total,
+      couponPercentage: couponPercentage,
+      couponDiscount: couponDiscount,
+    });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -296,11 +263,7 @@ const removeCoupon = async (req, res) => {
     }
     res.status(200).json({ redirect: "/checkout" });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 

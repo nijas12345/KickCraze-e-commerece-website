@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+
 <head>
     <meta charset="utf-8">
     <title>Evara Dashboard</title>
@@ -28,7 +29,8 @@
                 <img src="/admin/admin-assets/imgs/theme/logo.svg" class="logo" alt="Evara Dashboard">
             </a>
             <div>
-                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i> </button>
+                <button class="btn btn-icon btn-aside-minimize"> <i class="text-muted material-icons md-menu_open"></i>
+                </button>
             </div>
         </div>
         <nav>
@@ -50,7 +52,8 @@
                     </div>
                 </li>
                 <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/admin-page-orders-1.html"> <i class="icon material-icons md-shopping_cart"></i>
+                    <a class="menu-link" href="/admin/admin-page-orders-1.html"> <i
+                            class="icon material-icons md-shopping_cart"></i>
                         <span class="text">Orders</span>
                     </a>
                     <div class="submenu">
@@ -59,7 +62,7 @@
                         <a href="/admin/admin-page-orders-detail.html">Order detail</a> -->
                     </div>
                 </li>
-               
+
                 <li class="menu-item has-submenu">
                     <a class="menu-link" href="/admin/user-list"> <i class="icon material-icons md-store"></i>
                         <span class="text">UserManagement</span>
@@ -78,7 +81,7 @@
                         <!-- <a href="/admin/admin-page-form-product-1.html">Add product 1</a> -->
                         <!-- <a href="/admin/admin-page-form-product-2.html">Add product 2</a> -->
                         <a href="/admin/add-product">Add product </a>
-                       
+
                         <!-- <a href="/admin/admin-page-form-product-4.html"></a> -->
                     </div>
                 </li>
@@ -102,7 +105,7 @@
                         <!-- <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
                     </div>
                 </li>
-                
+
 
                 <!-- <li class="menu-item has-submenu">
                     <a class="menu-link" href="/admin/admin-page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
@@ -139,7 +142,7 @@
                 </li> -->
             </ul>
             <hr>
-           
+
             <br>
             <br>
         </nav>
@@ -149,7 +152,7 @@
             <div class="col-search">
                 <form class="searchform">
                     <div class="input-group">
-                        
+
                     </div>
                     <datalist id="search_terms">
                         <option value="Products">
@@ -160,124 +163,131 @@
                 </form>
             </div>
             <div class="col-nav">
-                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i class="material-icons md-apps"></i> </button>
+                <button class="btn btn-icon btn-mobile me-auto" data-trigger="#offcanvas_aside"> <i
+                        class="material-icons md-apps"></i> </button>
                 <ul class="nav">
-                 
-                   
+
+
                     <li>
-                            <a class="dropdown-item text-danger" href="/admin/logout"><i class="material-icons md-exit_to_app"></i>Logout</a>
-                        </div>
-                    </li>
-                </ul>
+                        <a class="dropdown-item text-danger" href="/admin/logout"><i
+                                class="material-icons md-exit_to_app"></i>Logout</a>
+            </div>
+            </li>
+            </ul>
             </div>
         </header>
 
-   
 
-     
-       
-   <section class="content-main">
-    <div class="content-header">
-        <div>
-            <h2 class="content-title card-title">Dashboard </h2>
-            <p>Whole data about your business here</p>
-        </div>
-        <!-- <div>
+
+
+
+        <section class="content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Dashboard </h2>
+                    <p>Whole data about your business here</p>
+                </div>
+                <!-- <div>
             <a href="#admins="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create report</a>
         </div> -->
-    </div>
-   
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-8 col-lg-12">
-            <div class="card mb-4">
-                <article class="card-body">
-                    <h5 class="card-title">Monthly statistics</h5>
-                    <label for="yearSelector">Select Year:</label>
-                    <select id="yearSelector1" >
-                        <option value="">selectYear</option>
-                        <% yearlyDatas.forEach(function(year) { %>
+            </div>
 
-                            <option value="<%= year%>"><%= year %></option>
-                            
-                        <% }); %>
-                    </select>
-                    <canvas id="myChart" height="120px"></canvas>
-                    <input type="hidden" value="<%= JSON.stringify(monthlyData) %>" id="salesReport">
-                </article>
             </div>
-            
-            <div class="card mb-4">
-                <article class="card-body">
-                    <h5 class="card-title">Yearly statistics</h5>
-                    <!-- <label for="yearSelector1">Select Year:</label> -->
-<!--              -->
-                   
-                    <canvas id="yearlySales" height="120px"></canvas>
-                    <input type="hidden" value="<%= JSON.stringify(yearlyData) %>" id="yearlyReport">
-                </article>
             </div>
-            
-            
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-xl-8 col-lg-12">
                     <div class="card mb-4">
                         <article class="card-body">
+                            <h5 class="card-title">Monthly statistics</h5>
+                            <label for="yearSelector">Select Year:</label>
+                            <select id="yearSelector1">
+                                <option value="">selectYear</option>
+                                <% yearlyDatas.forEach(function(year) { %>
 
-                            <h5 class="card-title">Best Selling Products</h5>
-                            <div class="new-member-list">
-                                <% for (let i = 0; i < bestSellingProduct.length; i++) { %>
-                                    <div class="d-flex align-items-center">
-                                        <img src="<%= bestSellingProduct[i].productImage[0] %>" alt="" class="avatar">
-                                        <div>
-                                            <h6><%= bestSellingProduct[i].productName %></h6>
-                                        </div>
-                                    </div>
-                                <% } %>
+                                    <option value="<%= year%>">
+                                        <%= year %>
+                                    </option>
 
-                               
-                                    
-                                
-                           
+                                    <% }); %>
+                            </select>
+                            <canvas id="myChart" height="120px"></canvas>
+                            <input type="hidden" value="<%= JSON.stringify(monthlyData) %>" id="salesReport">
+                        </article>
+                    </div>
+
+                    <div class="card mb-4">
+                        <article class="card-body">
+                            <h5 class="card-title">Yearly statistics</h5>
+                            <!-- <label for="yearSelector1">Select Year:</label> -->
+                            <!--              -->
+
+                            <canvas id="yearlySales" height="120px"></canvas>
+                            <input type="hidden" value="<%= JSON.stringify(yearlyData) %>" id="yearlyReport">
+                        </article>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <div class="card mb-4">
+                                <article class="card-body">
+
+                                    <h5 class="card-title">Best Selling Products</h5>
+                                    <div class="new-member-list">
+                                        <% for (let i=0; i < bestSellingProduct.length; i++) { %>
+                                            <div class="d-flex align-items-center">
+                                                <img src="<%= bestSellingProduct[i].productImage[0] %>" alt=""
+                                                    class="avatar">
+                                                <div>
+                                                    <h6>
+                                                        <%= bestSellingProduct[i].productName %>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            <% } %>
+
+
+
+
+
+                                </article>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="card mb-4">
+                                <article class="card-body">
+                                    <h5 class="card-title">Best selling Brands</h5>
+                                    <canvas id="brand" height="217"></canvas>
+                                    <input type="hidden" value="<%= JSON.stringify(bestBrand) %>" id="branddata">
+
+
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-12">
+                    <div class="card mb-4">
+                        <article class="card-body">
+                            <h5 class="card-title">Order Status</h5>
+                            <canvas id="myDoughnutChart" height="217"></canvas>
+                            <input type="hidden" value="<%= JSON.stringify(orderData) %>" id="order">
+                        </article>
+                    </div>
+                    <div class="card mb-4">
+                        <article class="card-body">
+                            <h5 class="card-title">Category selling</h5>
+
+                            <canvas id="progresschart" height="217"></canvas>
+                            <input type="hidden" value="<%= JSON.stringify(bestCategory) %>" id="category">
                         </article>
                     </div>
                 </div>
-                <div class="col-lg-7">
-                    <div class="card mb-4">
-                        <article class="card-body">
-                            <h5 class="card-title">Best selling Brands</h5>
-                            <canvas id="brand" height="217"></canvas>
-                            <input type="hidden" value="<%= JSON.stringify(bestBrand) %>" id="branddata">
-
-
-                        </article>
-                    </div>
-                </div>
             </div>
-        </div>
-        <div class="col-xl-4 col-lg-12">
-            <div class="card mb-4">
-                <article class="card-body">
-                    <h5 class="card-title">Order Status</h5>
-                    <canvas id="myDoughnutChart" height="217"></canvas>
-                    <input type="hidden" value="<%= JSON.stringify(orderData) %>" id="order">
-                </article>
-            </div>
-            <div class="card mb-4">
-                <article class="card-body">
-                    <h5 class="card-title">Category selling</h5>
-                    
-                    <canvas id="progresschart" height="217"></canvas>
-                  <input type="hidden" value="<%= JSON.stringify(bestCategory) %>" id="category">
-                </article>
-            </div>
-        </div>
-    </div>
- 
-</section>
 
-    </section>    
+        </section>
+
+        </section>
     </main>
     <script src="/admin/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
     <script src="/admin/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
@@ -294,56 +304,56 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("yearSelector1").addEventListener("change", function() {
-        const selectedYear = this.value; // Get the selected value of the <select> element
-            
-        const url = `/admin/dashboard?selectedYear=${selectedYear}`; // Construct the URL with the selected year as a query parameter
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("yearSelector1").addEventListener("change", function () {
+            const selectedYear = this.value; // Get the selected value of the <select> element
 
-        // Redirect the page to the constructed URL
-        window.location.href = url;
+            const url = `/admin/dashboard?selectedYear=${selectedYear}`; // Construct the URL with the selected year as a query parameter
+
+            // Redirect the page to the constructed URL
+            window.location.href = url;
+        });
     });
-});
 
 
 
-        // Doughnut Chart
-        var ctxDoughnut = document.getElementById('myDoughnutChart').getContext('2d');
-        const orderString = document.getElementById("order").value
-        
-        const order = JSON.parse(orderString)
-        const colory =  [
-              'rgb(20, 229, 34)',
-              'rgb(255, 148, 6)',
-              'rgb(20, 83, 229)',
-              'rgb(255, 6, 6)',
-              'rgb(229, 20, 139)'
-            ]
-        let colors = [] 
-        let status = []
-        let count = []
-        for(let i =0;i< order.length;i++){
-            status.push(order[i]._id)
-            colors.push(colory[i])
-            count.push(order[i].count)
-        }
-        
-        var doughnutData = {
-          labels: status,
-          datasets: [{
+    // Doughnut Chart
+    var ctxDoughnut = document.getElementById('myDoughnutChart').getContext('2d');
+    const orderString = document.getElementById("order").value
+
+    const order = JSON.parse(orderString)
+    const colory = [
+        'rgb(20, 229, 34)',
+        'rgb(255, 148, 6)',
+        'rgb(20, 83, 229)',
+        'rgb(255, 6, 6)',
+        'rgb(229, 20, 139)'
+    ]
+    let colors = []
+    let status = []
+    let count = []
+    for (let i = 0; i < order.length; i++) {
+        status.push(order[i]._id)
+        colors.push(colory[i])
+        count.push(order[i].count)
+    }
+
+    var doughnutData = {
+        labels: status,
+        datasets: [{
             label: 'My First Dataset',
             data: count,
-            backgroundColor:colors,
+            backgroundColor: colors,
             hoverOffset: 4
-          }]
-        };
-      
-        var doughnutConfig = {
-          type: 'doughnut',
-          data: doughnutData,
-        };
-      
-        var myDoughnutChart = new Chart(ctxDoughnut, doughnutConfig);
+        }]
+    };
+
+    var doughnutConfig = {
+        type: 'doughnut',
+        data: doughnutData,
+    };
+
+    var myDoughnutChart = new Chart(ctxDoughnut, doughnutConfig);
 
 
 
@@ -351,197 +361,197 @@ document.addEventListener("DOMContentLoaded", function() {
 
     ///////////////////////////////////////////////////////////////////////////////////    
 
-        if ($('#myChart').length) {
-            const salesReport =  JSON.parse( document.getElementById("salesReport").value)
-               // console.log(salesReport);
-          var ctx = document.getElementById('myChart').getContext('2d');
-          const allMonths = Array.from({ length: 12 }, (_, i) => i + 1); // Array representing all months (1 to 12)
-        
-           const monthlyDataMap = new Map(salesReport.map(item => [item._id, item.totalAmount]));
-           const months = [
-                "January", "February", "March", "April", "May", "June", 
-                "July", "August", "September", "October", "November", "December"
+    if ($('#myChart').length) {
+        const salesReport = JSON.parse(document.getElementById("salesReport").value)
+        // console.log(salesReport);
+        var ctx = document.getElementById('myChart').getContext('2d');
+        const allMonths = Array.from({ length: 12 }, (_, i) => i + 1); // Array representing all months (1 to 12)
+
+        const monthlyDataMap = new Map(salesReport.map(item => [item._id, item.totalAmount]));
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
         ]
-             ;
-           
-            const monthlyDataFilled = allMonths.map(month => ({ _id: month, totalAmount: monthlyDataMap.get(month) || 0 }));
-            //  console.log(monthlyDataFilled)
-          var chart = new Chart(ctx, {
+            ;
+
+        const monthlyDataFilled = allMonths.map(month => ({ _id: month, totalAmount: monthlyDataMap.get(month) || 0 }));
+        //  console.log(monthlyDataFilled)
+        var chart = new Chart(ctx, {
             type: 'line',
             data: {
-              labels:months.map((month)=>month),
-              datasets: [{
-                  label: 'Sales',
-                  tension: 0.3,
-                  fill: true,
-                  backgroundColor: 'rgba(44, 120, 220, 0.2)',
-                  borderColor: 'rgba(44, 120, 220)',
-                  data: monthlyDataFilled.map((product)=>product.totalAmount)
+                labels: months.map((month) => month),
+                datasets: [{
+                    label: 'Sales',
+                    tension: 0.3,
+                    fill: true,
+                    backgroundColor: 'rgba(44, 120, 220, 0.2)',
+                    borderColor: 'rgba(44, 120, 220)',
+                    data: monthlyDataFilled.map((product) => product.totalAmount)
                 },
-                
-              ]
+
+                ]
             },
             options: {
-              plugins: {
-                legend: {
-                  labels: {
-                    usePointStyle: true,
-                  },
-                }
-              }
-            }
-          });
-        }
-      //////////////////////////////////////////////////////////////////////////////
-
-      if ($('#yearlySales').length) {
-            const yearlyReport = JSON.parse(document.getElementById("yearlyReport").value)
-            const currentYear = new Date().getFullYear()
-            
-            let labels = []
-            let totalAmount =[]
-            const color = [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ]
-        let colors =[]
-        let borderColor =[
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ]
-                    let borderColors =[]
-            for(let i =0;i< yearlyReport.length;i++){
-                labels.push(yearlyReport[i]._id)
-                totalAmount.push(yearlyReport[i].totalAmount)
-                colors.push(color[i])
-                borderColors.push(borderColor[i])
-            }
-            const data = {
-                labels: labels,
-                datasets: [{
-                    label: "",
-                    data: totalAmount,
-                    backgroundColor: colors,
-                    borderColor: borderColors,
-                    borderWidth: 1
-                }]
-            };
-        
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                plugins: {
+                    legend: {
+                        labels: {
+                            usePointStyle: true,
+                        },
                     }
                 }
-            };
-        
-            // Render the chart
-            var ctx = document.getElementById('yearlySales').getContext('2d');
-            var myChart = new Chart(ctx, config);
+            }
+        });
+    }
+    //////////////////////////////////////////////////////////////////////////////
+
+    if ($('#yearlySales').length) {
+        const yearlyReport = JSON.parse(document.getElementById("yearlyReport").value)
+        const currentYear = new Date().getFullYear()
+
+        let labels = []
+        let totalAmount = []
+        const color = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+        ]
+        let colors = []
+        let borderColor = [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+        ]
+        let borderColors = []
+        for (let i = 0; i < yearlyReport.length; i++) {
+            labels.push(yearlyReport[i]._id)
+            totalAmount.push(yearlyReport[i].totalAmount)
+            colors.push(color[i])
+            borderColors.push(borderColor[i])
         }
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: "",
+                data: totalAmount,
+                backgroundColor: colors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        // Render the chart
+        var ctx = document.getElementById('yearlySales').getContext('2d');
+        var myChart = new Chart(ctx, config);
+    }
 
 
-        
-/////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////////////////
 
 
-const categoryString = document.getElementById("category").value;
-        const category = JSON.parse(categoryString);
+    const categoryString = document.getElementById("category").value;
+    const category = JSON.parse(categoryString);
 
-// Now you can access the individual objects in the array
-let categoryName =[]
-let colours =[]
-let colour = [
-              'rgb(0,139,139)',
-                'rgb(124,252,0)',
-                'rgb(255,165,0)'
-              ]
-let categoryCount = []
-for (let i = 0; i < category.length; i++) {
-    categoryName.push(category[i]._id.name)
-    colours.push(colour[i])
-    categoryCount.push(category[i].count)
+    // Now you can access the individual objects in the array
+    let categoryName = []
+    let colours = []
+    let colour = [
+        'rgb(0,139,139)',
+        'rgb(124,252,0)',
+        'rgb(255,165,0)'
+    ]
+    let categoryCount = []
+    for (let i = 0; i < category.length; i++) {
+        categoryName.push(category[i]._id.name)
+        colours.push(colour[i])
+        categoryCount.push(category[i].count)
 
-}
-     
-        const pieConfig = {
-          type: 'pie',
-          data: {
+    }
+
+    const pieConfig = {
+        type: 'pie',
+        data: {
             labels: categoryName,
             datasets: [{
-              label: 'My First Dataset',
-              data: categoryCount,
-              backgroundColor: colours,
-              hoverOffset: 4
+                label: 'My First Dataset',
+                data: categoryCount,
+                backgroundColor: colours,
+                hoverOffset: 4
             }]
-          },
-        };
-    
-      
-        // Get the canvas element by id
-        var progressChart = document.getElementById('progresschart').getContext('2d');
-      
-        // Create a new Chart instance for the pie chart
-        var myPieChart = new Chart(progressChart, pieConfig);
+        },
+    };
 
 
-////////////////////////////////////////////////////////////////////////////////////////////
+    // Get the canvas element by id
+    var progressChart = document.getElementById('progresschart').getContext('2d');
+
+    // Create a new Chart instance for the pie chart
+    var myPieChart = new Chart(progressChart, pieConfig);
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
-const brandCtx = document.getElementById('brand').getContext('2d');
- const branddstring = document.getElementById("branddata").value
+    const brandCtx = document.getElementById('brand').getContext('2d');
+    const branddstring = document.getElementById("branddata").value
 
- 
- const brand = JSON.parse(branddstring)
- let counts =[]
- const bColor = [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)',
-      'rgb(134, 228, 92)',
-      'rgb(255, 255, 0)',
-      'rgb(66, 0, 220)',
-      'rgb(220, 23, 0)'
+
+    const brand = JSON.parse(branddstring)
+    let counts = []
+    const bColor = [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+        'rgb(134, 228, 92)',
+        'rgb(255, 255, 0)',
+        'rgb(66, 0, 220)',
+        'rgb(220, 23, 0)'
     ]
-let bColors =[]
- let brandName =[]
- for(let i=0;i< brand.length;i++){
-    counts.push(brand[i].count)
-    brandName.push(brand[i]._id)
-    bColors.push(bColor[i])
- }
-const brandData = {
-  labels:brandName, // Replace with your brand names
-  datasets: [{
-    label: 'Best Selling Brands',
-    data: counts, // Replace with your actual sales data for each brand
-    backgroundColor:bColors,
-    hoverOffset: 4
-  }]
-};
+    let bColors = []
+    let brandName = []
+    for (let i = 0; i < brand.length; i++) {
+        counts.push(brand[i].count)
+        brandName.push(brand[i]._id)
+        bColors.push(bColor[i])
+    }
+    const brandData = {
+        labels: brandName, // Replace with your brand names
+        datasets: [{
+            label: 'Best Selling Brands',
+            data: counts, // Replace with your actual sales data for each brand
+            backgroundColor: bColors,
+            hoverOffset: 4
+        }]
+    };
 
-const brandConfig = {
-  type: 'doughnut',
-  data: brandData,
-};
+    const brandConfig = {
+        type: 'doughnut',
+        data: brandData,
+    };
 
-const brandChart = new Chart(brandCtx, brandConfig);
+    const brandChart = new Chart(brandCtx, brandConfig);
 
 
 
@@ -553,4 +563,5 @@ const brandChart = new Chart(brandCtx, brandConfig);
 </script>
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:32:57 GMT -->
+
 </html>

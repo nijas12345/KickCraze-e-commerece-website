@@ -6,6 +6,7 @@ const Order = require("../model/orderModel");
 const Coupon = require("../model/couponModel");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const renderError = require("../helpers/errorHandling");
 
 const createToken = (admin) => {
   const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
@@ -16,11 +17,7 @@ const adminRegister = async (req, res) => {
   try {
     res.render("signUp");
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const verifyRegister = async (req, res) => {
@@ -39,22 +36,14 @@ const verifyRegister = async (req, res) => {
       res.redirect("/admin/dashboard");
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const adminLogin = async (req, res) => {
   try {
     res.render("adminLogin");
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -76,11 +65,7 @@ const adminVerify = async (req, res) => {
       res.render("adminLogin", { message: "Email is incorrect" });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, 500, error);
   }
 };
 
@@ -88,11 +73,7 @@ const adminForgot = async (req, res) => {
   try {
     res.render("forgot");
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -103,11 +84,7 @@ const loadLogout = async (req, res) => {
     res.clearCookie("Adminjwt");
     res.redirect("/admin/login");
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -121,7 +98,7 @@ const adminDashboard = async (req, res) => {
       year = 2024;
     }
 
-    const order = await Order.find();
+    await Order.find();
 
     const orderData = await Order.aggregate([
       { $unwind: "$products" },
@@ -134,7 +111,6 @@ const adminDashboard = async (req, res) => {
     ]);
     const currentYear = new Date().getFullYear();
 
-    // console.log(selectedYear);
     const monthlyData = await Order.aggregate([
       { $unwind: "$products" },
       {
@@ -199,7 +175,6 @@ const adminDashboard = async (req, res) => {
       { $sort: { _id: 1 } },
     ]);
 
-    console.log("yearly", yearlyData);
     const bestCategory = await Order.aggregate([
       {
         $unwind: "$products",
@@ -286,11 +261,7 @@ const adminDashboard = async (req, res) => {
       yearlyDatas,
     });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -298,14 +269,10 @@ const adminDashboard = async (req, res) => {
 
 const userList = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find();
     res.render("userlist", { users: users });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -326,11 +293,7 @@ const userBlock = async (req, res) => {
       res.render("userlist", { users: users });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -342,11 +305,7 @@ const productCategories = async (req, res) => {
 
     res.render("categories", { categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -371,11 +330,7 @@ const insertCategories = async (req, res) => {
       res.render("categories", { categories: categories });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -388,11 +343,7 @@ const editCategories = async (req, res) => {
 
     res.render("categoryEdit", { category: category });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -406,23 +357,17 @@ const updateCategories = async (req, res) => {
     const category = await Category.findOne({ name: name });
 
     if (category) {
-      console.log("hai");
       res.status(200).json({ message: "Category Name is already exists " });
     } else {
       const categoryData = await Category.findByIdAndUpdate(Id, {
         name: name,
         description: description,
       });
-      console.log("CAtegory", categoryData);
 
       res.status(200).json({ redirect: "/admin/product-categories" });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -435,11 +380,7 @@ const deleteCategories = async (req, res) => {
     const categories = await Category.find({ delete: true });
     res.render("categories", { categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -452,11 +393,7 @@ const ListProduct = async (req, res) => {
     const categories = await Category.find({ delete: true });
     res.render("productList", { product: products, categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -465,25 +402,18 @@ const addProduct = async (req, res) => {
     const categories = await Category.find({ delete: true });
     res.render("productAdd", { categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
 const insertProduct = async (req, res) => {
   try {
-    console.log("req.files", req.files);
     const fileNames = req.files.map((file) => file.filename);
 
-    console.log(fileNames);
     let image = [];
 
     fileNames.forEach((filename) => {
       const outputPath2 = "/productImages/" + filename;
-      console.log("==================", outputPath2);
       image.push(outputPath2);
     });
 
@@ -492,7 +422,7 @@ const insertProduct = async (req, res) => {
 
     //     const outputPath1=path.join(__dirname,"../public/croppedImages","crop"+file.filename)
     //     const outputPath2 = "/croppedImages/"+"crop"+file.filename
-    //     console.log("imgPath",outputPath1);
+    //     "imgPath",outputPath1);
     //     const croppedImage = await sharp(file.path)
     //     .resize(1000,1000,{
     //         fit:"fill",
@@ -552,11 +482,7 @@ const insertProduct = async (req, res) => {
       res.render("productList", { product: products });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -569,30 +495,20 @@ const editProduct = async (req, res) => {
 
     res.render("editProduct", { categories: categories, products: products });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
 const insertEditedProduct = async (req, res) => {
   try {
-    console.log("req.flies", req.files);
     const fileNames = req.files.map((file) => file.filename);
 
-    console.log(fileNames);
     let image = [];
 
     fileNames.forEach((filename) => {
       const outputPath2 = "/productImages/" + filename;
-      console.log("==================", outputPath2);
       image.push(outputPath2);
     });
-    console.log("image", image);
-
-    console.log("2");
     const id = req.query.id;
     const price = req.body.price;
 
@@ -636,7 +552,6 @@ const insertEditedProduct = async (req, res) => {
         });
         await productData.save();
       }
-      console.log("product", productData);
     } else {
       const disprice = Math.floor(price - (discount / 100) * price);
       const productData = await Product.findByIdAndUpdate(id, {
@@ -651,14 +566,12 @@ const insertEditedProduct = async (req, res) => {
         offer: category.offer,
         //    image:image
       });
-      console.log("product data befor removing image", productData);
 
       if (req.body.imagesToRemove && req.body.imagesToRemove.length > 0) {
         // Convert strings to numbers
         const imageIndices = req.body.imagesToRemove.map((index) =>
           parseInt(index)
         );
-        console.log("index  ", imageIndices);
 
         // Remove images from productData
         productData.image = productData.image.filter(
@@ -674,8 +587,6 @@ const insertEditedProduct = async (req, res) => {
         });
         await productData.save();
       }
-
-      console.log("product data after removing image", productData);
     }
 
     const products = await Product.find();
@@ -683,11 +594,7 @@ const insertEditedProduct = async (req, res) => {
     const categories = await Category.find();
     res.render("productList", { product: products, categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -701,11 +608,7 @@ const deleteProduct = async (req, res) => {
     const categories = await Category.find();
     res.render("productList", { product: products, categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -716,14 +619,9 @@ const listOrders = async (req, res) => {
       .populate("addressId")
       .populate("products.productId")
       .sort({ orderedDate: -1 });
-    console.log("orders", orders);
     res.render("orders", { orders: orders });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "internal Servor Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -731,15 +629,12 @@ const viewOrders = async (req, res) => {
   const orderId = req.query.id;
 
   try {
-    const order = await Order.findOne({ _id: orderId }).populate("userId");
-
+    const order = await Order.findOne({ _id: orderId })
+      .populate("products.productId")
+      .populate("userId");
     res.render("viewOrders", { order: order });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -752,11 +647,7 @@ const statusOrders = async (req, res) => {
 
     res.status(200).json({ redirect: "/admin/view-orders?id=" + orderId });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -766,11 +657,7 @@ const loadCoupon = async (req, res) => {
 
     res.render("coupon", { coupons: coupons, message: undefined });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const insertCoupon = async (req, res) => {
@@ -799,16 +686,11 @@ const insertCoupon = async (req, res) => {
         minimumAmount: minimumAmount,
       });
       await coupon.save();
-      console.log("coupon", coupon);
 
       res.redirect("/admin/add-coupon");
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -820,11 +702,7 @@ const editCoupon = async (req, res) => {
 
     res.render("editCoupon", { coupon: coupon, message: undefined });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const insertEditedCoupon = async (req, res) => {
@@ -866,11 +744,7 @@ const insertEditedCoupon = async (req, res) => {
       res.redirect("/admin/add-coupon");
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 const deleteCoupon = async (req, res) => {
@@ -883,11 +757,7 @@ const deleteCoupon = async (req, res) => {
     });
     res.redirect("/admin/add-coupon");
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -896,11 +766,7 @@ const categoryOffer = async (req, res) => {
     const categories = await Category.find();
     res.render("categoryOffer", { categories: categories });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -961,12 +827,12 @@ const addCategoryOffer = async (req, res) => {
       //         },
       //       ])
 
-      //     console.log("products",products);
+      //     "products",products);
 
       //    products.forEach((product)=>{
       //     if(product.categoryOffer>product.discount){
       //         product.disprice = product.price-(product.categoryOffer/100)*product.price
-      //         console.log(product.disprice);
+      //         product.disprice);
       //     }
       //    })
 
@@ -980,11 +846,7 @@ const addCategoryOffer = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 
@@ -1013,11 +875,7 @@ const salesReport = async (req, res) => {
       totalDiscount,
     });
   } catch (error) {
-    console.log(error);
-    const errorMessage = "Internal Server Error";
-    return res
-      .status(500)
-      .render("errorPage", { statusCode: 500, errorMessage });
+    return renderError(res, error);
   }
 };
 

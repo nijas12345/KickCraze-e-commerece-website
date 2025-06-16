@@ -1083,17 +1083,16 @@
                         </div>
 
 
-                        <div class="tab-pane fade table-dashboard dashboard wish-list-section" id="order">
-                            <div class="box-head mb-3">
-                                <h3>My Order</h3>
-                            </div>
+                        <div class="card-body" id="order">
+                            
+                            
                             <div class="table-responsive">
                                 <% if(orders.length>0){ %>
-                                    <table class="table cart-table">
+                                    <table class="table cart-table" id="my-table">
                                         <thead>
                                             <tr class="table-head">
+                                                <th scope="col">SL.No</th>
                                                 <th scope="col">image</th>
-                                                <th scope="col">Order Id</th>
                                                 <th scope="col">Product Details</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Price</th>
@@ -1105,21 +1104,21 @@
 
                                             <% orders.forEach((order)=>{%>
 
-                                                <% order.products.forEach((product)=>{ %>
+                                                <% order.products.forEach((product,index)=>{ %>
                                                     <tr>
+                                                           <td>
+                                                                <p class="mt-0">
+                                                                    <%= index+1 %>
+                                                                </p>
+                                                            </td>
+
                                                         <td>
                                                             <a href="/product-profile?id=<%=product.productId._id %>">
                                                                 <img src="<%= product.productId.image[0] %>"
                                                                     class="blur-up lazyload" alt="">
                                                             </a>
                                                         </td>
-                                                        <%let orderId=order._id.toString().slice(8,13)%>
-                                                            <td>
-                                                                <p class="mt-0">
-                                                                    <%= orderId %>
-                                                                </p>
-                                                            </td>
-
+                                                  
                                                             <td>
 
 
@@ -2261,12 +2260,11 @@
     <!-- SweetAlert JavaScript -->
     //
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"/>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 
     <script src="/admin/admin-assets/js/main.js" type="text/javascript"></script>
     <script>new DataTable('#my-table', {
-            pagingType: 'simple_numbers'
-        });</script>
-    <script>new DataTable('#wishlist-table', {
             pagingType: 'simple_numbers'
         });</script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

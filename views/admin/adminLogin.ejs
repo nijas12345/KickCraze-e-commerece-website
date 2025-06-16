@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-account-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:33 GMT -->
+
 <head>
     <meta charset="utf-8">
     <title>Evara Dashboard</title>
@@ -28,7 +29,7 @@
                 </a>
             </div>
             <div class="col-nav">
-              
+
             </div>
         </header>
         <section class="content-main mt-80 mb-80">
@@ -36,15 +37,12 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Sign in</h4>
                     <form action="/admin/login" method="post">
-                        <div> 
-                            <% 
-    
-                        if(typeof message !=="undefined"){
-                            %> 
-                            <p style="color:red; margin-left: -135px ; margin-left: 50px; padding-bottom: 25px;"><%=message %></p>
-                            <%
-                         }
-                        %> 
+                        <div>
+                            <% if(typeof message !=="undefined" ){ %>
+                                <p style="color:red; margin-left: -135px ; margin-left: 50px; padding-bottom: 25px;">
+                                    <%=message %>
+                                </p>
+                                <% } %>
                         </div>
                         <div class="mb-3">
                             <input class="form-control" placeholder="Username or email" type="text" name="email">
@@ -55,7 +53,7 @@
                         <div class="mb-3">
                             <a href="/admin/forgot" class="float-end font-sm text-muted"></a>
                             <label class="form-check">
-                                 <input type="checkbox" class="form-check-input" checked="">
+                                <input type="checkbox" class="form-check-input" checked="">
                                 <span class=""></span>
                             </label>
                         </div> <!-- form-group form-check .// -->
@@ -63,11 +61,11 @@
                             <button type="submit" class="btn btn-primary w-100"> Login </button>
                         </div> <!-- form-group// -->
                     </form>
-                  
+
                     <p class="text-center small text-muted mb-15"></p>
                     <div class="">
                         <a href="/admin/admin-#" class="">
-                          
+
                         </a>
 
                     </div>
@@ -78,7 +76,7 @@
         <footer class="main-footer text-center">
             <p class="font-xs">
                 <script>
-                document.write(new Date().getFullYear())
+                    document.write(new Date().getFullYear())
                 </script> ©, Evara - HTML Ecommerce Template .
             </p>
             <p class="font-xs mb-30">All rights reserved</p>
@@ -93,4 +91,5 @@
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-account-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:33 GMT -->
+
 </html>
