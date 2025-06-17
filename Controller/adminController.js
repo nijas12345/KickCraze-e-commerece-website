@@ -4,9 +4,9 @@ const Category = require("../model/categoryModel");
 const Product = require("../model/productModel");
 const Order = require("../model/orderModel");
 const Coupon = require("../model/couponModel");
-const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const renderError = require("../helpers/errorHandling");
+const StatusCode = require("../helpers/statusCode");
 
 const createToken = (admin) => {
   const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET;
@@ -15,7 +15,7 @@ const createToken = (admin) => {
 
 const adminRegister = async (req, res) => {
   try {
-    res.render("signUp");
+    res.status(StatusCode.SUCCESS).render("signUp");
   } catch (error) {
     return renderError(res, error);
   }
@@ -32,7 +32,7 @@ const verifyRegister = async (req, res) => {
 
     if (adminData) {
       const token = createToken({ id: adminData._id });
-      res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 3600000 });
+      res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 36000000 });
       res.redirect("/admin/dashboard");
     }
   } catch (error) {
@@ -41,7 +41,7 @@ const verifyRegister = async (req, res) => {
 };
 const adminLogin = async (req, res) => {
   try {
-    res.render("adminLogin");
+    res.status(StatusCode.SUCCESS).render("adminLogin");
   } catch (error) {
     return renderError(res, error);
   }
@@ -59,10 +59,10 @@ const adminVerify = async (req, res) => {
         res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 60000000 });
         res.redirect("/admin/dashboard");
       } else {
-        res.render("adminLogin", { message: "Password is incorrect" });
+        res.status(StatusCode.SUCCESS).render("adminLogin", { message: "Password is incorrect" });
       }
     } else {
-      res.render("adminLogin", { message: "Email is incorrect" });
+      res.status(StatusCode.SUCCESS).render("adminLogin", { message: "Email is incorrect" });
     }
   } catch (error) {
     return renderError(res, 500, error);
@@ -71,7 +71,7 @@ const adminVerify = async (req, res) => {
 
 const adminForgot = async (req, res) => {
   try {
-    res.render("forgot");
+    res.status(StatusCode.SUCCESS).render("forgot");
   } catch (error) {
     return renderError(res, error);
   }
@@ -251,7 +251,7 @@ const adminDashboard = async (req, res) => {
     ]);
 
     const yearlyDatas = ["2022", "2023", "2024", "2025", "2026"];
-    res.render("dashboard", {
+    res.status(StatusCode.SUCCESS).render("dashboard", {
       orderData,
       monthlyData,
       yearlyData,
@@ -270,7 +270,7 @@ const adminDashboard = async (req, res) => {
 const userList = async (req, res) => {
   try {
     const users = await User.find();
-    res.render("userlist", { users: users });
+    res.status(StatusCode.SUCCESS).render("userlist", { users: users });
   } catch (error) {
     return renderError(res, error);
   }
@@ -286,11 +286,11 @@ const userBlock = async (req, res) => {
     if (userStatus == true) {
       await User.findOneAndUpdate({ _id: userId }, { status: false });
       const users = await User.find({});
-      res.render("userlist", { users: users });
+      res.status(StatusCode.SUCCESS).render("userlist", { users: users });
     } else {
       await User.findOneAndUpdate({ _id: userId }, { status: true });
       const users = await User.find({});
-      res.render("userlist", { users: users });
+      res.status(StatusCode.SUCCESS).render("userlist", { users: users });
     }
   } catch (error) {
     return renderError(res, error);
@@ -303,7 +303,7 @@ const productCategories = async (req, res) => {
   try {
     const categories = await Category.find();
 
-    res.render("categories", { categories: categories });
+    res.status(StatusCode.SUCCESS).render("categories", { categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -315,7 +315,7 @@ const insertCategories = async (req, res) => {
 
     if (categories) {
       const categories = await Category.find({ delete: true });
-      res.render("categories", {
+      res.status(StatusCode.SUCCESS).render("categories", {
         message: "This category is already exist",
         categories: categories,
       });
@@ -324,10 +324,10 @@ const insertCategories = async (req, res) => {
         name: req.body.name,
         description: req.body.description,
       });
-      const categoryData = await category.save();
+      await category.save();
       const categories = await Category.find({ delete: true });
 
-      res.render("categories", { categories: categories });
+      res.status(StatusCode.SUCCESS).render("categories", { categories: categories });
     }
   } catch (error) {
     return renderError(res, error);
@@ -341,7 +341,7 @@ const editCategories = async (req, res) => {
 
     const category = await Category.findOne({ _id: categoryId });
 
-    res.render("categoryEdit", { category: category });
+    res.status(StatusCode.SUCCESS).render("categoryEdit", { category: category });
   } catch (error) {
     return renderError(res, error);
   }
@@ -357,14 +357,14 @@ const updateCategories = async (req, res) => {
     const category = await Category.findOne({ name: name });
 
     if (category) {
-      res.status(200).json({ message: "Category Name is already exists " });
+      res.status(StatusCode.SUCCESS).json({ message: "Category Name is already exists " });
     } else {
       const categoryData = await Category.findByIdAndUpdate(Id, {
         name: name,
         description: description,
       });
 
-      res.status(200).json({ redirect: "/admin/product-categories" });
+      res.status(StatusCode.SUCCESS).json({ redirect: "/admin/product-categories" });
     }
   } catch (error) {
     return renderError(res, error);
@@ -374,11 +374,11 @@ const updateCategories = async (req, res) => {
 const deleteCategories = async (req, res) => {
   try {
     const categoryId = req.query.id;
-    const editCategory = await Category.findByIdAndUpdate(categoryId, {
+    await Category.findByIdAndUpdate(categoryId, {
       delete: false,
     });
     const categories = await Category.find({ delete: true });
-    res.render("categories", { categories: categories });
+    res.status(StatusCode.SUCCESS).render("categories", { categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -391,7 +391,7 @@ const ListProduct = async (req, res) => {
     const products = await Product.find();
 
     const categories = await Category.find({ delete: true });
-    res.render("productList", { product: products, categories: categories });
+    res.status(StatusCode.SUCCESS).render("productList", { product: products, categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -400,7 +400,7 @@ const ListProduct = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const categories = await Category.find({ delete: true });
-    res.render("productAdd", { categories: categories });
+    res.status(StatusCode.SUCCESS).render("productAdd", { categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -458,7 +458,7 @@ const insertProduct = async (req, res) => {
       const productData = await product.save();
       const products = await Product.find();
       const categories = await Category.find();
-      res.render("productList", { product: products });
+      res.status(StatusCode.SUCCESS).render("productList", { product: products });
     } else {
       const discounts = parseInt(discount);
       const disprice = Math.floor(
@@ -479,7 +479,7 @@ const insertProduct = async (req, res) => {
       await product.save();
       const products = await Product.find();
       await Category.find();
-      res.render("productList", { product: products });
+      res.status(StatusCode.SUCCESS).render("productList", { product: products });
     }
   } catch (error) {
     return renderError(res, error);
@@ -492,8 +492,9 @@ const editProduct = async (req, res) => {
 
     const categories = await Category.find({ delete: true });
     const products = await Product.findOne({ _id: editId });
-
-    res.render("editProduct", { categories: categories, products: products });
+    console.log('products',products);
+    
+    res.status(StatusCode.SUCCESS).render("editProduct", { categories: categories, products: products });
   } catch (error) {
     return renderError(res, error);
   }
@@ -502,13 +503,14 @@ const editProduct = async (req, res) => {
 const insertEditedProduct = async (req, res) => {
   try {
     const fileNames = req.files.map((file) => file.filename);
-
-    let image = [];
-
+    
+    let image = [];      
+    
     fileNames.forEach((filename) => {
       const outputPath2 = "/productImages/" + filename;
       image.push(outputPath2);
     });
+    
     const id = req.query.id;
     const price = req.body.price;
 
@@ -520,6 +522,7 @@ const insertEditedProduct = async (req, res) => {
       disprice = Math.floor(
         req.body.price - (category.offer / 100) * req.body.price
       );
+      
       const productData = await Product.findByIdAndUpdate(id, {
         name: req.body.name,
         price: price,
@@ -532,21 +535,19 @@ const insertEditedProduct = async (req, res) => {
         offer: category.offer,
         //    image:image
       });
+      
       if (req.body.imagesToRemove && req.body.imagesToRemove.length > 0) {
         // Convert strings to numbers
         const imageIndices = req.body.imagesToRemove.map((index) =>
           parseInt(index)
         );
-
         // Remove images from productData
         productData.image = productData.image.filter(
           (image, index) => !imageIndices.includes(index)
         );
-
-        // Perform database update
         await productData.save();
       }
-      if (image.length !== 0) {
+      if (image.length > 0) {
         image.forEach((img) => {
           productData.image.push(img);
         });
@@ -581,7 +582,7 @@ const insertEditedProduct = async (req, res) => {
         // Perform database update
         await productData.save();
       }
-      if (image.length !== 0) {
+      if (image.length > 0) {
         image.forEach((img) => {
           productData.image.push(img);
         });
@@ -590,9 +591,8 @@ const insertEditedProduct = async (req, res) => {
     }
 
     const products = await Product.find();
-
     const categories = await Category.find();
-    res.render("productList", { product: products, categories: categories });
+    res.status(StatusCode.SUCCESS).render("productList", { product: products, categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -606,7 +606,7 @@ const deleteProduct = async (req, res) => {
     const products = await Product.find();
 
     const categories = await Category.find();
-    res.render("productList", { product: products, categories: categories });
+    res.status(StatusCode.SUCCESS).render("productList", { product: products, categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -619,7 +619,7 @@ const listOrders = async (req, res) => {
       .populate("addressId")
       .populate("products.productId")
       .sort({ orderedDate: -1 });
-    res.render("orders", { orders: orders });
+    res.status(StatusCode.SUCCESS).render("orders", { orders: orders });
   } catch (error) {
     return renderError(res, error);
   }
@@ -631,8 +631,8 @@ const viewOrders = async (req, res) => {
   try {
     const order = await Order.findOne({ _id: orderId })
       .populate("products.productId")
-      .populate("userId");
-    res.render("viewOrders", { order: order });
+      .populate("userId").populate("addressId");
+    res.status(StatusCode.SUCCESS).render("viewOrders", { order: order });
   } catch (error) {
     return renderError(res, error);
   }
@@ -643,9 +643,8 @@ const statusOrders = async (req, res) => {
     const orderId = req.body.orderId;
     const option = req.body.selectedOption;
 
-    const orders = await Order.findByIdAndUpdate(orderId, { status: option });
-
-    res.status(200).json({ redirect: "/admin/view-orders?id=" + orderId });
+    await Order.findByIdAndUpdate(orderId, { status: option });
+    res.status(StatusCode.SUCCESS).json({ redirect: "/admin/view-orders?id=" + orderId });
   } catch (error) {
     return renderError(res, error);
   }
@@ -653,9 +652,8 @@ const statusOrders = async (req, res) => {
 
 const loadCoupon = async (req, res) => {
   try {
-    const coupons = await Coupon.find({ isCoupon: true });
-
-    res.render("coupon", { coupons: coupons, message: undefined });
+    const coupons = await Coupon.find({ isCoupon: true }).sort({createdAt:-1});
+    res.status(StatusCode.SUCCESS).render("coupon", { coupons: coupons, message: undefined });
   } catch (error) {
     return renderError(res, error);
   }
@@ -672,7 +670,7 @@ const insertCoupon = async (req, res) => {
     let coupons = await Coupon.findOne({ couponCode: req.body.code });
     if (coupons) {
       const coupons = await Coupon.find({ isCoupon: true });
-      res.render("coupon", {
+      res.status(StatusCode.SUCCESS).render("coupon", {
         coupons: coupons,
         message: "Code is already exist",
       });
@@ -700,7 +698,7 @@ const editCoupon = async (req, res) => {
 
     const coupon = await Coupon.findOne({ _id: couponId });
 
-    res.render("editCoupon", { coupon: coupon, message: undefined });
+    res.status(StatusCode.SUCCESS).render("editCoupon", { coupon: coupon, message: undefined });
   } catch (error) {
     return renderError(res, error);
   }
@@ -727,7 +725,7 @@ const insertEditedCoupon = async (req, res) => {
     let coupons = await Coupon.findOne({ couponCode: couponCode });
     if (coupons) {
       const coupon = await Coupon.findOne({ _id: couponId });
-      res.render("editCoupon", {
+      res.status(StatusCode.SUCCESS).render("editCoupon", {
         coupon: coupon,
         message: "code is already exist",
       });
@@ -764,7 +762,7 @@ const deleteCoupon = async (req, res) => {
 const categoryOffer = async (req, res) => {
   try {
     const categories = await Category.find();
-    res.render("categoryOffer", { categories: categories });
+    res.status(StatusCode.SUCCESS).render("categoryOffer", { categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -777,7 +775,7 @@ const addCategoryOffer = async (req, res) => {
     const category = await Category.findOne({ name: name });
 
     if (category) {
-      const categoryData = await Category.findOneAndUpdate(
+      await Category.findOneAndUpdate(
         { name: name },
         { $set: { offer: offer } }
       );
@@ -837,10 +835,10 @@ const addCategoryOffer = async (req, res) => {
       //    })
 
       const categories = await Category.find();
-      res.render("categoryOffer", { categories: categories });
+      res.status(StatusCode.SUCCESS).render("categoryOffer", { categories: categories });
     } else {
       const categories = await Category.find();
-      res.render("categoryOffer", {
+      res.status(StatusCode.SUCCESS).render("categoryOffer", {
         categories: categories,
         message: "No categories exist",
       });
@@ -852,8 +850,8 @@ const addCategoryOffer = async (req, res) => {
 
 const salesReport = async (req, res) => {
   try {
-    const orders = await Order.find({ status: "delivered" }).populate("userId");
-    const status = await Order.find({ status: "delivered" }).count();
+    const orders = await Order.find({ status: "delivered" }).sort({orderedDate:-1}).populate("userId");
+    await Order.find({ status: "delivered" }).count();
 
     let orderOriginalPrice = 0;
     let orderDiscountPrice = 0;
@@ -868,7 +866,7 @@ const salesReport = async (req, res) => {
 
     totalDiscount = orderOriginalPrice - orderDiscountPrice;
 
-    res.render("salesReport", {
+    res.status(StatusCode.SUCCESS).render("salesReport", {
       orders: orders,
       orderOriginalPrice: orderOriginalPrice,
       orderDiscountPrice: orderDiscountPrice,

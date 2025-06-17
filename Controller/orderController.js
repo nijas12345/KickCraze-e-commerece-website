@@ -1,5 +1,3 @@
-const User = require("../model/userModel");
-const Admin = require("../model/adminModel");
 const Category = require("../model/categoryModel");
 const Product = require("../model/productModel");
 const Cart = require("../model/cartModel");
@@ -10,6 +8,7 @@ const { razorpayInstance } = require("../helpers/razorpay");
 const Wallet = require("../model/walletModel");
 const moment = require("moment");
 const renderError = require("../helpers/errorHandling");
+const StatusCode = require("../helpers/statusCode");
 
 const loadSuccess = async (req, res) => {
   try {
@@ -22,7 +21,7 @@ const loadSuccess = async (req, res) => {
       .populate("products.productId")
       .populate("addressId");
     if (orders.isPayment == false) {
-      const orderData = await Order.findByIdAndUpdate(orderId, {
+      await Order.findByIdAndUpdate(orderId, {
         isPayment: true,
       });
     }
@@ -42,7 +41,7 @@ const loadSuccess = async (req, res) => {
       }
     }
 
-    const cart = await Cart.deleteMany({ userId: userId });
+    await Cart.deleteMany({ userId: userId });
 
     let total = 0;
     orders.products.forEach((order) => {
@@ -61,16 +60,12 @@ const loadSuccess = async (req, res) => {
 
 const loadUnSuccess = async (req, res) => {
   try {
-    const userId = req.id;
-
     const orderId = req.query.orderId;
     const categories = await Category.find({ delete: true });
 
     const orders = await Order.findById(orderId)
       .populate("products.productId")
       .populate("addressId");
-    const cartData = await Cart.find({ userId: userId }).populate("productId");
-
     res.render("orderPending", { orders: orders, categories: categories });
   } catch (error) {
     return renderError(res, error);
@@ -127,7 +122,7 @@ const insertOrder = async (req, res) => {
           payment: req.body.paymentId,
         });
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
@@ -135,11 +130,9 @@ const insertOrder = async (req, res) => {
         // Fetch coupon details
 
         // This will print the current timestamp in ISO 8601 format
-        const couponData = await Coupon.findByIdAndUpdate(couponId, {
+        await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
         });
-        const coupon = await Coupon.findById(couponId);
-        // Create order with coupon
         const order = new Order({
           userId: userId,
           products: cart.map((cartItem) => ({
@@ -156,7 +149,7 @@ const insertOrder = async (req, res) => {
         });
 
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
@@ -165,9 +158,6 @@ const insertOrder = async (req, res) => {
       if (couponId == null) {
         const addressId = req.body.addressId;
         const cart = await Cart.find({ userId: userId });
-        const address = await Address.findOne({ _id: addressId });
-
-        // This will print the current timestamp in ISO 8601 format
 
         const order = new Order({
           userId: userId,
@@ -183,24 +173,17 @@ const insertOrder = async (req, res) => {
           payment: req.body.paymentId,
         });
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
       } else {
-        const couponData = await Coupon.findByIdAndUpdate(couponId, {
+        await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
         });
 
         const addressId = req.body.addressId;
         const cart = await Cart.find({ userId: userId });
-        const address = await Address.findOne({ _id: addressId });
-        const coupon = await Coupon.findById(couponId);
-        // let couponID = new mongoose.Types.ObjectId(couponId)
-        // typeof couponID);
-        // Create order with coupon
-
-        // This will print the current timestamp in ISO 8601 format
 
         const order = new Order({
           userId: userId,
@@ -219,7 +202,7 @@ const insertOrder = async (req, res) => {
 
         const orderData = await order.save();
 
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
@@ -242,21 +225,10 @@ const onlineOrder = async (req, res) => {
 
     razorpayInstance.orders.create(options, function (err, order) {
       if (!err) {
-        res.status(200).json({ order });
-        // res.status(200).send({
-        //     success:true,
-        //     msg:"order Created",
-        //     order_id:order.id,
-        //     amount:amount,
-        //     key_id:RAZORPAY_ID_KEY,
-        //     product_name:"req.body.name",
-        //     contact:"9755512334",
-        //     name:"shand",
-        //     email:"nijasbinabbas@gmail.com",
-
-        // })
+        res.status(StatusCode.SUCCESS).json({ order });
+ 
       } else {
-        res.status(400).send({ success: false, msg: "something went wrong" });
+        res.status(StatusCode.BAD_REQUEST).send({ success: false, msg: "something went wrong" });
       }
     });
   } catch (error) {
@@ -291,7 +263,7 @@ const walletPayment = async (req, res) => {
 
       if (total > totalAmount) {
         res
-          .status(200)
+          .status(StatusCode.SUCCESS)
           .json({ success: true, message: "Wallet has insufficient balance" });
       } else {
         let updatedAmount = total;
@@ -350,17 +322,16 @@ const walletPayment = async (req, res) => {
               payment: req.body.paymentId,
             });
             const orderData = await order.save();
-            return res.status(200).json({
+            return res.status(StatusCode.SUCCESS).json({
               success: true,
               redirect: `/order-success?orderId=${orderData._id}`,
             });
           } else {
             // Fetch coupon details
 
-            const couponData = await Coupon.findByIdAndUpdate(couponId, {
+            await Coupon.findByIdAndUpdate(couponId, {
               $addToSet: { users: { userId: userId } },
             });
-            const coupon = await Coupon.findById(couponId);
             // Create order with coupon
             const order = new Order({
               userId: userId,
@@ -378,7 +349,7 @@ const walletPayment = async (req, res) => {
             });
 
             const orderData = await order.save();
-            return res.status(200).json({
+            return res.status(StatusCode.SUCCESS).json({
               success: true,
               redirect: `/order-success?orderId=${orderData._id}`,
             });
@@ -387,7 +358,7 @@ const walletPayment = async (req, res) => {
           if (couponId == null) {
             const addressId = req.body.addressId;
             const cart = await Cart.find({ userId: userId });
-            const address = await Address.findOne({ _id: addressId });
+            await Address.findOne({ _id: addressId });
 
             const order = new Order({
               userId: userId,
@@ -403,22 +374,17 @@ const walletPayment = async (req, res) => {
               payment: req.body.paymentId,
             });
             const orderData = await order.save();
-            return res.status(200).json({
+            return res.status(StatusCode.SUCCESS).json({
               success: true,
               redirect: `/order-success?orderId=${orderData._id}`,
             });
           } else {
-            const couponData = await Coupon.findByIdAndUpdate(couponId, {
+            await Coupon.findByIdAndUpdate(couponId, {
               $addToSet: { users: { userId: userId } },
             });
 
             const addressId = req.body.addressId;
             const cart = await Cart.find({ userId: userId });
-            const address = await Address.findOne({ _id: addressId });
-            const coupon = await Coupon.findById(couponId);
-            // let couponID = new mongoose.Types.ObjectId(couponId)
-            // typeof couponID);
-            // Create order with coupon
 
             const order = new Order({
               userId: userId,
@@ -437,7 +403,7 @@ const walletPayment = async (req, res) => {
 
             const orderData = await order.save();
 
-            return res.status(200).json({
+            return res.status(StatusCode.SUCCESS).json({
               success: true,
               redirect: `/order-success?orderId=${orderData._id}`,
             });
@@ -446,7 +412,7 @@ const walletPayment = async (req, res) => {
       }
     } else {
       res
-        .status(200)
+        .status(StatusCode.SUCCESS)
         .json({ success: true, message: "Wallet has insufficient balance" });
     }
   } catch (error) {
@@ -505,18 +471,17 @@ const onlineSuccess = async (req, res) => {
           payment: req.body.paymentId,
         });
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
       } else {
         // Fetch coupon details
 
-        const couponData = await Coupon.findByIdAndUpdate(couponId, {
+        await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
         });
 
-        const coupon = await Coupon.findById(couponId);
         // Create order with coupon
         const order = new Order({
           userId: userId,
@@ -534,7 +499,7 @@ const onlineSuccess = async (req, res) => {
         });
 
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
@@ -543,7 +508,6 @@ const onlineSuccess = async (req, res) => {
       if (couponId == null) {
         const addressId = req.body.addressId;
         const cart = await Cart.find({ userId: userId });
-        const address = await Address.findOne({ _id: addressId });
 
         const order = new Order({
           userId: userId,
@@ -560,22 +524,16 @@ const onlineSuccess = async (req, res) => {
           payment: req.body.paymentId,
         });
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
       } else {
-        const couponData = await Coupon.findByIdAndUpdate(couponId, {
+        await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
         });
         const addressId = req.body.addressId;
         const cart = await Cart.find({ userId: userId });
-        const address = await Address.findOne({ _id: addressId });
-        const coupon = await Coupon.findById(couponId);
-
-        // let couponID = new mongoose.Types.ObjectId(couponId)
-        // typeof couponID);
-        // Create order with coupon
 
         const order = new Order({
           userId: userId,
@@ -595,7 +553,7 @@ const onlineSuccess = async (req, res) => {
 
         const orderData = await order.save();
 
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-success?orderId=${orderData._id}`,
         });
@@ -657,17 +615,16 @@ const failureOrder = async (req, res) => {
           isPayment: false,
         });
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-unSuccess?orderId=${orderData._id}`,
         });
       } else {
         // Fetch coupon details
 
-        const couponData = await Coupon.findByIdAndUpdate(couponId, {
+        await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
         });
-        const coupon = await Coupon.findById(couponId);
         // Create order with coupon
         const order = new Order({
           userId: userId,
@@ -686,7 +643,7 @@ const failureOrder = async (req, res) => {
         });
 
         const orderData = await order.save();
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-unSuccess?orderId=${orderData._id}`,
         });
@@ -695,7 +652,6 @@ const failureOrder = async (req, res) => {
       if (couponId == null) {
         const addressId = req.body.addressId;
         const cart = await Cart.find({ userId: userId });
-        const address = await Address.findOne({ _id: addressId });
 
         const order = new Order({
           userId: userId,
@@ -714,22 +670,16 @@ const failureOrder = async (req, res) => {
         });
         const orderData = await order.save();
 
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-unSuccess?orderId=${orderData._id}`,
         });
       } else {
-        const couponData = await Coupon.findByIdAndUpdate(couponId, {
+        await Coupon.findByIdAndUpdate(couponId, {
           $addToSet: { users: { userId: userId } },
         });
         const addressId = req.body.addressId;
         const cart = await Cart.find({ userId: userId });
-        const address = await Address.findOne({ _id: addressId });
-        const coupon = await Coupon.findById(couponId);
-
-        // let couponID = new mongoose.Types.ObjectId(couponId)
-        // typeof couponID);
-        // Create order with coupon
 
         const order = new Order({
           userId: userId,
@@ -750,7 +700,7 @@ const failureOrder = async (req, res) => {
 
         const orderData = await order.save();
 
-        return res.status(200).json({
+        return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-unSuccess?orderId=${orderData._id}`,
         });
@@ -763,18 +713,18 @@ const failureOrder = async (req, res) => {
 
 const viewOrder = async (req, res) => {
   try {
-    let userId = req.id;
     const categories = await Category.find({ delete: true });
     const orderId = req.query.id;
 
     const order = await Order.findOne({ _id: orderId }).populate(
       "products.productId"
-    );
+    ).populate("addressId");
     let total = 0;
     order.products.forEach((order) => {
       total = total + order.total;
     });
-
+    console.log(order);
+    
     if (order) {
       res.render("orderDetails", {
         order: order,
@@ -790,7 +740,6 @@ const viewOrder = async (req, res) => {
 const cancelOrder = async (req, res) => {
   try {
     const userId = req.id;
-    const status = req.body.status;
     if (req.body.reason == "reason1") {
       reason = "Shoes has no expected size";
     } else if (req.body.reason == "reason2") {
@@ -810,12 +759,11 @@ const cancelOrder = async (req, res) => {
       const productId = product.productId._id;
       const stock = product.productId.stock + product.quantity;
       product.quantity = 0;
-      const products = await Product.findByIdAndUpdate(productId, {
+      await Product.findByIdAndUpdate(productId, {
         stock: stock,
       });
     });
 
-    const order = await Order.findOne({ _id: orderId });
 
     let wallet;
 
@@ -839,7 +787,7 @@ const cancelOrder = async (req, res) => {
       if (orders.wcTotal) {
         const wallet = await Wallet.findOne({ userId: userId });
 
-        const wallets = await Wallet.findByIdAndUpdate(
+        await Wallet.findByIdAndUpdate(
           wallet._id,
           {
             $push: {
@@ -854,10 +802,10 @@ const cancelOrder = async (req, res) => {
           { new: true } // To return the updated document
         );
 
-        res.status(200).json({ status: "cancelled", message: 1 });
+        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
       } else {
         const wallet = await Wallet.findOne({ userId: userId });
-        const wallets = await Wallet.findByIdAndUpdate(
+        await Wallet.findByIdAndUpdate(
           wallet._id,
           {
             $push: {
@@ -871,13 +819,13 @@ const cancelOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res.status(200).json({ status: "cancelled", message: 1 });
+        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
       }
     } else if (orders.payment == "wallet-payment") {
       if (orders.wcTotal) {
         const wallet = await Wallet.findOne({ userId: userId });
 
-        const wallets = await Wallet.findByIdAndUpdate(
+        await Wallet.findByIdAndUpdate(
           wallet._id,
           {
             $push: {
@@ -892,10 +840,10 @@ const cancelOrder = async (req, res) => {
           { new: true } // To return the updated document
         );
 
-        res.status(200).json({ status: "cancelled", message: 1 });
+        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
       } else {
         const wallet = await Wallet.findOne({ userId: userId });
-        const wallets = await Wallet.findByIdAndUpdate(
+        await Wallet.findByIdAndUpdate(
           wallet._id,
           {
             $push: {
@@ -909,10 +857,10 @@ const cancelOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res.status(200).json({ status: "cancelled", message: 1 });
+        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
       }
     } else {
-      res.status(200).json({ status: "cancelled" });
+      res.status(StatusCode.SUCCESS).json({ status: "cancelled" });
     }
   } catch (error) {
     return renderError(res, error);
@@ -922,7 +870,6 @@ const cancelOrder = async (req, res) => {
 const returnOrder = async (req, res) => {
   try {
     const userId = req.id;
-    const status = req.body.status;
 
     if (req.body.reason == "reason1") {
       reason = "Shoes has no expected size";
@@ -962,7 +909,7 @@ const returnOrder = async (req, res) => {
     if (orders) {
       if (orders.wcTotal) {
         const wallet = await Wallet.findOne({ userId: userId });
-        const wallets = await Wallet.findByIdAndUpdate(
+        await Wallet.findByIdAndUpdate(
           wallet._id,
           {
             $push: {
@@ -976,14 +923,14 @@ const returnOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res.status(200).json({
+        res.status(StatusCode.SUCCESS).json({
           status: "returned",
           message:
             "Your order is returned and amount has been credited into wallet",
         });
       } else {
         const wallet = await Wallet.findOne({ userId: userId });
-        const wallets = await Wallet.findByIdAndUpdate(
+        await Wallet.findByIdAndUpdate(
           wallet._id,
           {
             $push: {
@@ -997,7 +944,7 @@ const returnOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res.status(200).json({
+        res.status(StatusCode.SUCCESS).json({
           status: "returned",
           message:
             "Your order is returned and amount has been credited into wallet",

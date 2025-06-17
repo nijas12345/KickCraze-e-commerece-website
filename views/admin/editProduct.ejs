@@ -127,8 +127,9 @@
 
         <br>
         <!-- <button type="button" id="crop-button">Crop Image</button> -->
-
+        <a type="button" href="/admin/product-list" class="btn btn-sm btn-primary rounded font-sm mt-15" >Back</a>
         <button type="submit" id="submit-btn" class="btn btn-sm btn-primary rounded font-sm mt-15">Submit</button>
+        
   </form>
 
 
@@ -159,8 +160,9 @@
         const file = files[i];
         const reader = new FileReader();
         if (!file.type.startsWith("image/")) {
-          console.log("File is not an image.", file.type);
-          continue;
+          alert("File is not an image.", file.type);
+          imageInput.value = null;
+          return;
         }
 
         const imgdiv = document.createElement("div");
@@ -307,9 +309,8 @@
         allSelected = true
       }
 
-      if (allSelected && files.length == 0) {
-        errorDiv.textContent = "Please select an image file.";
-        console.log("helloo");
+      if (allSelected && files.length < 3) {
+        errorDiv.textContent = "Please select at least 3 image file.";
         isValid = false
         event.preventDefault(); // Prevent form submission
       }

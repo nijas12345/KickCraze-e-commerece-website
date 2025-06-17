@@ -1018,24 +1018,18 @@
                                         day: 'numeric' }) %>
                                 </span>%> </span></h3>
 
-                            <div class="input-group" style="margin-left: 1100px;">
-                                <button class="btn btn-solid-default " type="button" id="returns">Return</button>
-
-
-                                <div style="margin-left:20px ;"> <button class="" type="button" id="submit"></button>
-                                </div>
-                            </div>
+           <div class="d-flex justify-content-end gap-3 mt-3">
+                <button class="btn btn-solid-default" type="button" id="returns">Return</button>
+                <button hidden class="btn btn-outline-secondary" type="button" id="submit">Submit</button>
+                </div>
 
                             <%} else if(order.status=="cancelled" ){%>
 
                                 <%} else if(order.status=="returned" ){%>
 
                                     <% } else{%>
-                                        <div class="input-group" style="margin-left: 1100px;">
-
-
-                                            <div style="margin-left:20px ;"> <button class="btn btn-solid-default"
-                                                    type="button" id="submit">Cancel</button></div>
+                                     <div class="d-flex justify-content-end">
+                                        <button class="btn btn-solid-default" type="button" id="submit">Cancel</button>
                                         </div>
                                         <% }%>
 
@@ -1101,18 +1095,26 @@
 
                                                         </div>
 
+
                                                     </div>
                                                 </div>
                                                 <% }) %>
-                                                    <div class="col-12 overflow-visible">
-                                                        <div class="tracker-table">
-                                                            <div class="table-responsive">
+                                                <div style="display: flex; justify-content: center; margin-top: 20px; margin-left: -130px;">
+  <div class="address-details" >
+    <h3 class="font-light">Shipping Address:</h3>
+    <p class="font-light mb-0"><strong>Name:</strong> <%= order.addressId.name %></p>
+    <p class="font-light mb-0"><strong>House Name:</strong> <%= order.addressId.houseName %></p>
+    <p class="font-light mb-0"><strong>State:</strong> <%= order.addressId.state %></p>
+    <p class="font-light mb-0"><strong>Pin Code:</strong> <%= order.addressId.pin %></p>
+    <p class="font-light mb-0"><strong>Mobile:</strong> <%= order.addressId.mobile %></p>
+  </div>
+</div>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                   
             </div>
+            
         </div>
+        
     </section>
     <!-- Order Track Section End -->
 

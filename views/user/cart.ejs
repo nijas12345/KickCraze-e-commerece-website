@@ -909,7 +909,6 @@
                                     <th scope="col">price</th>
                                     <th scope="col">quantity</th>
                                     <th scope="col">action</th>
-                                    <th scope="col">total</th>
                                 </tr>
                             </thead>
 
@@ -966,7 +965,7 @@
                                         </td>
                                         <td>
                                             <h2>
-                                                <%= carts[i].productId.price %>
+                                                <%= carts[i].productId.disprice %>
                                             </h2>
                                         </td>
                                         <td>
@@ -997,15 +996,7 @@
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         </td>
-                                        <td>
-
-
-                                            <h2 class="td-color" id="total<%= i%> "
-                                                data-total-id="<%= carts[i].productId._id %>"
-                                                data-total-size="<%=carts[i].size %>">
-                                                <%= carts[i].totalPrice %>
-                                            </h2>
-                                        </td>
+                 
 
                                         <% } %>
                                     </tr>
@@ -1051,7 +1042,7 @@
 
                             <div class="col-lg-4 col-sm-6 ">
                                 <div class="checkout-button">
-                                    <button href="" class="btn btn-solid-default btn fw-bold">
+                                    <button disabled href="" class="btn btn-solid-default btn fw-bold">
                                         Check Out <i class="fas fa-arrow-right ms-1"></i></button>
                                 </div>
                             </div>

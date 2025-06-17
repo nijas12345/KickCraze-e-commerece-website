@@ -12,9 +12,10 @@ const renderError = require("../helpers/errorHandling");
 const loadCart = async (req, res) => {
   try {
     const userId = req.id;
-
+    const carts = await Cart.find({userId:userId}).populate("productId");
     const categories = await Category.find({ delete: true });
-
+   console.log("carts",carts);
+   
     let totalCart = 0;
     let totalPrice = 0;
     carts.forEach((cart) => {
@@ -144,7 +145,7 @@ const deleteCart = async (req, res) => {
 const clearCart = async (req, res) => {
   try {
     const userId = req.id;
-    const cartData = await Cart.deleteMany({ userId: userId });
+    await Cart.deleteMany({ userId: userId });
     res.redirect("/home");
   } catch (error) {
     return renderError(res, error);
@@ -163,7 +164,6 @@ const checkOut = async (req, res) => {
 
     let totalCart = 0;
     let totalPrice = 0;
-    let productTotal = 0;
     carts.forEach((cart) => {
       totalCart = totalCart + cart.total;
       totalPrice = totalPrice + cart.totalPrice;
@@ -224,7 +224,6 @@ const applyCoupon = async (req, res) => {
     req.session.couponId = couponId;
     const total = req.body.total;
 
-    const cart = Cart.find({ userId: userId });
     const coupon = await Coupon.findOne({ _id: couponId });
 
     const discountPercentage = parseInt(coupon.couponDiscount);
@@ -233,7 +232,7 @@ const applyCoupon = async (req, res) => {
 
     const couponDiscount = total - (discountPercentage / 100) * total;
 
-    const couponData = await Coupon.findByIdAndUpdate(couponId, {
+    await Coupon.findByIdAndUpdate(couponId, {
       $addToSet: { users: { userId: userId } },
     });
 
@@ -255,7 +254,7 @@ const removeCoupon = async (req, res) => {
     const coupon = await Coupon.findOne({ _id: couponId });
 
     if (coupon) {
-      const updatedCoupon = await Coupon.findByIdAndUpdate(
+      await Coupon.findByIdAndUpdate(
         couponId,
         { $pull: { users: { userId: userId } } },
         { multi: true, new: true }

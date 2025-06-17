@@ -202,9 +202,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% // Sort orders array by createdAt field in descending order orders.sort((a, b)=> new
-                                    Date(b.createdAt) - new Date(a.createdAt));
-                                    %>
+                               
 
                                     <%orders.forEach((order,index)=>{%>
 
@@ -233,10 +231,10 @@
                                                             <%= order.status %>
                                                         </span></td>
                                                     <%} %>
-                                                        <td><%=order.orderedDate.toLocaleDateString('en-US', {
-                                                                year: 'numeric' , month: 'numeric' , day: 'numeric' })%>
+                                                        <td>
+                                                            <%=order.orderedDate.toLocaleDateString('en-GB', {
+                                                                year: 'numeric' , month: 'long' , day: 'numeric' })%>
                                                         </td>
-
 
                                                         <td class="text-end">
                                                             <a href="/admin/view-orders?id=<%=order._id %>"

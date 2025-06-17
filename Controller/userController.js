@@ -1,14 +1,13 @@
 const User = require("../model/userModel");
 const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const Product = require("../model/productModel");
-const Address = require("../model/addressModel");
 const Cart = require("../model/cartModel");
 const wishlist = require("../model/wishlistModel");
 const { sendMail } = require("../helpers/nodemailer");
 const Category = require("../model/categoryModel");
 const Wallet = require("../model/walletModel");
+const StatusCode = require("../helpers/statusCode");
 
 const createToken = (user) => {
   const JWT_SECRET = process.env.JWT_SECRET;
@@ -20,13 +19,13 @@ const securePassword = async (password) => {
     const passwordHash = await bcrypt.hash(password, 10);
     return passwordHash;
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
 const loadRegister = async (req, res) => {
   try {
-    res.render("register");
+    res.status(StatusCode.SUCCESS).render("register");
   } catch (error) {
     return renderError(res, error);
   }
@@ -38,7 +37,9 @@ const insertUser = async (req, res) => {
 
     const checkEmail = await User.findOne({ email: req.body.email });
     if (checkEmail) {
-      res.status(200).render("register", { message: "Email already exists" });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("register", { message: "Email already exists" });
     } else {
       if (req.body.referal) {
         let user = await User.findOne({ referal: req.body.referal });
@@ -80,7 +81,7 @@ const insertUser = async (req, res) => {
           }
         } else {
           res
-            .status(200)
+            .status(StatusCode.SUCCESS)
             .render("register", { message1: "referal code is not exist" });
         }
       }
@@ -111,15 +112,17 @@ const loadOtp = async (req, res) => {
     const isSend = await sendMail(email, otpCode);
 
     if (isSend) {
-      res.render("registerOtp");
+      res.status(StatusCode.SUCCESS).render("registerOtp");
     } else {
       console.error("Error sending mail");
-      const statusCode = 500;
+      const statusCode = StatusCode.INTERNAL_ERROR;
       const errorMessage = "Failed to send OTP mail";
-      res.status(statusCode).render("errorPage", { statusCode, errorMessage });
+      res
+        .status(StatusCode.INTERNAL_ERROR)
+        .render("errorPage", { statusCode, errorMessage });
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -172,15 +175,15 @@ const verifyRegister = async (req, res) => {
         //     await newWallet.save()
         // }
         const token = createToken({ id: userData._id });
-        res.cookie("jwt", token, { httpOnly: true, maxAge: 3600000 });
+        res.cookie("jwt", token, { httpOnly: true, maxAge: 36000000 });
 
-        res.status(200).json({ redirect: "/home" });
+        res.status(StatusCode.SUCCESS).json({ redirect: "/home" });
       }
     } else {
-      res.status(200).json({ message: "OTP is invalid" });
+      res.status(StatusCode.SUCCESS).json({ message: "OTP is invalid" });
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -212,7 +215,7 @@ const loadShop = async (req, res) => {
       })
         .skip(skip)
         .limit(limit);
-      res.render("shop", {
+      res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
         total: total,
@@ -242,7 +245,7 @@ const loadShop = async (req, res) => {
       })
         .skip(skip)
         .limit(limit);
-      res.render("shop", {
+      res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
         total: total,
@@ -271,7 +274,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -295,7 +298,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -319,7 +322,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -344,7 +347,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -368,7 +371,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -400,7 +403,7 @@ const loadShop = async (req, res) => {
         .skip(skip)
         .limit(limit);
 
-      res.render("shop", {
+      res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
         total: total,
@@ -432,7 +435,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -450,7 +453,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -468,7 +471,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -486,7 +489,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -504,7 +507,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -537,7 +540,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -555,7 +558,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -573,7 +576,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -591,7 +594,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -609,7 +612,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -644,7 +647,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -663,7 +666,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -682,7 +685,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -701,7 +704,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -720,7 +723,7 @@ const loadShop = async (req, res) => {
           .skip(skip)
           .limit(limit);
 
-        res.render("shop", {
+        res.status(StatusCode.SUCCESS).render("shop", {
           products: products,
           quantity: quantity,
           total: total,
@@ -744,7 +747,7 @@ const loadShop = async (req, res) => {
         .skip(skip)
         .limit(limit);
 
-      res.render("shop", {
+      res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
         total: total,
@@ -842,7 +845,7 @@ const loadSearch = async (req, res) => {
       res.json(products);
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -896,7 +899,7 @@ const SearchInput = async (req, res) => {
       res.json(products);
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -922,7 +925,7 @@ const loadSortAZ = async (req, res) => {
         quantity = quantity + cart.quantity;
         total = total + cart.total;
       });
-      res.render("shopCategory", {
+      res.status(StatusCode.SUCCESS).render("shopCategory", {
         products: products,
         total: total,
         category: categoryId,
@@ -941,10 +944,12 @@ const loadSortAZ = async (req, res) => {
         total = total + cart.total;
       });
 
-      res.render("shop", { products: products, total: total });
+      res
+        .statusCode(StatusCode.SUCCESS)
+        .render("shop", { products: products, total: total });
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -970,7 +975,7 @@ const loadSortZA = async (req, res) => {
         quantity = quantity + cart.quantity;
         total = total + cart.total;
       });
-      res.render("shopCategory", {
+      res.status(StatusCode.SUCCESS).render("shopCategory", {
         products: products,
         total: total,
         category: categoryId,
@@ -988,10 +993,12 @@ const loadSortZA = async (req, res) => {
         total = total + cart.total;
       });
 
-      res.render("shop", { products: products, total: total });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("shop", { products: products, total: total });
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -1019,7 +1026,7 @@ const highToLow = async (req, res) => {
         quantity = quantity + cart.quantity;
         total = total + cart.total;
       });
-      res.render("shopCategory", {
+      res.status(StatusCode.SUCCESS).render("shopCategory", {
         products: products,
         total: total,
         category: categoryId,
@@ -1038,10 +1045,12 @@ const highToLow = async (req, res) => {
         total = total + cart.total;
       });
 
-      res.render("shop", { products: products, total: total });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("shop", { products: products, total: total });
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -1067,7 +1076,7 @@ const lowToHigh = async (req, res) => {
         quantity = quantity + cart.quantity;
         total = total + cart.total;
       });
-      res.render("shopCategory", {
+      res.status(StatusCode.SUCCESS).render("shopCategory", {
         products: products,
         total: total,
         category: categoryId,
@@ -1086,7 +1095,9 @@ const lowToHigh = async (req, res) => {
         total = total + cart.total;
       });
 
-      res.render("shop", { products: products, total: total });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("shop", { products: products, total: total });
     }
   } catch (error) {
     return renderError(res, error);
@@ -1115,7 +1126,7 @@ const newArrivals = async (req, res) => {
         quantity = quantity + cart.quantity;
         total = total + cart.total;
       });
-      res.render("shopCategory", {
+      res.status(StatusCode.SUCCESS).render("shopCategory", {
         products: products,
         total: total,
         category: categoryId,
@@ -1134,7 +1145,9 @@ const newArrivals = async (req, res) => {
         total = total + cart.total;
       });
 
-      res.render("shop", { products: products, total: total });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("shop", { products: products, total: total });
     }
   } catch (error) {
     return renderError(res, error);
@@ -1143,7 +1156,7 @@ const newArrivals = async (req, res) => {
 
 const loadLogin = async (req, res) => {
   try {
-    res.render("login");
+    res.status(StatusCode.SUCCESS).render("login");
   } catch (error) {
     return renderError(res, error);
   }
@@ -1212,13 +1225,17 @@ const verifyUser = async (req, res) => {
 
           res.redirect("/home");
         } else {
-          res.render("login", { message1: "your password is incorrect" });
+          res
+            .status(StatusCode.SUCCESS)
+            .render("login", { message1: "your password is incorrect" });
         }
       } else {
         res.render("login", { message: "you are blocked by admin" });
       }
     } else {
-      res.render("login", { message: "email is invalid" });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("login", { message: "email is invalid" });
     }
   } catch (error) {
     return renderError(res, error);
@@ -1227,7 +1244,7 @@ const verifyUser = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   try {
-    res.render("forgot");
+    res.status(StatusCode.SUCCESS).render("forgot");
   } catch (error) {
     return renderError(res, error);
   }
@@ -1249,20 +1266,21 @@ const forgotEmail = async (req, res) => {
           res.redirect("/Verify-otp");
         } else {
           console.error("Error sending mail");
-          const statusCode = 500;
+          const statusCode = StatusCode.INTERNAL_ERROR;
           const errorMessage = "Failed to send OTP mail";
           res
             .status(statusCode)
             .render("errorPage", { statusCode, errorMessage });
         }
       } else {
-        res.render("forgot", { message: "Email doesnot exist" });
+        res
+          .status(StatusCode.SUCCESS)
+          .render("forgot", { message: "Email doesnot exist" });
       }
     } catch (error) {
-      console.log(error);
       const errorMessage = "Internal Server Error";
       return res
-        .status(500)
+        .status(StatusCode.INTERNAL_ERROR)
         .render("errorPage", { statusCode: 500, errorMessage });
     }
   } catch (error) {
@@ -1272,7 +1290,7 @@ const forgotEmail = async (req, res) => {
 
 const verifyOtp = async (req, res) => {
   try {
-    res.render("verifyOtp");
+    res.status(StatusCode.SUCCESS).render("verifyOtp");
   } catch (error) {
     return renderError(res, error);
   }
@@ -1285,9 +1303,9 @@ const insertOtp = async (req, res) => {
     var loadOtp1 = req.session.otp1;
     console.log(loadOtp1);
     if (loadOtp1 === OTPs) {
-      res.status(200).json({ redirect: "/confirmation" });
+      res.status(StatusCode.SUCCESS).json({ redirect: "/confirmation" });
     } else {
-      res.status(200).json({ message: "OTP is invalid" });
+      res.status(StatusCode.BAD_REQUEST).json({ message: "OTP is invalid" });
     }
   } catch (error) {
     return renderError(res, error);
@@ -1296,7 +1314,7 @@ const insertOtp = async (req, res) => {
 
 const confirmation = async (req, res) => {
   try {
-    res.render("changePassword");
+    res.status(StatusCode.SUCCESS).render("changePassword");
   } catch (error) {
     return renderError(res, error);
   }
@@ -1308,17 +1326,21 @@ const confirmPassword = async (req, res) => {
     const user = await User.find({ email: email });
     if (user) {
       const spassword = await securePassword("req.body.pass");
-      const userData = await User.findByIdAndUpdate(user._id, {
+      await User.findByIdAndUpdate(user._id, {
         password: spassword,
       });
-      res.render("changePassword", {
+      res.status(StatusCode.SUCCESS).render("changePassword", {
         message: "Your Password Changed Successfully",
       });
     } else {
-      res.render("changePassword", { message: "Something error Please Login" });
+      res
+        .status(StatusCode.INTERNAL_ERROR)
+        .render("changePassword", {
+          message: "Something went wrong. Please Login",
+        });
     }
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -1332,22 +1354,22 @@ const loadHome = async (req, res) => {
 
     const categories = await Category.find({ delete: true });
 
-    res.render("home", {
+    res.status(StatusCode.SUCCESS).render("home", {
       product: products,
       wishlistCount: wishlistCount,
       categories: categories,
       userId: userId,
     });
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
 const registerOtp = async (req, res) => {
   try {
-    res.render("registerOtp");
+    res.status(StatusCode.SUCCESS).render("registerOtp");
   } catch (error) {
-    erorhandler;
+    return renderError(res, error);
   }
 };
 
@@ -1385,7 +1407,7 @@ const insertWishlist = async (req, res) => {
       productId: productId,
     });
     if (wishlistData) {
-      res.status(200).json({ success: true });
+      res.status(StatusCode.SUCCESS).json({ success: true });
     } else {
       const wishlistData = new wishlist({
         userId: userId,
@@ -1393,7 +1415,7 @@ const insertWishlist = async (req, res) => {
       });
       await wishlistData.save();
     }
-    res.status(200).json({ success: true });
+    res.status(StatusCode.SUCCESS).json({ success: true });
   } catch (error) {
     return renderError(res, error);
   }
@@ -1408,7 +1430,7 @@ const showWishlist = async (req, res) => {
       .populate("userId")
       .populate("productId");
 
-    res.render("wishlist", {
+    res.status(StatusCode.SUCCESS).render("wishlist", {
       wishlistData: wishlistData,
       categories: categories,
     });
@@ -1421,9 +1443,9 @@ const removeWishlist = async (req, res) => {
   try {
     const userId = req.id;
     const productId = req.query.id;
-    const wishlists = await wishlist.findOneAndDelete({ productId: productId });
+    await wishlist.findOneAndDelete({ productId: productId });
 
-    const wishlistData = await wishlist
+    await wishlist
       .find({ userId: userId })
       .populate("userId")
       .populate("productId");
@@ -1452,7 +1474,7 @@ const sportShoe = async (req, res) => {
       quantity = quantity + cart.quantity;
       total = total + cart.total;
     });
-    res.render("shopCategory", {
+    res.status(StatusCode.SUCCESS).render("shopCategory", {
       products: products,
       total: total,
       quantity: quantity,

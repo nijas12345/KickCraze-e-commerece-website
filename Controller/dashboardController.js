@@ -6,6 +6,7 @@ const wishlist = require("../model/wishlistModel");
 const Wallet = require("../model/walletModel");
 const Category = require("../model/categoryModel");
 const renderError = require("../helpers/errorHandling");
+const StatusCode = require("../helpers/statusCode");
 
 const securePassword = async (password) => {
   try {
@@ -97,7 +98,7 @@ const addAddress = async (req, res) => {
 const addEdit = async (req, res) => {
   try {
     const id = req.body.id;
-    const address = await Address.findByIdAndUpdate(id, {
+    await Address.findByIdAndUpdate(id, {
       name: req.body.name,
       state: req.body.state,
       pin: req.body.zip,
@@ -115,7 +116,7 @@ const deleteAddres = async (req, res) => {
   try {
     const addressId = req.query.id;
 
-    const address = await Address.findByIdAndUpdate(addressId, {
+    await Address.findByIdAndUpdate(addressId, {
       isAddress: false,
     });
     res.redirect("/userProfile");
@@ -131,14 +132,14 @@ const editUserProfile = async (req, res) => {
     const user = await User.findOne({ email: email });
 
     if (user) {
-      res.status(200).json({ success: false });
+      res.status(StatusCode.SUCCESS).json({ success: false });
     }
     const userData = await User.findByIdAndUpdate(id, {
       name: name,
       email: email,
       mobile: mobile,
     });
-    res.status(200).json({ success: true });
+    res.status(StatusCode.SUCCESS).json({ success: true });
   } catch (error) {
     return renderError(res, error);
   }
@@ -152,12 +153,12 @@ const changePassword = async (req, res) => {
     const passwordMatch = await bcrypt.compare(oldPassword, user.password);
     if (passwordMatch) {
       const spassword = await securePassword(oldPassword);
-      const userData = await User.findByIdAndUpdate(userId, {
+      await User.findByIdAndUpdate(userId, {
         password: spassword,
       });
-      res.status(200).json({ success: true });
+      res.status(StatusCode.SUCCESS).json({ success: true });
     } else {
-      res.status(200).json({ success: false });
+      res.status(StatusCode.SUCCESS).json({ success: false });
     }
   } catch (error) {
     return renderError(res, error);
@@ -168,7 +169,7 @@ const deleteUser = async (req, res) => {
   try {
     const userId = req.id;
     res.clearCookie("jwt");
-    const user = await User.deleteOne({ _id: userId });
+    await User.deleteOne({ _id: userId });
     res.redirect("/");
   } catch (error) {
     return renderError(res, error);
