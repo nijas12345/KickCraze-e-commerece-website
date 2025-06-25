@@ -56,10 +56,10 @@ const loadShop = async (req, res) => {
         total = total + cart.total;
       });
       const categories = await Category.find({ delete: true });
-      const product = await Product.find({ status: true });
 
       const products = await Product.find({
         status: true,
+        category:categoryName
       })
         .skip(skip)
         .limit(limit);
