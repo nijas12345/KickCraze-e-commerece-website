@@ -11,7 +11,6 @@ const loadShop = async (req, res) => {
     let categoryName = req.query.selectedCategory;
     let selectedValue = req.query.selectedValue;
     let page = parseInt(req.query.page);
-    console.log(searchQuery,categoryName,selectedValue);
     
     let limit = 5;
     let skip = (page - 1) * limit;

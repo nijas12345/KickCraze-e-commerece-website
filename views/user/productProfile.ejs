@@ -655,10 +655,7 @@
                                                                         </h6>
                                                                         <div class="qty-with-price">
                                                                             <span> ₹ <%= products.disprice %></span>
-                                                                            <!-- <span>
-                                                                        <input type="number" class="form-control"
-                                                                            value="">
-                                                                    </span> -->
+                                                                        
                                                                         </div>
                                                                     </div>
                                                                     <button type="button"
@@ -668,26 +665,6 @@
                                                                     </button>
                                                                 </div>
                                                             </li>
-                                                            <!-- <li>
-                                                        <div class="media">
-                                                            <img src="/user/assets/images/fashion/product/front/7.jpg"
-                                                                class="img-fluid blur-up lazyload" alt="">
-                                                            <div class="media-body">
-                                                                <h6></h6>
-                                                                <div class="qty-with-price">
-                                                                    <span>$24.00</span>
-                                                                    <span>
-                                                                        <input type="number" class="form-control"
-                                                                            value="1">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <button type="button" class="btn-close d-block d-md-none"
-                                                                aria-label="Close">
-                                                                <i class="fas fa-times"></i>
-                                                            </button>
-                                                        </div>
-                                                    </li> -->
                                                         </ul>
                                                     </div>
                                                     <div class="cart-btn">
@@ -1725,13 +1702,13 @@
                                         <div class="cart-wrap">
                                             <ul>
                                                 <li>
-                                                    <a href="/product-profile?id=<%=products._id%>">
+                                                    <a href="/product-profile?id=<%=similarProducts[i]._id%>">
 
                                                         <i data-feather="shopping-bag"></i>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="/product-profile?id=<%=products._id%>">
+                                                    <a href="/product-profile?id=<%=similarProducts[i]._id%>">
                                                         <i data-feather="eye"></i>
                                                     </a>
                                                 </li>
@@ -1763,11 +1740,11 @@
                                             </ul> -->
                                         </div>
                                         <div class="main-price">
-                                            <a href="/user/product-left-sidebar.html" class="font-default">
+                                            
                                                 <h5>
                                                     <%=similarProducts[i].category%>
                                                 </h5>
-                                            </a>
+                                            
                                             <div class="listing-content">
                                                 <span class="font-light">Regular Fit</span>
                                                 <p class="font-light">Lorem ipsum, dolor sit amet consectetur

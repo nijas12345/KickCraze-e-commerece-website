@@ -70,10 +70,25 @@ const updateCategories = async (req, res) => {
         .status(StatusCode.SUCCESS)
         .json({ message: "Category Name is already exists " });
     } else {
-      const categoryData = await Category.findByIdAndUpdate(Id, {
-        name: name,
-        description: description,
-      });
+      const category = await Category.findById({ _id: Id });
+      const categoryName = category.name;
+
+      const product = await Product.find({ category: categoryName });
+      const categoryData = await Category.findByIdAndUpdate(
+        Id,
+        {
+          name: name,
+          description: description,
+        },
+        { new: true }
+      );
+
+      const products = await Product.updateMany(
+        {
+          category: categoryName,
+        },
+        { $set: { category: categoryData.name } }
+      );
 
       res
         .status(StatusCode.SUCCESS)
