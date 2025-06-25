@@ -93,7 +93,7 @@ const loadLogout = async (req, res) => {
 
 const userList = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find({}).sort({Date:-1});
     res.status(StatusCode.SUCCESS).render("userlist", { users: users });
   } catch (error) {
     return renderError(res, error);
@@ -103,7 +103,6 @@ const userList = async (req, res) => {
 const userBlock = async (req, res) => {
   try {
     const userId = req.body.id;
-    console.log(userId);
     const user = await User.findOne({ _id: userId });
 
     const userStatus = user.status;

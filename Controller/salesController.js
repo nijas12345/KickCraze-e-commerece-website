@@ -204,7 +204,6 @@ const salesReport = async (req, res) => {
     const orders = await Order.find({ status: "delivered" })
       .sort({ orderedDate: -1 })
       .populate("userId");
-    console.log(orders);
     let orderOriginalPrice = 0;
     let orderDiscountPrice = 0;
     orders.forEach((order) => {

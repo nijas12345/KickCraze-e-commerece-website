@@ -142,7 +142,7 @@
   <script>
     const form = document.getElementById("form")
     let totalimages = 0;
-
+    let fileImage;
     function imageupload(event) {
 
       const files = event.target.files;
@@ -210,17 +210,19 @@
           cropbtn.textContent = "Crop";
           cropbtn.addEventListener("click", function (event) {
             event.preventDefault();
+            
             const croppedCanvas = cropper.getCroppedCanvas();
 
             img.src = croppedCanvas.toDataURL()
-
+            
             croppedCanvas.toBlob((blob) => {
               const fileName = Date.now();
-              const file = new File([blob], ` ${fileName}.jpg`, { type: 'image/jpeg' });
-
+              fileImage = new File([blob], ` ${fileName}.jpg`, { type: 'image/jpeg' });
+              console.log("file",fileImage);
+              
               if (window.FileList && window.DataTransfer) {
                 const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
+                dataTransfer.items.add(fileImage);
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.name = `image${i}`;
@@ -237,7 +239,7 @@
 
 
           });
-
+          
           imgdiv.appendChild(cropbtn);
           imgdiv.appendChild(deletebutton);
         };
@@ -247,7 +249,12 @@
         imagecontainer.appendChild(imgdiv);
       }
       totalimages = totalupload;
+      console.log("totalImage",totalimages);
+      console.log(files);
+      
     }
+    
+    
 
     const imageInput = document.getElementById("image-upload");
 
@@ -292,7 +299,6 @@
       size3Error.textContent = "";
       size4Error.textContent = "";
 
-      console.log(name);
       let isValid = true
       var allSelected = false;
 
@@ -308,11 +314,14 @@
       if (totalCheckbox === selected) {
         allSelected = true
       }
+      
+      if (allSelected && !fileImage) {
 
-      if (allSelected && files.length < 3) {
-        errorDiv.textContent = "Please select at least 3 image file.";
+        errorDiv.textContent = "Please select at least an image file.";
         isValid = false
         event.preventDefault(); // Prevent form submission
+        
+       
       }
       else {
         const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
@@ -383,7 +392,6 @@
 
 
       if (isValid) {
-        console.log("ahai");
         document.getElementById("form").submit()
       }
     })

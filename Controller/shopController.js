@@ -80,7 +80,6 @@ const loadShop = async (req, res) => {
     ) {
       if (selectedValue == "option1") {
         const carts = await Cart.find({ userId: userId });
-        console.log("helo");
 
         let quantity = 0;
         let total = 0;
@@ -221,7 +220,6 @@ const loadShop = async (req, res) => {
       })
         .skip(skip)
         .limit(limit);
-      console.log(products);
 
       res.status(StatusCode.SUCCESS).render("shop", {
         products: products,

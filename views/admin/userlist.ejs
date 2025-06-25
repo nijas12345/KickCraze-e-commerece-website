@@ -202,7 +202,11 @@
                                             <%= user.status == 1 ? 'Unblocked' : 'Blocked' %>
                                         </span>
                                     </td>
-                                        <td>08.07.2020</td>
+                                        <td><%= user.Date.toLocaleDateString('en-GB', {
+                                        day: '2-digit',
+                                        month: '2-digit',
+                                        year: 'numeric'
+                                    }) %></td>
                                         <td class="text-end">
                                             <!-- <a href="/admin/user-unblock?id=<%=user._id%>" class="btn btn-sm btn-primary rounded font-sm mt-15 ">UNBLOCk</a> -->
                                             <% if (user.status==1) { %>

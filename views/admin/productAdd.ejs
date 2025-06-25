@@ -150,7 +150,7 @@
   <script>
     const form = document.getElementById("form")
     let totalimages = 0;
-
+    let fileImage;
     function imageupload(event) {
 
       const files = event.target.files;
@@ -223,11 +223,11 @@
 
             croppedCanvas.toBlob((blob) => {
               const fileName = Date.now();
-              const file = new File([blob], ` ${fileName}.jpg`, { type: 'image/jpeg' });
+              fileImage = new File([blob], ` ${fileName}.jpg`, { type: 'image/jpeg' });
 
               if (window.FileList && window.DataTransfer) {
                 const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(file);
+                dataTransfer.items.add(fileImage);
                 const input = document.createElement('input');
                 input.type = 'file';
                 input.name = `image${i}`;
@@ -257,9 +257,9 @@
     }
 
     const imageInput = document.getElementById("image-upload");
-
+    
     imageInput.addEventListener("change", imageupload);
-
+    
     document.getElementById('submit-btn').addEventListener("click", function (event) {
       event.preventDefault()
       const name = document.getElementById("name").value.trim()
@@ -362,15 +362,15 @@
         categoryError.textContent = "Please select a category";
         isValid = false;
       }
-
+      categoryError.textContent = ""
       const files = document.getElementById("image-upload").files;
       const imageError = document.getElementById("image-error");
       imageError.textContent = "";
-
-      if (files.length === 0) {
+      console.log(fileImage);
+      
+      if (!fileImage) {
         imageError.textContent = "Please select at least one image";
         isValid = false;
-
       } else {
         const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
         for (let i = 0; i < files.length; i++) {

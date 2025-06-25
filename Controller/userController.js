@@ -105,7 +105,7 @@ const loadOtp = async (req, res) => {
     let otpCode = Math.floor(1000 + Math.random() * 9000).toString();
     req.session.otp = otpCode;
     console.log(otpCode);
-
+    
     const isSend = await sendMail(email, otpCode);
 
     if (isSend) {

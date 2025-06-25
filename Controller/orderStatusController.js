@@ -11,9 +11,9 @@ const cancelOrder = async (req, res) => {
     if (req.body.reason == "reason1") {
       reason = "Shoes has no expected size";
     } else if (req.body.reason == "reason2") {
-      reason = "shoe is damaged";
+      reason = "Address Location has changed.";
     } else {
-      reason = "Quality is not good";
+      reason = "Another deal has found";
     }
 
     const orderId = req.body.orderId;
@@ -243,7 +243,6 @@ const viewOrder = async (req, res) => {
     order.products.forEach((order) => {
       total = total + order.total;
     });
-    console.log(order);
 
     if (order) {
       res.status(StatusCode.SUCCESS).render("orderDetails", {
