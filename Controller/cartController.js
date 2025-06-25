@@ -156,7 +156,7 @@ const checkOut = async (req, res) => {
     const wishlistCount = await wishlist.countDocuments({ userId: userId });
 
     req.session.couponId = null;
-    const address = await Address.find({ userId: userId });
+    const address = await Address.find({ userId: userId,isAddress:false });
     const carts = await Cart.find({ userId: userId }).populate("productId");
 
     let totalCart = 0;
@@ -225,10 +225,9 @@ const applyCoupon = async (req, res) => {
 
     const discountPercentage = Math.round(parseInt(coupon.couponDiscount));
 
-    const couponPercentage = (discountPercentage / 100) * total;
-
-    const couponDiscount = Math.round(total - (discountPercentage / 100) * total);
-
+    const couponPercentage = Math.floor((discountPercentage / 100) * total);
+    const couponDiscount = Math.round((total - (discountPercentage / 100) * total));
+    
     await Coupon.findByIdAndUpdate(couponId, {
       $addToSet: { users: { userId: userId } },
     });
