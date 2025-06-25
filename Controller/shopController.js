@@ -11,11 +11,10 @@ const loadShop = async (req, res) => {
     let categoryName = req.query.selectedCategory;
     let selectedValue = req.query.selectedValue;
     let page = parseInt(req.query.page);
-    console.log(page,searchQuery,categoryName,selectedValue);
-    
+
     let limit = 5;
     let skip = (page - 1) * limit;
-    
+
     let userId = req.id;
 
     if (searchQuery !== "" && categoryName == "" && selectedValue == "option") {
@@ -48,7 +47,6 @@ const loadShop = async (req, res) => {
       categoryName !== "" &&
       selectedValue == "option"
     ) {
-      
       const carts = await Cart.find({ userId: userId });
 
       let quantity = 0;
@@ -58,17 +56,14 @@ const loadShop = async (req, res) => {
         total = total + cart.total;
       });
       const categories = await Category.find({ delete: true });
-      const product = await Product.find({status:true})
-      console.log(product.length);
-      console.log("skip",skip);
-      console.log(limit);
-      
+      const product = await Product.find({ status: true });
+
       const products = await Product.find({
         status: true,
       })
         .skip(skip)
         .limit(limit);
-      
+
       res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
@@ -86,7 +81,7 @@ const loadShop = async (req, res) => {
       if (selectedValue == "option1") {
         const carts = await Cart.find({ userId: userId });
         console.log("helo");
-        
+
         let quantity = 0;
         let total = 0;
         carts.forEach((cart) => {
@@ -211,9 +206,8 @@ const loadShop = async (req, res) => {
       categoryName !== "" &&
       selectedValue == "option"
     ) {
-      
       const carts = await Cart.find({ userId: userId });
-      
+
       let quantity = 0;
       let total = 0;
       carts.forEach((cart) => {
@@ -228,7 +222,7 @@ const loadShop = async (req, res) => {
         .skip(skip)
         .limit(limit);
       console.log(products);
-      
+
       res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
