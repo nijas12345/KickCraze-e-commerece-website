@@ -194,32 +194,24 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" />
-                                                </div>
+                                                Sl.No
                                             </th>
                                             <!-- <th>ID</th> -->
                                             <th>Name</th>
                                             <th>Description</th>
-                                            <!-- <th>Slug</th>
-                                            <th>Order</th> -->
                                             <th style="padding-left: 80px;">Action</th>
                                             <th class="text-end"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <%categories.forEach((category)=>{
+                                        <%categories.forEach((category,index)=>{
                                             %>
                                             <%if(category.delete){ %>
 
                                                 <tr>
                                                     <td class="text-center">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" />
-                                                        </div>
+                                                        <%=index+1%>
                                                     </td>
-                                                    <!-- <td>21</td> -->
-                                                    <!-- <td><b>Men clothes</b></td> -->
                                                     <td>
                                                         <%= category.name%>
                                                     </td>

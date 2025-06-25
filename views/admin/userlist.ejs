@@ -108,40 +108,13 @@
                     </a>
                     <div class="submenu">
                         <a href="/admin/add-coupon">Coupon</a>
-                        <!-- <a href="/admin/admin-page-sellers-list.html">Sellers list</a>
-                        <a href="/admin/admin-page-seller-detail.html">Seller profile</a> -->
                     </div>
                 </li>
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/admin-page-transactions-1.html"> <i class="icon material-icons md-monetization_on"></i>
-                        <span class="text">Transactions</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/admin-page-transactions-1.html">Transaction 1</a>
-                        <a href="/admin/admin-page-transactions-2.html">Transaction 2</a>
-                    </div>
-                </li> -->
-                <!-- <li class="menu-item has-submenu">
-                    <a class="menu-link" href="/admin/admin-#"> <i class="icon material-icons md-person"></i>
-                        <span class="text">Account</span>
-                    </a>
-                    <div class="submenu">
-                        <a href="/admin/admin-page-account-login.html">User login</a>
-                        <a href="/admin/admin-page-account-register.html">User registration</a>
-                        <a href="/admin/admin-page-error-404.html">Error 404</a>
-                    </div>
-                </li> -->
                 <li class="menu-item">
                     <a class="menu-link" href="/admin/category-offer"> <i class="icon material-icons md-comment"></i>
                         <span class="text">Category Offer</span>
                     </a>
                 </li>
-
-                <!-- <li class="menu-item">
-                    <a class="menu-link" disabled href="/admin/admin-#"> <i class="icon material-icons md-pie_chart"></i>
-                        <span class="text">Statistics</span>
-                    </a>
-                </li> -->
             </ul>
             <hr>
 
@@ -222,29 +195,23 @@
                                                 <%=user.email%>
                                             </div>
                                         </td>
-                                        <td><span class="badge rounded-pill alert-success">
-
-                                                <% if (user.status==1) { %>
-                                                    <p>UNblocked</p>
-                                                    <% } else { %>
-                                                        <p>Blocked</p>
-                                                        <% } %>
-
-
-
-                                            </span></td>
+                                    <td>
+                                        <span 
+                                            id="user-status-<%= user._id %>" 
+                                            class="badge rounded-pill <%= user.status == 1 ? 'alert-success' : 'alert-danger' %>">
+                                            <%= user.status == 1 ? 'Unblocked' : 'Blocked' %>
+                                        </span>
+                                    </td>
                                         <td>08.07.2020</td>
                                         <td class="text-end">
                                             <!-- <a href="/admin/user-unblock?id=<%=user._id%>" class="btn btn-sm btn-primary rounded font-sm mt-15 ">UNBLOCk</a> -->
                                             <% if (user.status==1) { %>
-                                                <a href="/admin/user-block?id=<%=user._id%>"
-                                                    class="btn btn-sm btn-danger rounded font-sm mt-15">BLOCK</a>
+                                                <button data-id="<%= user._id %>" data-status="1"
+                                                    class="btn btn-sm btn-danger rounded font-sm mt-15 block-toggle">BLOCK</a>
                                                 <% } else { %>
-                                                    <a href="/admin/user-block?id=<%=user._id%>"
-                                                        class="btn btn-sm btn-primary rounded font-sm mt-15">UNBLOCK</a>
+                                                    <button data-id="<%= user._id %>" data-status ="0"
+                                                        class="btn btn-sm btn-primary rounded font-sm mt-15 block-toggle">UNBLOCK</a>
                                                     <% } %>
-
-
                                         </td>
                                     </tr>
                                     <% }) %>
@@ -258,14 +225,6 @@
             </div> <!-- card end// -->
             <div class="pagination-area mt-15 mb-50">
                 <nav aria-label="Page navigation example">
-                    <!-- <ul class="pagination justify-content-start">
-                        <li class="page-item active"><a class="page-link" href="/admin/admin-#">01</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#">02</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#">03</a></li>
-                        <li class="page-item"><a class="page-link dot" href="/admin/admin-#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#">16</a></li>
-                        <li class="page-item"><a class="page-link" href="/admin/admin-#"><i class="material-icons md-chevron_right"></i></a></li>
-                    </ul> -->
                 </nav>
             </div>
         </section> <!-- content-main end// -->
@@ -303,6 +262,50 @@
             pagingType: 'simple_numbers'
         });</script>
 </body>
+
+<script>
+  document.querySelectorAll('.block-toggle').forEach(button=>{
+    button.addEventListener('click',function(){
+    const userId = this.dataset.id;
+    fetch('/admin/user-block',{
+    method:"PUT",
+    headers:{
+        'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+        id:userId,
+    })
+  })
+  .then((response)=>response.json())
+  .then((data)=>{
+    console.log(data.userStatus);
+    
+    if(data.userStatus){
+          this.textContent = "BLOCK";
+          this.classList.remove("btn-primary");
+          this.classList.add("btn-danger");
+    }else{
+          this.textContent = "UNBLOCK";
+          this.classList.remove("btn-danger");
+          this.classList.add("btn-primary");
+    }
+    const badge = document.getElementById(`user-status-${userId}`);
+      if (badge) {
+        if (data.userStatus) {
+          badge.textContent = "Unblocked";
+          badge.classList.remove("alert-danger");
+          badge.classList.add("alert-success");
+        } else {
+          badge.textContent = "Blocked";
+          badge.classList.remove("alert-success");
+          badge.classList.add("alert-danger");
+        }
+      }
+  })
+    })
+  })
+  
+</script>
 
 
 <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-sellers-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:23 GMT -->

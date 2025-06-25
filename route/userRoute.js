@@ -14,10 +14,19 @@ const userController = require("../Controller/userController");
 const cartController = require("../Controller/cartController");
 const dashboardController = require("../Controller/dashboardController");
 const orderController = require("../Controller/orderController");
+const wishListController = require('../Controller/wishListController');
+const sortController = require('../Controller/sortController');
+const productController = require('../Controller/productController');
+const searchController = require('../Controller/searchController');
+const shopController = require('../Controller/shopController')
+const categoryController = require('../Controller/categoryController')
+const orderStatusController = require('../Controller/orderStatusController');
+const orderFailureController = require('../Controller/orderFailureController');
+const homeController = require('../Controller/homeController');
 const Auth = require("../middleware/userAuth");
 
 // user Registration
-userRoute.get("/", userController.loadHome);
+userRoute.get("/", homeController.loadHome);
 userRoute.get("/register", userController.loadRegister);
 userRoute.post("/register", userController.insertUser);
 userRoute.get("/loadOtp", userController.loadOtp);
@@ -55,30 +64,30 @@ userRoute.post("/confirm-password", userController.confirmPassword);
 
 //user home
 
-userRoute.get("/home", Auth.requireAuth, userController.loadHome);
+userRoute.get("/home", Auth.requireAuth, homeController.loadHome);
 userRoute.get(
   "/product-profile",
   Auth.jwtVerify,
-  userController.productProfile
+  productController.productProfile
 );
 
 //wishlist
 userRoute.post(
   "/insert-wishlist",
   Auth.requireAuth,
-  userController.insertWishlist
+  wishListController.insertWishlist
 );
 userRoute.get(
   "/show-wishlist",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.showWishlist
+  wishListController.showWishlist
 );
 userRoute.get(
   "/wishlist-remove",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.removeWishlist
+  wishListController.removeWishlist
 );
 
 userRoute.get(
@@ -193,13 +202,13 @@ userRoute.post(
   "/failed",
   Auth.requireAuth,
   Auth.isBlocked,
-  orderController.failureOrder
+  orderFailureController.failureOrder
 );
 userRoute.get(
   "/order-unSuccess",
   Auth.requireAuth,
   Auth.isBlocked,
-  orderController.loadUnSuccess
+  orderFailureController.loadUnSuccess
 );
 // userRoute.get('/order-pending',Auth.requireAuth,Auth.isBlocked,orderController.orderPending)
 userRoute.post(
@@ -212,19 +221,19 @@ userRoute.get(
   "/view-order",
   Auth.requireAuth,
   Auth.isBlocked,
-  orderController.viewOrder
+  orderStatusController.viewOrder
 );
 userRoute.put(
   "/cancel-order",
   Auth.requireAuth,
   Auth.isBlocked,
-  orderController.cancelOrder
+  orderStatusController.cancelOrder
 );
 userRoute.put(
   "/return-order",
   Auth.requireAuth,
   Auth.isBlocked,
-  orderController.returnOrder
+  orderStatusController.returnOrder
 );
 
 //coupon
@@ -248,58 +257,56 @@ userRoute.get(
   "/shop",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.loadShop
+  shopController.loadShop
 );
 userRoute.post(
   "/search",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.loadSearch
+  searchController.loadSearch
 );
 userRoute.post(
   "/search-input",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.SearchInput
+  searchController.SearchInput
 );
 userRoute.get(
   "/sort-alphabet-a-z",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.loadSortAZ
+  sortController.loadSortAZ
 );
 userRoute.get(
   "/sort-alphabet-z-a",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.loadSortZA
+  sortController.loadSortZA
 );
 userRoute.get(
   "/sort-high-to-low",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.highToLow
+  sortController.highToLow
 );
 userRoute.get(
   "/sort-low-to-high",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.lowToHigh
+  sortController.lowToHigh
 );
 userRoute.get(
   "/sort-new-arrivals",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.newArrivals
+  sortController.newArrivals
 );
-
-//category
 
 userRoute.get(
   "/sports-shoes",
   Auth.requireAuth,
   Auth.isBlocked,
-  userController.sportShoe
+  categoryController.sportShoe
 );
 
 module.exports = userRoute;

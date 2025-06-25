@@ -1,13 +1,11 @@
-const User = require("../model/userModel");
-const Admin = require("../model/adminModel");
 const Category = require("../model/categoryModel");
 const Product = require("../model/productModel");
-const jwt = require("jsonwebtoken");
 const Cart = require("../model/cartModel");
 const Address = require("../model/addressModel");
 const Coupon = require("../model/couponModel");
 const wishlist = require("../model/wishlistModel");
 const renderError = require("../helpers/errorHandling");
+const StatusCode = require("../helpers/statusCode");
 
 const loadCart = async (req, res) => {
   try {
@@ -24,7 +22,7 @@ const loadCart = async (req, res) => {
     });
     discount = totalPrice - totalCart;
 
-    res.render("cart", {
+    res.status(StatusCode.SUCCESS).render("cart", {
       carts: carts,
       totalCart: totalCart,
       totalPrice: totalPrice,
@@ -113,7 +111,7 @@ const updateCart = async (req, res) => {
         });
         discount = totalPrice - totalCart;
 
-        res.status(200).json({
+        res.status(StatusCode.SUCCESS).json({
           total: updateCart.total,
           quantity: updateCart.quantity,
           totalCart: totalCart,
@@ -136,9 +134,9 @@ const deleteCart = async (req, res) => {
   const cart = await Cart.find({ userId: userId });
 
   if (cart) {
-    const cartData = await Cart.deleteOne({ productId: productId, size: size });
+    await Cart.deleteOne({ productId: productId, size: size });
 
-    res.status(200).json({ success: true });
+    res.status(StatusCode.SUCCESS).json({ success: true });
   }
 };
 
@@ -192,7 +190,7 @@ const checkOut = async (req, res) => {
         }
       });
 
-      res.render("checkout", {
+      res.status(StatusCode.SUCCESS).render("checkout", {
         address: address,
         carts: carts,
         totalCart: totalCart,
@@ -236,7 +234,7 @@ const applyCoupon = async (req, res) => {
       $addToSet: { users: { userId: userId } },
     });
 
-    res.status(200).json({
+    res.status(StatusCode.SUCCESS).json({
       total: total,
       couponPercentage: couponPercentage,
       couponDiscount: couponDiscount,
@@ -260,7 +258,7 @@ const removeCoupon = async (req, res) => {
         { multi: true, new: true }
       );
     }
-    res.status(200).json({ redirect: "/checkout" });
+    res.status(StatusCode.SUCCESS).json({ redirect: "/checkout" });
   } catch (error) {
     return renderError(res, error);
   }

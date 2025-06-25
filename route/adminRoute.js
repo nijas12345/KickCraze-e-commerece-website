@@ -3,10 +3,14 @@ const adminRoute = express();
 const path = require("path");
 const adminController = require("../Controller/adminController");
 const auth = require("../middleware/adminAuth");
-const orderController = require("../Controller/orderController");
+const categoryController = require('../Controller/categoryController')
+const productController = require('../Controller/productController')
+const couponController = require('../Controller/couponController')
+const dashboardController = require('../Controller/dashboardController')
+const salesController = require('../Controller/salesController');
+const userOrderController = require('../Controller/userOrderController')
 
 const multerStorage = require("../helpers/multerStorage");
-
 adminRoute.set("view engine", "ejs");
 adminRoute.set("views", path.join(__dirname, "../views/admin"));
 
@@ -15,7 +19,7 @@ adminRoute.set("views", path.join(__dirname, "../views/admin"));
 adminRoute.get("/login", auth.adminAuth1, adminController.adminLogin);
 adminRoute.post("/login", adminController.adminVerify);
 adminRoute.get("/forgot", adminController.adminForgot);
-adminRoute.get("/dashboard", auth.adminAuth, adminController.adminDashboard);
+adminRoute.get("/dashboard", auth.adminAuth, dashboardController.adminDashboard);
 
 //register
 
@@ -28,81 +32,78 @@ adminRoute.get("/logout", adminController.loadLogout);
 //user Management
 
 adminRoute.get("/user-list", auth.adminAuth, adminController.userList);
-adminRoute.get("/user-block", auth.adminAuth, adminController.userBlock);
+adminRoute.put("/user-block", auth.adminAuth, adminController.userBlock);
 
 //categories
 adminRoute.get(
   "/product-categories",
   auth.adminAuth,
-  adminController.productCategories
+  categoryController.productCategories
 );
 adminRoute.post(
   "/product-categories",
   auth.adminAuth,
-  adminController.insertCategories
+  categoryController.insertCategories
 );
 adminRoute.get(
   "/categories-edit",
   auth.adminAuth,
-  adminController.editCategories
+  categoryController.editCategories
 );
-adminRoute.get("/categories-delete", adminController.deleteCategories);
-adminRoute.put("/update-categories", adminController.updateCategories);
+adminRoute.get("/categories-delete", categoryController.deleteCategories);
+adminRoute.put("/update-categories", categoryController.updateCategories);
 
 //product list
 
-adminRoute.get("/product-list", auth.adminAuth, adminController.ListProduct);
-adminRoute.get("/add-product", auth.adminAuth, adminController.addProduct);
+adminRoute.get("/product-list", auth.adminAuth, productController.ListProduct);
+adminRoute.get("/add-product", auth.adminAuth, productController.addProduct);
 adminRoute.post(
   "/add-products",
   multerStorage.any(),
-  adminController.insertProduct
+  productController.insertProduct
 );
-adminRoute.get("/product-edit", auth.adminAuth, adminController.editProduct);
+adminRoute.get("/product-edit", auth.adminAuth, productController.editProduct);
 
 adminRoute.post(
   "/product-edit",
   multerStorage.any(),
-  adminController.insertEditedProduct
+  productController.insertEditedProduct
 );
 adminRoute.get(
   "/product-delete",
   auth.adminAuth,
-  adminController.deleteProduct
+  productController.deleteProduct
 );
 
 // coupond
 
-adminRoute.get("/add-coupon", auth.adminAuth, adminController.loadCoupon);
-adminRoute.post("/add-coupon", auth.adminAuth, adminController.insertCoupon);
-adminRoute.get("/edit-coupon", auth.adminAuth, adminController.editCoupon);
+adminRoute.get("/add-coupon", auth.adminAuth, couponController.loadCoupon);
+adminRoute.post("/add-coupon", auth.adminAuth, couponController.insertCoupon);
+adminRoute.get("/edit-coupon", auth.adminAuth, couponController.editCoupon);
 adminRoute.post(
   "/edit-coupon",
   auth.adminAuth,
-  adminController.insertEditedCoupon
+  couponController.insertEditedCoupon
 );
-adminRoute.get("/delete-coupon", auth.adminAuth, adminController.deleteCoupon);
+adminRoute.get("/delete-coupon", auth.adminAuth, couponController.deleteCoupon);
 
-//orders
 
-adminRoute.get("/order-list", auth.adminAuth, adminController.listOrders);
-adminRoute.get("/view-orders", auth.adminAuth, adminController.viewOrders);
+adminRoute.get("/order-list", auth.adminAuth, userOrderController.listOrders);
+adminRoute.get("/view-orders", auth.adminAuth, userOrderController.viewOrders);
+adminRoute.put("/status-update", auth.adminAuth, userOrderController.statusOrders);
 
-adminRoute.put("/status-update", auth.adminAuth, adminController.statusOrders);
-
-//category
 
 adminRoute.get(
   "/category-offer",
   auth.adminAuth,
-  adminController.categoryOffer
+  categoryController.categoryOffer
 );
-adminRoute.post("/add-offer", auth.adminAuth, adminController.addCategoryOffer);
+adminRoute.post("/add-offer", auth.adminAuth, categoryController.addCategoryOffer);
 
 //salesReport
 
-adminRoute.get("/sales-report", auth.adminAuth, adminController.salesReport);
+adminRoute.get("/sales-report", auth.adminAuth, salesController.salesReport);
 
-adminRoute.post("/day-sales", auth.adminAuth, orderController.daySales);
+adminRoute.post("/day-sales", auth.adminAuth, salesController.daySales);
 
 module.exports = adminRoute;

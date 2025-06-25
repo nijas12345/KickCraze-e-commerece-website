@@ -134,7 +134,7 @@ const editUserProfile = async (req, res) => {
     if (user) {
       res.status(StatusCode.SUCCESS).json({ success: false });
     }
-    const userData = await User.findByIdAndUpdate(id, {
+    await User.findByIdAndUpdate(id, {
       name: name,
       email: email,
       mobile: mobile,
@@ -176,12 +176,187 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const adminDashboard = async (req, res) => {
+  try {
+    let year = parseInt(req.query.selectedYear);
+
+    if (isNaN(year)) {
+      year = 2024;
+    }
+
+    await Order.find();
+
+    const orderData = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const monthlyData = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $match: {
+          status: "delivered",
+          $expr: {
+            $eq: [{ $year: "$orderedDate" }, year],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $month: "$orderedDate" },
+          totalAmount: {
+            $sum: {
+              $cond: {
+                if: {
+                  $gt: [
+                    { $toDouble: "$wcTotal" }, // Convert wcTotal to double
+                    { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+                  ],
+                },
+                then: { $toDouble: "$wcTotal" }, // Convert wcTotal to double
+                else: { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+              },
+            },
+          },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    const yearlyData = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $match: {
+          status: "delivered",
+          $expr: {
+            $eq: [{ $year: "$orderedDate" }, year],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: { $year: "$orderedDate" },
+          totalAmount: {
+            $sum: {
+              $cond: {
+                if: {
+                  $gt: [
+                    { $toDouble: "$wcTotal" }, // Convert wcTotal to double
+                    { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+                  ],
+                },
+                then: { $toDouble: "$wcTotal" }, // Convert wcTotal to double
+                else: { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+              },
+            },
+          },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    const bestCategory = await Order.aggregate([
+      {
+        $unwind: "$products",
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "products.productId",
+          foreignField: "_id",
+          as: "prod",
+        },
+      },
+      { $unwind: "$prod" },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "prod.category",
+          foreignField: "name",
+          as: "category",
+        },
+      },
+      {
+        $unwind: "$category",
+      },
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const bestSellingProduct = await Order.aggregate([
+      { $unwind: "$products" },
+      { $match: { status: "delivered" } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "products.productId",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      { $unwind: "$product" },
+      {
+        $group: {
+          _id: "$product",
+          productName: { $first: "$product.name" },
+          totalCount: { $sum: "$products.quantity" },
+          productImage: { $first: "$product.image" },
+        },
+      },
+      { $sort: { totalCount: -1 } },
+      { $limit: 10 },
+    ]);
+
+    const bestBrand = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "products.productId",
+          foreignField: "_id",
+          as: "prod",
+        },
+      },
+      { $unwind: "$prod" },
+      {
+        $group: {
+          _id: "$prod.name",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const yearlyDatas = ["2022", "2023", "2024", "2025", "2026"];
+    res.status(StatusCode.SUCCESS).render("dashboard", {
+      orderData,
+      monthlyData,
+      yearlyData,
+      bestSellingProduct,
+      bestBrand,
+      bestCategory,
+      yearlyDatas,
+    });
+  } catch (error) {
+    return renderError(res, error);
+  }
+};
+
 module.exports = {
   userProfile,
   addAddress,
   addEdit,
   deleteAddres,
   editUserProfile,
+  adminDashboard,
   changePassword,
   deleteUser,
 };
