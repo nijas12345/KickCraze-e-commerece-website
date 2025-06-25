@@ -1123,7 +1123,7 @@
                                     </div>
                                     <div>
                                         <span>
-                                            <%= cart.productId.disprice %> * <%= cart.quantity %>
+                                            <%= Math.round(cart.productId.disprice) %> * <%= cart.quantity %>
                                         </span>
                                     </div>
                                     <span>₹<%= cart.total %></span>

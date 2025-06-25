@@ -70,7 +70,7 @@ const failureOrder = async (req, res) => {
           payment: req.body.paymentId,
           isPayment: false,
         });
-        const orderData = await Order.save();
+        const orderData = await order.save();
         return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-unSuccess?orderId=${orderData._id}`,
@@ -98,7 +98,7 @@ const failureOrder = async (req, res) => {
           isPayment: false,
         });
 
-        const orderData = await Order.save();
+        const orderData = await order.save();
         return res.status(StatusCode.SUCCESS).json({
           success: true,
           redirect: `/order-unSuccess?orderId=${orderData._id}`,
@@ -124,11 +124,11 @@ const failureOrder = async (req, res) => {
           payment: req.body.paymentId,
           isPayment: false,
         });
-        const orderData = await Order.save();
+        const orderData = await order.save();
 
         return res.status(StatusCode.SUCCESS).json({
           success: true,
-          redirect: `/rOrder-unSuccess?orderId=${orderData._id}`,
+          redirect: `/order-unSuccess?orderId=${orderData._id}`,
         });
       } else {
         await Coupon.findByIdAndUpdate(couponId, {
@@ -154,7 +154,7 @@ const failureOrder = async (req, res) => {
           isPayment: false,
         });
 
-        const orderData = await Order.save();
+        const orderData = await order.save();
 
         return res.status(StatusCode.SUCCESS).json({
           success: true,

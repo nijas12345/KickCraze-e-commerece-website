@@ -16,11 +16,11 @@ const loadCart = async (req, res) => {
     let totalCart = 0;
     let totalPrice = 0;
     carts.forEach((cart) => {
-      totalCart = totalCart + cart.total;
-      totalPrice = totalPrice + cart.totalPrice;
+      totalCart = Math.round(totalCart + cart.total);
+      totalPrice = Math.round(totalPrice + cart.totalPrice);
     });
-    discount = totalPrice - totalCart;
-
+    
+    const discount = Math.round(totalPrice - totalCart);
     res.status(StatusCode.SUCCESS).render("cart", {
       carts: carts,
       totalCart: totalCart,
@@ -162,8 +162,8 @@ const checkOut = async (req, res) => {
     let totalCart = 0;
     let totalPrice = 0;
     carts.forEach((cart) => {
-      totalCart = totalCart + cart.total;
-      totalPrice = totalPrice + cart.totalPrice;
+      totalCart = Math.round(totalCart + cart.total);
+      totalPrice = Math.round(totalPrice + cart.totalPrice);
     });
     if (totalCart == 0) {
       res.redirect("/home");
@@ -223,11 +223,11 @@ const applyCoupon = async (req, res) => {
 
     const coupon = await Coupon.findOne({ _id: couponId });
 
-    const discountPercentage = parseInt(coupon.couponDiscount);
+    const discountPercentage = Math.round(parseInt(coupon.couponDiscount));
 
     const couponPercentage = (discountPercentage / 100) * total;
 
-    const couponDiscount = total - (discountPercentage / 100) * total;
+    const couponDiscount = Math.round(total - (discountPercentage / 100) * total);
 
     await Coupon.findByIdAndUpdate(couponId, {
       $addToSet: { users: { userId: userId } },

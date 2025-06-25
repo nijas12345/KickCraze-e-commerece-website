@@ -202,11 +202,13 @@
                                             <%= user.status == 1 ? 'Unblocked' : 'Blocked' %>
                                         </span>
                                     </td>
-                                        <td><%= user.Date.toLocaleDateString('en-GB', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric'
-                                    }) %></td>
+                                        <td data-order="<%= user.Date.getTime() %>">
+                                        <%= user.Date.toLocaleDateString('en-GB', {
+                                            day: '2-digit',
+                                            month: '2-digit',
+                                            year: 'numeric'
+                                        }) %>
+                                        </td>
                                         <td class="text-end">
                                             <!-- <a href="/admin/user-unblock?id=<%=user._id%>" class="btn btn-sm btn-primary rounded font-sm mt-15 ">UNBLOCk</a> -->
                                             <% if (user.status==1) { %>
@@ -262,9 +264,12 @@
     <script src="/admin/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
     <!-- Main Script -->
     <script src="/admin/admin-assets/js/main.js" type="text/javascript"></script>
-    <script>new DataTable('#my-table', {
-            pagingType: 'simple_numbers'
-        });</script>
+   <script>
+  new DataTable('#my-table', {
+    pagingType: 'simple_numbers',
+    order: [[3, 'desc']] // 4th column (index starts from 0), sorted by newest first
+  });
+</script>
 </body>
 
 <script>
