@@ -4,8 +4,12 @@ const Coupon = require("../model/couponModel");
 
 const loadCoupon = async (req, res) => {
   try {
-    const coupons = await Coupon.find({ isCoupon: true }).sort({createdAt:-1});
-    res.status(StatusCode.SUCCESS).render("coupon", { coupons: coupons, message: undefined });
+    const coupons = await Coupon.find({ isCoupon: true }).sort({
+      createdAt: -1,
+    });
+    res
+      .status(StatusCode.SUCCESS)
+      .render("coupon", { coupons: coupons, message: undefined });
   } catch (error) {
     return renderError(res, error);
   }
@@ -50,7 +54,9 @@ const editCoupon = async (req, res) => {
 
     const coupon = await Coupon.findOne({ _id: couponId });
 
-    res.status(StatusCode.SUCCESS).render("editCoupon", { coupon: coupon, message: undefined });
+    res
+      .status(StatusCode.SUCCESS)
+      .render("editCoupon", { coupon: coupon, message: undefined });
   } catch (error) {
     return renderError(res, error);
   }
@@ -81,7 +87,7 @@ const insertEditedCoupon = async (req, res) => {
         message: "code is already exist",
       });
     } else {
-       await Coupon.findByIdAndUpdate(couponId, {
+      await Coupon.findByIdAndUpdate(couponId, {
         couponCode: couponCode,
         couponDescription: couponDescription,
         couponDiscount: couponDiscount,
@@ -109,11 +115,10 @@ const deleteCoupon = async (req, res) => {
   }
 };
 
-
 module.exports = {
   loadCoupon,
   insertCoupon,
   editCoupon,
   deleteCoupon,
   insertEditedCoupon,
-}
+};

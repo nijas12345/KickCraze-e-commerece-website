@@ -8,7 +8,9 @@ const ListProduct = async (req, res) => {
     const products = await Product.find();
 
     const categories = await Category.find({ delete: true });
-    res.status(StatusCode.SUCCESS).render("productList", { product: products, categories: categories });
+    res
+      .status(StatusCode.SUCCESS)
+      .render("productList", { product: products, categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -17,7 +19,9 @@ const ListProduct = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const categories = await Category.find({ delete: true });
-    res.status(StatusCode.SUCCESS).render("productAdd", { categories: categories });
+    res
+      .status(StatusCode.SUCCESS)
+      .render("productAdd", { categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -60,7 +64,9 @@ const insertProduct = async (req, res) => {
       });
       await product.save();
       const products = await Product.find();
-      res.status(StatusCode.SUCCESS).render("productList", { product: products });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("productList", { product: products });
     } else {
       const discounts = parseInt(discount);
       const disprice = Math.floor(
@@ -80,7 +86,9 @@ const insertProduct = async (req, res) => {
       });
       await product.save();
       const products = await Product.find();
-      res.status(StatusCode.SUCCESS).render("productList", { product: products });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("productList", { product: products });
     }
   } catch (error) {
     return renderError(res, error);
@@ -93,8 +101,10 @@ const editProduct = async (req, res) => {
 
     const categories = await Category.find({ delete: true });
     const products = await Product.findOne({ _id: editId });
-    
-    res.status(StatusCode.SUCCESS).render("editProduct", { categories: categories, products: products });
+
+    res
+      .status(StatusCode.SUCCESS)
+      .render("editProduct", { categories: categories, products: products });
   } catch (error) {
     return renderError(res, error);
   }
@@ -103,14 +113,14 @@ const editProduct = async (req, res) => {
 const insertEditedProduct = async (req, res) => {
   try {
     const fileNames = req.files.map((file) => file.filename);
-    
-    let image = [];      
-    
+
+    let image = [];
+
     fileNames.forEach((filename) => {
       const outputPath2 = "/productImages/" + filename;
       image.push(outputPath2);
     });
-    
+
     const id = req.query.id;
     const price = req.body.price;
 
@@ -122,7 +132,7 @@ const insertEditedProduct = async (req, res) => {
       disprice = Math.floor(
         req.body.price - (category.offer / 100) * req.body.price
       );
-      
+
       const productData = await Product.findByIdAndUpdate(id, {
         name: req.body.name,
         price: price,
@@ -135,7 +145,7 @@ const insertEditedProduct = async (req, res) => {
         offer: category.offer,
         //    image:image
       });
-      
+
       if (req.body.imagesToRemove && req.body.imagesToRemove.length > 0) {
         // Convert strings to numbers
         const imageIndices = req.body.imagesToRemove.map((index) =>
@@ -192,7 +202,9 @@ const insertEditedProduct = async (req, res) => {
 
     const products = await Product.find();
     const categories = await Category.find();
-    res.status(StatusCode.SUCCESS).render("productList", { product: products, categories: categories });
+    res
+      .status(StatusCode.SUCCESS)
+      .render("productList", { product: products, categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -206,7 +218,9 @@ const deleteProduct = async (req, res) => {
     const products = await Product.find();
 
     const categories = await Category.find();
-    res.status(StatusCode.SUCCESS).render("productList", { product: products, categories: categories });
+    res
+      .status(StatusCode.SUCCESS)
+      .render("productList", { product: products, categories: categories });
   } catch (error) {
     return renderError(res, error);
   }
@@ -236,7 +250,6 @@ const productProfile = async (req, res) => {
   }
 };
 
-
 module.exports = {
   insertProduct,
   editProduct,
@@ -244,5 +257,5 @@ module.exports = {
   deleteProduct,
   ListProduct,
   addProduct,
-  productProfile
-}
+  productProfile,
+};

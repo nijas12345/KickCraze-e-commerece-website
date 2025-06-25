@@ -1179,9 +1179,8 @@
 
                                          
                                             <select name="" id="category">
-                                                <option value="<%=categoryName %>">Category</option>
+                                                <option value="All">Category</option>
                                                 <% categories.forEach((category)=>{%>
-                                               
                                                 <option value="<%= category.name %>"><%=category.name %>
                                                     </option>
                                                     <%  })%>
@@ -1293,23 +1292,7 @@
                                    
                                     <div class="rating-details">
                                         <span class="font-light grid-content"><%= product.name %></span>
-                                        <!-- <ul class="rating mt-0">
-                                            <li>
-                                                <i class="fas fa-star theme-color"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star theme-color"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-star"></i>
-                                            </li>
-                                        </ul> -->
+                                       
                                     </div>
                                     <div class="main-price">
                                         <a href="/user/product-left-sidebar.html" class="font-default">
@@ -2035,23 +2018,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
     const selectElement = document.getElementById('select');
     const categorySelect = document.getElementById('category');
+    
     let pageInput = document.getElementById('change-page')
-    console.log(pageInput);
 
 
     // Function to send data to backend
     function sendDataToBackend(searchQuery, selectedValue, selectedCategory,page) {
         // Create a form element
+        console.log("searchQuery",searchQuery,selectedValue,selectedCategory);
+        
         const form = document.createElement('form');
         form.setAttribute('method', 'GET'); // Use GET method
         form.setAttribute('action', '/shop'); // Backend endpoint
 
         // Create input fields for each data to send
         const searchQueryInput = document.createElement('input');
+        
         searchQueryInput.setAttribute('type', 'hidden');
         searchQueryInput.setAttribute('name', 'searchQuery');
         searchQueryInput.value = searchQuery;
-        console.log(searchQueryInput.value);
 
         const selectedValueInput = document.createElement('input');
         selectedValueInput.setAttribute('type', 'hidden');
@@ -2061,27 +2046,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedCategoryInput = document.createElement('input');
         selectedCategoryInput.setAttribute('type', 'hidden');
         selectedCategoryInput.setAttribute('name', 'selectedCategory');
-        selectedCategoryInput.value = selectedCategory;
-
+        selectedCategoryInput.value = selectedCategory;;
+        
         const pageInput = document.createElement('input');
         pageInput.setAttribute('type', 'hidden');
         pageInput.setAttribute('name', 'page');
         pageInput.value = page;
-        console.log(pageInput.value);
 
         // Append input fields to the form
         form.appendChild(searchQueryInput);
         form.appendChild(selectedValueInput);
         form.appendChild(selectedCategoryInput);
         form.appendChild(pageInput);    
-
+        
         // Append the form to the document body
         document.body.appendChild(form);
-
-        // Submit the form
-         
             form.submit()
-        
     }
 
  
@@ -2089,7 +2069,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Event listeners for input and select elements
        
         searchInput.addEventListener('change', async function () {
-            console.log("hai");
             const searchQuery = await searchInput.value.trim();
             const selectedValue = selectElement.value;
             const selectedCategory = categorySelect.value;

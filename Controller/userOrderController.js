@@ -21,7 +21,8 @@ const viewOrders = async (req, res) => {
   try {
     const order = await Order.findOne({ _id: orderId })
       .populate("products.productId")
-      .populate("userId").populate("addressId");
+      .populate("userId")
+      .populate("addressId");
     res.status(StatusCode.SUCCESS).render("viewOrders", { order: order });
   } catch (error) {
     return renderError(res, error);
@@ -34,15 +35,16 @@ const statusOrders = async (req, res) => {
     const option = req.body.selectedOption;
 
     await Order.findByIdAndUpdate(orderId, { status: option });
-    res.status(StatusCode.SUCCESS).json({ redirect: "/admin/view-orders?id=" + orderId });
+    res
+      .status(StatusCode.SUCCESS)
+      .json({ redirect: "/admin/view-orders?id=" + orderId });
   } catch (error) {
     return renderError(res, error);
   }
 };
 
-
 module.exports = {
   listOrders,
   viewOrders,
   statusOrders,
-}
+};

@@ -10,10 +10,10 @@ const StatusCode = require("../helpers/statusCode");
 const loadCart = async (req, res) => {
   try {
     const userId = req.id;
-    const carts = await Cart.find({userId:userId}).populate("productId");
+    const carts = await Cart.find({ userId: userId }).populate("productId");
     const categories = await Category.find({ delete: true });
-   console.log("carts",carts);
-   
+    console.log("carts", carts);
+
     let totalCart = 0;
     let totalPrice = 0;
     carts.forEach((cart) => {

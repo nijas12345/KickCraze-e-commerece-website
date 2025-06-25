@@ -6,7 +6,6 @@ const Category = require("../model/categoryModel");
 const Coupon = require("../model/couponModel");
 const Order = require("../model/orderModel");
 
-
 const loadUnSuccess = async (req, res) => {
   try {
     const orderId = req.query.orderId;
@@ -20,7 +19,6 @@ const loadUnSuccess = async (req, res) => {
     return renderError(res, error);
   }
 };
-
 
 const failureOrder = async (req, res) => {
   try {
@@ -169,8 +167,7 @@ const failureOrder = async (req, res) => {
   }
 };
 
-
 module.exports = {
-    failureOrder,
-    loadUnSuccess
-}
+  failureOrder,
+  loadUnSuccess,
+};

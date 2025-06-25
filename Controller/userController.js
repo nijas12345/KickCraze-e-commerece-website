@@ -169,7 +169,6 @@ const verifyRegister = async (req, res) => {
   }
 };
 
-
 const loadLogin = async (req, res) => {
   try {
     res.status(StatusCode.SUCCESS).render("login");
@@ -193,7 +192,7 @@ const verifyGoogle = async (req, res) => {
 
     if (userData) {
       const token = createToken({ id: userData._id });
-      res.cookie("jwt", token, { httpOnly: true, maxAge: 360000 });
+      res.cookie("jwt", token, { httpOnly: true, maxAge:3600000  });
       res.redirect("/home");
     } else {
       function generateReferralCode(length) {
@@ -219,7 +218,7 @@ const verifyGoogle = async (req, res) => {
       const userData = await user.save();
 
       const token = createToken({ id: userData._id });
-      res.cookie("jwt", token, { httpOnly: true, maxAge: 600000000 });
+      res.cookie("jwt", token, { httpOnly: true, maxAge: 3600000 });
       res.redirect("/home");
     }
   } catch (error) {
@@ -237,7 +236,7 @@ const verifyUser = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, userData.password);
         if (passwordMatch) {
           const token = createToken({ id: userData._id });
-          res.cookie("jwt", token, { httpOnly: true, maxAge: 600000000 });
+          res.cookie("jwt", token, { httpOnly: true, maxAge: 3600000 });
 
           res.redirect("/home");
         } else {
@@ -315,13 +314,12 @@ const verifyOtp = async (req, res) => {
 const insertOtp = async (req, res) => {
   try {
     let OTPs = req.body.input;
-    console.log(OTPs);
     var loadOtp1 = req.session.otp1;
     console.log(loadOtp1);
     if (loadOtp1 === OTPs) {
       res.status(StatusCode.SUCCESS).json({ redirect: "/confirmation" });
     } else {
-      res.status(StatusCode.BAD_REQUEST).json({ message: "OTP is invalid" });
+      res.status(StatusCode.SUCCESS).json({ message: "OTP is invalid" });
     }
   } catch (error) {
     return renderError(res, error);
@@ -349,11 +347,9 @@ const confirmPassword = async (req, res) => {
         message: "Your Password Changed Successfully",
       });
     } else {
-      res
-        .status(StatusCode.INTERNAL_ERROR)
-        .render("changePassword", {
-          message: "Something went wrong. Please Login",
-        });
+      res.status(StatusCode.INTERNAL_ERROR).render("changePassword", {
+        message: "Something went wrong. Please Login",
+      });
     }
   } catch (error) {
     return renderError(res, error);
@@ -367,8 +363,6 @@ const registerOtp = async (req, res) => {
     return renderError(res, error);
   }
 };
-
-
 
 module.exports = {
   verifyGoogle,

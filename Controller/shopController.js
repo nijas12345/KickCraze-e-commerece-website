@@ -1,3 +1,4 @@
+const Logger = require("nodemon/lib/utils/log");
 const renderError = require("../helpers/errorHandling");
 const StatusCode = require("../helpers/statusCode");
 const Cart = require("../model/cartModel");
@@ -6,12 +7,12 @@ const Product = require("../model/productModel");
 
 const loadShop = async (req, res) => {
   try {
-    
     let searchQuery = req.query.searchQuery;
     let categoryName = req.query.selectedCategory;
     let selectedValue = req.query.selectedValue;
     let page = parseInt(req.query.page);
-
+    console.log(searchQuery,categoryName,selectedValue);
+    
     let limit = 5;
     let skip = (page - 1) * limit;
 
@@ -38,7 +39,7 @@ const loadShop = async (req, res) => {
         quantity: quantity,
         total: total,
         categories: categories,
-        searchQuery: searchQuery,
+        searchQuery: "",
         categoryName: categoryName,
         selectedValue: selectedValue,
       });
@@ -204,8 +205,9 @@ const loadShop = async (req, res) => {
       categoryName !== "" &&
       selectedValue == "option"
     ) {
+      
       const carts = await Cart.find({ userId: userId });
-
+      
       let quantity = 0;
       let total = 0;
       carts.forEach((cart) => {
@@ -215,18 +217,18 @@ const loadShop = async (req, res) => {
       let categories = await Category.find({ delete: true });
       const products = await Product.find({
         status: true,
-        category: categoryName,
         name: { $regex: new RegExp(searchQuery, "i") },
       })
         .skip(skip)
         .limit(limit);
-
+      console.log(products);
+      
       res.status(StatusCode.SUCCESS).render("shop", {
         products: products,
         quantity: quantity,
         total: total,
         categories: categories,
-        searchQuery: searchQuery,
+        searchQuery: "",
         categoryName: categoryName,
         selectedValue: selectedValue,
       });
@@ -258,7 +260,7 @@ const loadShop = async (req, res) => {
           quantity: quantity,
           total: total,
           categories: categories,
-          searchQuery: searchQuery,
+          searchQuery: "",
           categoryName: categoryName,
           selectedValue: selectedValue,
         });
@@ -470,7 +472,7 @@ const loadShop = async (req, res) => {
           quantity: quantity,
           total: total,
           categories: categories,
-          searchQuery: searchQuery,
+          searchQuery: "",
           categoryName: categoryName,
           selectedValue: selectedValue,
         });
@@ -576,11 +578,10 @@ const loadShop = async (req, res) => {
       });
     }
   } catch (error) {
-  return renderError(res, error);
+    return renderError(res, error);
   }
 };
 
-
 module.exports = {
-    loadShop
-}
+  loadShop,
+};

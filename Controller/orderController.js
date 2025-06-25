@@ -57,8 +57,6 @@ const loadSuccess = async (req, res) => {
   }
 };
 
-
-
 const insertOrder = async (req, res) => {
   try {
     const userId = req.id;
@@ -214,9 +212,10 @@ const onlineOrder = async (req, res) => {
     razorpayInstance.orders.create(options, function (err, order) {
       if (!err) {
         res.status(StatusCode.SUCCESS).json({ order });
- 
       } else {
-        res.status(StatusCode.BAD_REQUEST).send({ success: false, msg: "something went wrong" });
+        res
+          .status(StatusCode.BAD_REQUEST)
+          .send({ success: false, msg: "something went wrong" });
       }
     });
   } catch (error) {

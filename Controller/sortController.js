@@ -255,11 +255,10 @@ const newArrivals = async (req, res) => {
   }
 };
 
-
 module.exports = {
   loadSortAZ,
   loadSortZA,
   highToLow,
   lowToHigh,
   newArrivals,
-}
+};

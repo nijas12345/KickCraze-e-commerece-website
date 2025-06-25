@@ -27,7 +27,7 @@ const daySales = async (req, res) => {
             $lte: endOfMonthFormatted,
           },
           status: "delivered",
-        }).populate('userId');
+        }).populate("userId");
 
         let orderOriginalPrice = 0;
         let orderDiscountPrice = 0;
@@ -67,7 +67,7 @@ const daySales = async (req, res) => {
           $lt: endOfDayFormatted, // Less than the end of the day
         },
         status: "delivered",
-      }).populate('userId');
+      }).populate("userId");
 
       let orderOriginalPrice = 0;
       let orderDiscountPrice = 0;
@@ -105,7 +105,7 @@ const daySales = async (req, res) => {
           $lte: endOfWeekFormatted, // Less than or equal to the end date of the week
         },
         status: "delivered",
-      }).populate('userId');
+      }).populate("userId");
 
       let orderOriginalPrice = 0;
       let orderDiscountPrice = 0;
@@ -201,7 +201,9 @@ const daySales = async (req, res) => {
 
 const salesReport = async (req, res) => {
   try {
-    const orders = await Order.find({ status: "delivered" }).sort({orderedDate:-1}).populate("userId");
+    const orders = await Order.find({ status: "delivered" })
+      .sort({ orderedDate: -1 })
+      .populate("userId");
     console.log(orders);
     let orderOriginalPrice = 0;
     let orderDiscountPrice = 0;
@@ -228,6 +230,6 @@ const salesReport = async (req, res) => {
 };
 
 module.exports = {
-    daySales,
-    salesReport
-}
+  daySales,
+  salesReport,
+};

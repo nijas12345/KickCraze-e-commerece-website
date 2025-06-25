@@ -54,7 +54,9 @@
                 <form action="" method="">
                     <div class="input">
 
-                        <input type="text" name="OTP" class="is-invalid" id="OTP" placeholder="Enter OTP">
+                        <input type="number" inputmode="numeric" 
+                        pattern="[0-9]*"
+                        maxlength="4" name="OTP" class="is-invalid" id="OTP" placeholder="Enter OTP">
 
                         <span class="spin"></span>
 
@@ -153,7 +155,6 @@
 
             const input = document.getElementById("OTP").value
             const otpError = document.getElementById("otp-wrong")
-            console.log(input);
             const data = { input }
             try {
                 const response = await fetch('/registerOtps', {

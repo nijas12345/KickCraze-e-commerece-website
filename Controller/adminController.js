@@ -1,5 +1,5 @@
 const User = require("../model/userModel");
-const Admin = require("../model/adminModel"); 
+const Admin = require("../model/adminModel");
 const Order = require("../model/orderModel");
 const jwt = require("jsonwebtoken");
 const renderError = require("../helpers/errorHandling");
@@ -29,7 +29,7 @@ const verifyRegister = async (req, res) => {
 
     if (adminData) {
       const token = createToken({ id: adminData._id });
-      res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 36000000 });
+      res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 3600000 });
       res.redirect("/admin/dashboard");
     }
   } catch (error) {
@@ -53,13 +53,17 @@ const adminVerify = async (req, res) => {
     if (adminData) {
       if (adminData.password === password) {
         const token = createToken({ id: adminData._id });
-        res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 60000000 });
+        res.cookie("Adminjwt", token, { httpOnly: true, maxAge: 3600000 });
         res.redirect("/admin/dashboard");
       } else {
-        res.status(StatusCode.SUCCESS).render("adminLogin", { message: "Password is incorrect" });
+        res
+          .status(StatusCode.SUCCESS)
+          .render("adminLogin", { message: "Password is incorrect" });
       }
     } else {
-      res.status(StatusCode.SUCCESS).render("adminLogin", { message: "Email is incorrect" });
+      res
+        .status(StatusCode.SUCCESS)
+        .render("adminLogin", { message: "Email is incorrect" });
     }
   } catch (error) {
     return renderError(res, 500, error);
@@ -85,7 +89,6 @@ const loadLogout = async (req, res) => {
   }
 };
 
-
 //user Management
 
 const userList = async (req, res) => {
@@ -102,29 +105,31 @@ const userBlock = async (req, res) => {
     const userId = req.body.id;
     console.log(userId);
     const user = await User.findOne({ _id: userId });
-    
+
     const userStatus = user.status;
-    console.log(userStatus);
-    
+
     if (userStatus) {
-      const user = await User.findOneAndUpdate({ _id: userId }, { status: false },{new:true});
-      const userStatus = user.status
-      console.log("unblock",userStatus);
-      
-      res.status(StatusCode.SUCCESS).json({userStatus:userStatus})
+      const user = await User.findOneAndUpdate(
+        { _id: userId },
+        { status: false },
+        { new: true }
+      );
+      const userStatus = user.status;
+
+      res.status(StatusCode.SUCCESS).json({ userStatus: userStatus });
     } else {
-      const user = await User.findOneAndUpdate({ _id: userId }, { status: true },{new:true});
-      const userStatus = user.status
-      console.log("block",userStatus);
-      
-      res.status(StatusCode.SUCCESS).json({userStatus:userStatus});
+      const user = await User.findOneAndUpdate(
+        { _id: userId },
+        { status: true },
+        { new: true }
+      );
+      const userStatus = user.status;
+      res.status(StatusCode.SUCCESS).json({ userStatus: userStatus });
     }
   } catch (error) {
     return renderError(res, error);
   }
 };
-
-
 
 module.exports = {
   adminRegister,
@@ -134,5 +139,5 @@ module.exports = {
   loadLogout,
   adminVerify,
   userList,
-  userBlock
+  userBlock,
 };

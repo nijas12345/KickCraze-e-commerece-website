@@ -32,7 +32,6 @@ const cancelOrder = async (req, res) => {
       });
     });
 
-
     let wallet;
 
     wallet = await Wallet.findOne({ userId: userId });
@@ -70,7 +69,9 @@ const cancelOrder = async (req, res) => {
           { new: true } // To return the updated document
         );
 
-        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
+        res
+          .status(StatusCode.SUCCESS)
+          .json({ status: "cancelled", message: 1 });
       } else {
         const wallet = await Wallet.findOne({ userId: userId });
         await Wallet.findByIdAndUpdate(
@@ -87,7 +88,9 @@ const cancelOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
+        res
+          .status(StatusCode.SUCCESS)
+          .json({ status: "cancelled", message: 1 });
       }
     } else if (orders.payment == "wallet-payment") {
       if (orders.wcTotal) {
@@ -108,7 +111,9 @@ const cancelOrder = async (req, res) => {
           { new: true } // To return the updated document
         );
 
-        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
+        res
+          .status(StatusCode.SUCCESS)
+          .json({ status: "cancelled", message: 1 });
       } else {
         const wallet = await Wallet.findOne({ userId: userId });
         await Wallet.findByIdAndUpdate(
@@ -125,7 +130,9 @@ const cancelOrder = async (req, res) => {
           },
           { new: true } // To return the updated document
         );
-        res.status(StatusCode.SUCCESS).json({ status: "cancelled", message: 1 });
+        res
+          .status(StatusCode.SUCCESS)
+          .json({ status: "cancelled", message: 1 });
       }
     } else {
       res.status(StatusCode.SUCCESS).json({ status: "cancelled" });
@@ -229,15 +236,15 @@ const viewOrder = async (req, res) => {
     const categories = await Category.find({ delete: true });
     const orderId = req.query.id;
 
-    const order = await Order.findOne({ _id: orderId }).populate(
-      "products.productId"
-    ).populate("addressId");
+    const order = await Order.findOne({ _id: orderId })
+      .populate("products.productId")
+      .populate("addressId");
     let total = 0;
     order.products.forEach((order) => {
       total = total + order.total;
     });
     console.log(order);
-    
+
     if (order) {
       res.status(StatusCode.SUCCESS).render("orderDetails", {
         order: order,
@@ -253,5 +260,5 @@ const viewOrder = async (req, res) => {
 module.exports = {
   cancelOrder,
   returnOrder,
-  viewOrder
-}
+  viewOrder,
+};

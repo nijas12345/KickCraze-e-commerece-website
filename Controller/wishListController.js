@@ -31,8 +31,7 @@ const showWishlist = async (req, res) => {
   try {
     const userId = req.id;
     const categories = await Category.find({ delete: true });
-    const wishlistData = await Wishlist
-      .find({ userId: userId })
+    const wishlistData = await Wishlist.find({ userId: userId })
       .populate("userId")
       .populate("productId");
 
@@ -51,8 +50,7 @@ const removeWishlist = async (req, res) => {
     const productId = req.query.id;
     await Wishlist.findOneAndDelete({ productId: productId });
 
-    await Wishlist
-      .find({ userId: userId })
+    await Wishlist.find({ userId: userId })
       .populate("userId")
       .populate("productId");
     res.redirect("/show-wishlist");
@@ -65,4 +63,4 @@ module.exports = {
   insertWishlist,
   showWishlist,
   removeWishlist,
-}
+};

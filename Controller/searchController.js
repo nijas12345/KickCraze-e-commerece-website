@@ -144,4 +144,4 @@ const SearchInput = async (req, res) => {
 module.exports = {
   loadSearch,
   SearchInput,
-}
+};

@@ -4,7 +4,6 @@ require("dotenv").config();
 const secret = process.env.JWT_SECRET;
 const requireAuth = async (req, res, next) => {
   try {
-    console.log("Home");
     
     const token = req.cookies.jwt;
     if (token) {
