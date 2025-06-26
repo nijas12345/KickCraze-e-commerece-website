@@ -156,7 +156,7 @@ const checkOut = async (req, res) => {
     const wishlistCount = await wishlist.countDocuments({ userId: userId });
 
     req.session.couponId = null;
-    const address = await Address.find({ userId: userId,isAddress:false });
+    const address = await Address.find({ userId: userId,isAddress:true });
     const carts = await Cart.find({ userId: userId }).populate("productId");
 
     let totalCart = 0;

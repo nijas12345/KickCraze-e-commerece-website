@@ -916,7 +916,7 @@
                                     </div>
 
                                     <h3 class="price-detail">
-                                        <%=products.disprice%> <del>
+                                        <%=Math.round(products.disprice) %><del>
                                                 <%=products.price%>
                                             </del>
                                             <%if(products.offer>products.discount){%>
@@ -1052,7 +1052,7 @@
                                             <%if(products.stock<10 && products.stock>0){%>
                                                 <div class="mt-2 mt-md-3 border-product">
                                                     <h6 class="product-title hurry-title d-block">Hurry Up! Left
-                                                        <span>10</span>
+                                                        <span><%=products.stock %></span>
                                                         in
                                                         stock</h6>
                                                     <div class="progress">
