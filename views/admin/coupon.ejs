@@ -270,7 +270,7 @@
                                             <th>Coupon Description</th>
                                             <th>Max Amount</th>
                                             <th>Min Amount</th>
-                                            <th>Coupon Expiry</th>
+                                            <!-- <th>Coupon Expiry</th> -->
                                             <th style="padding-left: 80px;">Action</th>
                                             <th class="text-end"></th>
                                         </tr>
@@ -297,10 +297,7 @@
                                                 <td>
                                                     <%= coupon.minimumAmount %>
                                                 </td>
-                                                <td>
-                                                    <%= coupon.couponExpiry.toLocaleDateString(undefined, {
-                                                        day: '2-digit' , month: '2-digit' , year: 'numeric' }) %>
-                                                </td>
+                                                
 
                                                 %>
 
@@ -362,12 +359,7 @@
             const minAmount = document.getElementById('min').value
             const expiry = document.getElementById('exp').value
             const CouponDiscount = document.getElementById('discount').value
-            console.log(CouponDiscount);
-            console.log(description);
-            console.log(code);
-            console.log(maxAmount);
-            console.log(minAmount);
-            console.log(expiry);
+
             const codeError = document.getElementById("code-error")
             const descriptionError = document.getElementById("description-error")
             const maxError = document.getElementById('max-error')
@@ -388,8 +380,13 @@
                 isValid = false
                 return
             }
-            else if (code.length !== 10) {
-                codeError.textContent = "Code must be exactly 10 characters";
+            if(!/^[A-Za-z]/.test(code.trimStart())){
+                codeError.textContent = "Code must start with a letter (A-Z or a-z)";
+                isValid = false;
+                return;
+            }
+            else if (code.length <= 5) {
+                codeError.textContent = "Code must be exactly more than 5 characters";
                 isValid = false;
                 return
             }
@@ -429,19 +426,44 @@
                 return;
             }
 
-
-
-
             if (description === "") {
                 descriptionError.textContent = "Description is required"
                 isValid = false
                 return
             }
 
-
-
             if (isValid == true) {
-                document.getElementById("form").submit()
+                const data = {
+                    code,
+                    description,
+                    maxAmount,
+                    minAmount,
+                    expiryDate,
+                    discount: CouponDiscount
+                };
+                fetch("/admin/add-coupon", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+               })
+               .then(res => res.json())
+                .then(response => {
+                    console.log(response);
+                    if(response.status === "failed"){
+                        console.log("ja");
+                        
+                     codeError.textContent = response.message
+                    }else{
+                        window.location.href = "/admin/add-coupon"
+                    }
+   
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Something went wrong.");
+                });
             }
 
         })
@@ -450,7 +472,6 @@
             var result = confirm("Are you sure you want to delete this item")
             if (result) {
                 window.location.href = `/admin/delete-coupon?id=${couponId}`
-
             }
             else {
                 return;

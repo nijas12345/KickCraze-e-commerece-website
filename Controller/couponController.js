@@ -16,20 +16,19 @@ const loadCoupon = async (req, res) => {
 };
 const insertCoupon = async (req, res) => {
   try {
-    couponCode = req.body.code;
-    couponDescription = req.body.description;
-    (couponDiscount = req.body.discount), (couponExpiry = req.body.exp);
+    const couponCode = req.body.code;
+    const couponDescription = req.body.description;
+    const couponDiscount = req.body.discount,
+      couponExpiry = req.body.expiryDate;
 
-    maximumAmount = req.body.max;
-    minimumAmount = req.body.min;
+    const maximumAmount = req.body.maxAmount;
+    const minimumAmount = req.body.minAmount;
 
     let coupons = await Coupon.findOne({ couponCode: req.body.code });
     if (coupons) {
-      const coupons = await Coupon.find({ isCoupon: true });
-      res.status(StatusCode.SUCCESS).render("coupon", {
-        coupons: coupons,
-        message: "Code is already exist",
-      });
+      res
+        .status(StatusCode.SUCCESS)
+        .json({ status: "failed", message: "Coupon code is already exist" });
     } else {
       const coupon = new Coupon({
         couponCode: couponCode,
@@ -41,7 +40,7 @@ const insertCoupon = async (req, res) => {
       });
       await coupon.save();
 
-      res.redirect("/admin/add-coupon");
+      res.status(StatusCode.SUCCESS).json({ status: "success" });
     }
   } catch (error) {
     return renderError(res, error);
@@ -51,7 +50,6 @@ const insertCoupon = async (req, res) => {
 const editCoupon = async (req, res) => {
   try {
     const couponId = req.query.id;
-
     const coupon = await Coupon.findOne({ _id: couponId });
 
     res
@@ -67,8 +65,7 @@ const insertEditedCoupon = async (req, res) => {
     let couponCode = req.body.code;
     let couponDescription = req.body.description;
     let couponDiscount = req.body.discount;
-    // Assuming req.body.exp is in the format 'MM/DD/YYYY'
-    let dateParts = req.body.exp.split("/"); // Split the date string into parts
+    let dateParts = req.body.expiry.split("/"); // Split the date string into parts
 
     // Extract year, month, and day from the date string parts
     let year = parseInt(dateParts[2]); // Extract year
@@ -77,26 +74,33 @@ const insertEditedCoupon = async (req, res) => {
 
     let couponExpiry = new Date(year, month, day);
 
-    let maximumAmount = req.body.max;
-    let minimumAmount = req.body.min;
-    let coupons = await Coupon.findOne({ couponCode: couponCode });
-    if (coupons) {
-      const coupon = await Coupon.findOne({ _id: couponId });
-      res.status(StatusCode.SUCCESS).render("editCoupon", {
-        coupon: coupon,
-        message: "code is already exist",
+    let maximumAmount = req.body.maxAmount;
+    let minimumAmount = req.body.minAmount;
+    let coupon = await Coupon.findOne({
+      couponCode: couponCode,
+      _id: { $ne: couponId },
+      isCoupon: true,
+    });
+    if (coupon) {
+      res.status(StatusCode.SUCCESS).json({
+        status: "failed",
+        message: "Coupon code is already exist",
       });
     } else {
-      await Coupon.findByIdAndUpdate(couponId, {
-        couponCode: couponCode,
-        couponDescription: couponDescription,
-        couponDiscount: couponDiscount,
-        couponExpiry: couponExpiry,
-        maximumAmount: maximumAmount,
-        minimumAmount: minimumAmount,
-      });
+      const coupon = await Coupon.findByIdAndUpdate(
+        couponId,
+        {
+          couponCode: couponCode,
+          couponDescription: couponDescription,
+          couponDiscount: couponDiscount,
+          couponExpiry: couponExpiry,
+          maximumAmount: maximumAmount,
+          minimumAmount: minimumAmount,
+        },
+        { new: true }
+      );
 
-      res.redirect("/admin/add-coupon");
+      res.status(StatusCode.SUCCESS).json({ status: "success" });
     }
   } catch (error) {
     return renderError(res, error);

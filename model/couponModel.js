@@ -45,4 +45,4 @@ couponSchema.pre("save", function (next) {
 
 const Coupon = mongoose.model("Coupon", couponSchema);
 
-module.exports = Coupon
+module.exports = Coupon 

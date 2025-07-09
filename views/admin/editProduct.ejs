@@ -85,16 +85,7 @@
     <br>
     <div><label for="Name">Enter Size 1</label></div>
     <div class="spin error" id="size1-error"></div>
-    <input type="text" name="sizes[]" placeholder="Type here.." id="size1" value="<%=products.sizes[0]%>"><br>
-    <div><label for="Name">Enter Size 2</label></div>
-    <div class="spin error" id="size2-error"></div>
-    <input type="text" name="sizes[]" placeholder="Type here.." id="size2" value="<%=products.sizes[1]%>"><br>
-    <div><label for="Name">Enter Size 3</label></div>
-    <div class="spin error" id="size3-error"></div>
-    <input type="text" name="sizes[]" placeholder="Type here.." id="size3" value="<%=products.sizes[2]%>"><br>
-    <div><label for="Name">Enter Size 4</label></div>
-    <div class="spin error" id="size4-error"></div>
-    <input type="text" name="sizes[]" placeholder="Type here.." id="size4" value="<%=products.sizes[3]%>"><br>
+    <input type="text" name="size" placeholder="Type here.." id="size" value="<%=products.size%>"><br>
     <br>
 
 
@@ -268,10 +259,7 @@
       const discount = document.getElementById("discount").value
       const color = document.getElementById("color").value.trim()
       const stock = document.getElementById("stock").value
-      const size1 = document.getElementById("size1").value
-      const size2 = document.getElementById("size2").value
-      const size3 = document.getElementById("size3").value
-      const size4 = document.getElementById("size4").value
+      const size = document.getElementById("size").value
       var checkboxes = document.querySelectorAll(".imageCheckbox");
       var files = document.getElementById("image-upload").files;
 
@@ -285,9 +273,7 @@
       const colorError = document.getElementById("color-error")
       const stockError = document.getElementById("stock-error")
       const size1Error = document.getElementById("size1-error")
-      const size2Error = document.getElementById("size2-error")
-      const size3Error = document.getElementById("size3-error")
-      const size4Error = document.getElementById("size4-error")
+
 
       nameError.textContent = "";
       priceError.textContent = "";
@@ -295,9 +281,6 @@
       colorError.textContent = "";
       stockError.textContent = "";
       size1Error.textContent = "";
-      size2Error.textContent = "";
-      size3Error.textContent = "";
-      size4Error.textContent = "";
 
       let isValid = true
       var allSelected = false;
@@ -333,7 +316,7 @@
           }
         }
       }
-      if (name === '') {
+      if (name.trim() === '') {
         nameError.textContent = 'Name is required';
         isValid = false;
 
@@ -348,20 +331,23 @@
         isValid = false;
       }
 
-      if (discount == "") {
+      if (discount.trim() == "") {
         discountError.textContent = "discount is required"
         isValid = false
-
       }
       const regex = /^\d{2}$/;
-      if (!regex.test(discount)) {
-        discountError.textContent = "discount contain only 2 digits"
+      if (discount<0) {
+        discountError.textContent = "discount contain positive digits"
         isValid = false
-
       }
       if (!/^\d+$/.test(stock) || parseInt(stock) <= 0) {
         stockError.textContent = 'Please enter a valid positive integer for stock';
         isValid = false;
+      }
+
+      if (color.trim() == "") {
+        colorError.textContent = "Color is required"
+        isValid = false
       }
 
       if (/\d/.test(color)) {
@@ -369,23 +355,8 @@
         isValid = false;
 
       }
-      if (!/^\d+$/.test(size1) || parseInt(size1) <= 0) {
+      if (!/^\d+$/.test(size) || parseInt(size) <= 0) {
         size1Error.textContent = 'Please enter a valid positive integer for size';
-        isValid = false;
-      }
-
-      if (!/^\d+$/.test(size2) || parseInt(size2) <= 0) {
-        size2Error.textContent = 'Please enter a valid positive integer for size';
-        isValid = false;
-      }
-
-      if (!/^\d+$/.test(size3) || parseInt(size3) <= 0) {
-        size3Error.textContent = 'Please enter a valid positive integer for size';
-        isValid = false;
-      }
-
-      if (!/^\d+$/.test(size4) || parseInt(size4) <= 0) {
-        size4Error.textContent = 'Please enter a valid positive integer for size';
         isValid = false;
       }
 

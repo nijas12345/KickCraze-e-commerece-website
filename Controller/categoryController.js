@@ -6,7 +6,7 @@ const Product = require("../model/productModel");
 
 const productCategories = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find({ delete: true }).sort({ date: -1 });
 
     res
       .status(StatusCode.SUCCESS)
@@ -18,9 +18,8 @@ const productCategories = async (req, res) => {
 
 const insertCategories = async (req, res) => {
   try {
-    const categories = await Category.findOne({ name: req.body.name });
-
-    if (categories) {
+    const category = await Category.findOne({ name: req.body.name });
+    if (category) {
       const categories = await Category.find({ delete: true });
       res.status(StatusCode.SUCCESS).render("categories", {
         message: "This category is already exist",
@@ -62,18 +61,20 @@ const updateCategories = async (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
     const Id = req.body.dataId;
-
-    const category = await Category.findOne({ name: name });
-
+    const category = await Category.findOne({
+      name: name,
+      _id: { $ne: Id },
+      delete: true,
+    });
     if (category) {
       res
         .status(StatusCode.SUCCESS)
-        .json({ message: "Category Name is already exists " });
+        .json({ message: `The ${category.name} is already exists ` });
     } else {
       const category = await Category.findById({ _id: Id });
       const categoryName = category.name;
 
-      const product = await Product.find({ category: categoryName });
+      await Product.find({ category: categoryName });
       const categoryData = await Category.findByIdAndUpdate(
         Id,
         {
@@ -83,7 +84,7 @@ const updateCategories = async (req, res) => {
         { new: true }
       );
 
-      const products = await Product.updateMany(
+      await Product.updateMany(
         {
           category: categoryName,
         },

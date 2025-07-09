@@ -250,16 +250,16 @@
                                     <section class="content-body p-xl-4">
                                         <form id="form" action="">
                                             <div id="category-error" style="color: red;"></div>
+                                            <div id="name-error" style="color: red;"></div>
                                             <label for="">Name:</label><br>
                                             <input type="text" name="name" placeholder="Enter Name"
                                                 value="<%=category.name%>" id="name" data-id="<%=category._id %>">
-                                            <div id="name-error" style="color: red;"></div>
+                                            
                                             <br>
                                             <label for="">Description:</label><br>
-
-                                            <input type="text" name="description" placeholder="Enter Description"
-                                                value="<%=category.description %>" id="description">
                                             <div id="description-error" style="color: red;"></div>
+                                            <input type="text" name="description" placeholder="Enter Description"
+                                                value="<%=category.description %>" id="description">                     
                                             <br>
 
 
@@ -321,7 +321,7 @@
 
             const data = { name, description, dataId }
 
-            if (name === "") {
+            if (name.trim() === "") {
                 nameError.textContent = "Name is required";
 
                 return;
@@ -336,12 +336,8 @@
             } else {
                 nameError.textContent = "";
             }
-            if (description === "") {
+            if (description.trim() === "") {
                 descriptionError.textContent = "description is required";
-                return;
-            }
-            else if (!/^[a-zA-Z\s]*$/.test(description)) {
-                descriptionError.textContent = "description cannot contain special characters";
                 return;
             }
 

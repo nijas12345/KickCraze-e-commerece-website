@@ -34,10 +34,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// For cookie
+
 app.use(cookieParser());
 
-// For static files
 app.use(express.static(path.join(__dirname, "public")));
 
 // User route

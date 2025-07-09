@@ -239,6 +239,7 @@ const viewOrder = async (req, res) => {
     const order = await Order.findOne({ _id: orderId })
       .populate("products.productId")
       .populate("addressId");
+
     let total = 0;
     order.products.forEach((order) => {
       total = total + order.total;

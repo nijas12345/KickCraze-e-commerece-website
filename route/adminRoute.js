@@ -69,7 +69,7 @@ adminRoute.post(
   multerStorage.any(),
   productController.insertEditedProduct
 );
-adminRoute.get(
+adminRoute.put(
   "/product-delete",
   auth.adminAuth,
   productController.deleteProduct

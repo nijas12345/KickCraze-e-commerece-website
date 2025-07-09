@@ -203,10 +203,11 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Coupon</th>
-                                    <th scope="col">Original Price</th>
-                                    <th scope="col">Discounted Price</th>
-                                    <th scope="col">Discount</th>
                                     <th scope="col" class="text-end"> Payment method </th>
+                                    <th scope="col">Product Price</th>
+                                    <th scope="col">Discount</th>
+                                    <th scope="col">After Discount</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -249,7 +250,9 @@
                                                         <% }else{ %>
                                                             <td>Coupon not Applied</td>
                                                             <% } %>
-
+                                                                <td class="text-end">
+                                                                    <%= order.payment %>
+                                                                    </td>
                                                                 <td>
                                                                     <h5 style="color: green; ">
                                                                         <%=order.totalPrice%>
@@ -257,23 +260,6 @@
                                                                 </td>
 
                                                                 <% if(order.discountTotal){%>
-                                                                    <td>
-                                                                        <h5 style="color: green;">
-                                                                            <%=order.discountTotal%>
-                                                                        </h5>
-                                                                    </td>
-                                                                    <%}else{%>
-                                                                        <td>
-                                                                            <h5 style="color: green;">
-                                                                                <%=order.wcTotal %>
-                                                                            </h5>
-                                                                        </td>
-                                                                        <% } %>
-
-
-
-
-                                                                            <% if(order.discountTotal){%>
                                                                                 <% let discount=order.totalPrice -
                                                                                     parseInt(order.discountTotal) %>
                                                                                     <td>
@@ -292,11 +278,22 @@
                                                                                             </td>
                                                                                             <% } %>
 
+                                                                <% if(order.discountTotal){%>
+                                                                    <td>
+                                                                        <h5 style="color: green;">
+                                                                            <%=order.discountTotal%>
+                                                                        </h5>
+                                                                    </td>
+                                                                    <%}else{%>
+                                                                        <td>
+                                                                            <h5 style="color: green;">
+                                                                                <%=order.wcTotal %>
+                                                                            </h5>
+                                                                        </td>
+                                                                        <% } %>
 
+                                                                            
 
-                                                                                                <td class="text-end">
-                                                                                                    <%= order.payment %>
-                                                                                                </td>
 
                                     </tr>
 
@@ -309,6 +306,7 @@
                                                     <td>
                                                         <h4>Total</h4>
                                                     </td>
+                                                    <td></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>

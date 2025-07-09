@@ -19,7 +19,7 @@ const loadCart = async (req, res) => {
       totalCart = Math.round(totalCart + cart.total);
       totalPrice = Math.round(totalPrice + cart.totalPrice);
     });
-    
+
     const discount = Math.round(totalPrice - totalCart);
     res.status(StatusCode.SUCCESS).render("cart", {
       carts: carts,
@@ -34,10 +34,8 @@ const loadCart = async (req, res) => {
 };
 const insertCart = async (req, res) => {
   try {
-    let userId = req.id;
-
+    const userId = req.id;
     const productId = req.body.productId;
-
     const quantity = parseInt(req.body.quantity);
     const size = parseInt(req.body.size);
     const cart = await Cart.findOne({
@@ -73,6 +71,8 @@ const insertCart = async (req, res) => {
       });
       await carts.save();
     }
+    const carts = await Cart.find({ productId: productId });
+    res.status(StatusCode.SUCCESS).json({ success: true });
   } catch (error) {
     return renderError(res, error);
   }
@@ -83,42 +83,38 @@ const updateCart = async (req, res) => {
     const userId = req.id;
 
     const { quantity, productId, size } = req.body;
-    if (req.body.quantity == "") {
-    } else {
-      const updateCart = await Cart.findOne({
-        userId: userId,
-        productId: productId,
-        size: size,
-      }).populate("productId");
 
-      if (updateCart) {
-        const disprice = parseInt(updateCart.productId.disprice);
-        const price = parseInt(updateCart.productId.price);
-        const updateQuantity = parseInt(quantity);
-        updateCart.quantity = updateQuantity;
-        updateCart.total = updateCart.quantity * disprice;
-        updateCart.totalPrice = updateCart.quantity * price;
-        const cart = await updateCart.save();
+    const updateCart = await Cart.findOne({
+      userId: userId,
+      productId: productId,
+      size: size,
+    }).populate("productId");
 
-        const carts = await Cart.find({ userId: userId });
+    const disprice = parseInt(updateCart.productId.disprice);
+    const price = parseInt(updateCart.productId.price);
+    const updateQuantity = parseInt(quantity);
+    updateCart.quantity = updateQuantity;
+    updateCart.total = updateCart.quantity * disprice;
+    updateCart.totalPrice = updateCart.quantity * price;
+    await updateCart.save();
 
-        let totalCart = 0;
-        let totalPrice = 0;
-        carts.forEach((cart) => {
-          totalCart = totalCart + cart.total;
-          totalPrice = totalPrice + cart.totalPrice;
-        });
-        discount = totalPrice - totalCart;
+    const carts = await Cart.find({ userId: userId });
 
-        res.status(StatusCode.SUCCESS).json({
-          total: updateCart.total,
-          quantity: updateCart.quantity,
-          totalCart: totalCart,
-          totalPrice: totalPrice,
-          discount: discount,
-        });
-      }
-    }
+    let totalCart = 0;
+    let totalPrice = 0;
+    carts.forEach((cart) => {
+      totalCart = totalCart + cart.total;
+      totalPrice = totalPrice + cart.totalPrice;
+    });
+    discount = totalPrice - totalCart;
+
+    res.status(StatusCode.SUCCESS).json({
+      total: updateCart.total,
+      quantity: updateCart.quantity,
+      totalCart: totalCart,
+      totalPrice: totalPrice,
+      discount: discount,
+    });
   } catch (error) {
     return renderError(res, error);
   }
@@ -156,7 +152,7 @@ const checkOut = async (req, res) => {
     const wishlistCount = await wishlist.countDocuments({ userId: userId });
 
     req.session.couponId = null;
-    const address = await Address.find({ userId: userId,isAddress:true });
+    const address = await Address.find({ userId: userId, isAddress: true });
     const carts = await Cart.find({ userId: userId }).populate("productId");
 
     let totalCart = 0;
@@ -226,8 +222,10 @@ const applyCoupon = async (req, res) => {
     const discountPercentage = Math.round(parseInt(coupon.couponDiscount));
 
     const couponPercentage = Math.floor((discountPercentage / 100) * total);
-    const couponDiscount = Math.round((total - (discountPercentage / 100) * total));
-    
+    const couponDiscount = Math.round(
+      total - (discountPercentage / 100) * total
+    );
+
     await Coupon.findByIdAndUpdate(couponId, {
       $addToSet: { users: { userId: userId } },
     });

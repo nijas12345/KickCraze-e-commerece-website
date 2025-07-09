@@ -6,7 +6,6 @@
 <!-- Mirrored from themes.pixelstrap.com/voxo/front-end/product-no-sidebar.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Dec 2023 05:48:31 GMT -->
 
 <head>
-    <link rel="manifest" href="/user/manifest.json" />
     <link rel="icon" href="/user/assets/images/favicon/2.png" type="image/x-icon" />
     <link rel="apple-touch-icon" href="/user/assets/images/favicon/2.png" />
     <meta name="theme-color" content="#e22454" />
@@ -957,48 +956,25 @@
 
                                             </div>
 
-                                            <form id="add-cart">
-                                                <div id="selectSize"
+                                            <form >
+                                                <div
                                                     class="addeffect-section product-description border-product">
                                                     <h6 class="product-title size-text">select size
 
                                                     </h6>
 
-                                                    <h6 class="error-message">please select size</h6>
+                                              
 
                                                     <div class="size-box">
                                                         <ul>
-
-                                                            <li>
+                                                            
                                                                 <input type="hidden" value="<%=products._id%>"
                                                                     id="product-id">
-                                                                <input type="radio" id="small" name="size"
-                                                                    value="<%=products.sizes[0] %>"><br>
-                                                                <label for="small">
-                                                                    <%=products.sizes[0] %>
-                                                                </label><br>
-                                                            </li>
-                                                            <li>
-                                                                <input type="radio" id="medium" name="size"
-                                                                    value="<%=products.sizes[1] %>"><br>
-                                                                <label for="small">
-                                                                    <%=products.sizes[1] %>
-                                                                </label><br>
-                                                            </li>
-                                                            <li>
-                                                                <input type="radio" id="large" name="size"
-                                                                    value="<%=products.sizes[2] %>"><br>
-                                                                <label for="small">
-                                                                    <%=products.sizes[2] %>
-                                                                </label><br>
-                                                            </li>
-                                                            <li>
-                                                                <input type="radio" id="xl" name="size"
-                                                                    value="<%=products.sizes[3] %>"><br>
-                                                                <label for="small">
-                                                                    <%=products.sizes[3]%>
-                                                                </label><br>
-                                                            </li>
+                                                              
+                                                                <span id="product-size">
+                                                                    <%=products.size %>
+                                                                </span><br>
+                                                            
                                                         </ul>
                                                     </div>
                                                     <input type="hidden" id="stock" value="<%=products.stock%>">
@@ -1013,7 +989,7 @@
                                                                 </button>
                                                             </span>
 
-                                                            <input type="number" name="quantity"
+                                                            <input type="number"  name="quantity" 
                                                                 class="form-control input-number" value="1"
                                                                 id="quantity" min="1" readonly>
                                                             <span class="input-group-prepend">
@@ -1033,11 +1009,11 @@
                                                         <i class="fa fa-bookmark fz-16 me-2"></i>
                                                         <span>Wishlist</span>
                                                     </button>
-                                                    <button id="cartEffect" type="submit"
+                                                    <button id="add-cart" 
                                                         class="btn btn-solid hover-solid btn-animation">
                                                         <i class="fa fa-shopping-cart"></i>
-                                                        <span id="addtocart"></span>
-                                                        <span>Add To Cart</span>
+                                                        
+                                                        <span id="added-cart">Add To Cart</span>
                                                     </button>
 
                                                 </div>
@@ -1081,117 +1057,16 @@
                     <div class="cloth-review">
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <!-- <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#desc" type="button">Description</button> -->
-
-                                <!-- <button class="nav-link" id="nav-speci-tab" data-bs-toggle="tab" data-bs-target="#speci"
-                                    type="button">Specifications</button> -->
-
-                                <!-- <button class="nav-link" id="nav-size-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-guide" type="button">Sizing Guide</button>
-
-                                <button class="nav-link" id="nav-question-tab" data-bs-toggle="tab"
-                                    data-bs-target="#question" type="button">Q & A</button>
-
-                                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#review" type="button">Review</button> -->
+                       
                             </div>
                         </nav>
 
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="desc">
                                 <div class="shipping-chart">
-                                    <!-- <div class="part">
-                                        <h4 class="inner-title mb-2">Give you a complete account of the system</h4>
-                                        <p class="font-light">Nor again is there anyone who loves or pursues or
-                                            desires
-                                            to
-                                            obtain pain of itself, because it is pain, but because occasionally
-                                            circumstances occur in which toil and pain can procure him some great
-                                            pleasure.
-                                            To take a trivial example, which of us ever undertakes laborious
-                                            physical
-                                            exercise, except to obtain some advantage from it? But who has any right
-                                            to
-                                            find
-                                            fault with a man who chooses to enjoy a pleasure that has no annoying
-                                            consequences, or one who avoids a pain that produces no resultant
-                                            pleasure.
-                                        </p>
-                                    </div> -->
 
                                     <div class="row g-3 align-items-center">
-                                        <!-- <div class="col-lg-8">
-                                            <p class="font-light">Lorem ipsum dolor sit amet, consectetur
-                                                adipisicing
-                                                elit.
-                                                Ab, autem nemo? Tempora vitae assumenda laudantium unde magni,
-                                                soluta
-                                                repudiandae quam, neque voluptate deleniti consequatur laboriosam
-                                                veritatis?
-                                                Tempore dolor molestias voluptatum! Minima possimus, pariatur sed,
-                                                quasi
-                                                provident dolorum unde molestias, assumenda consequuntur odit magni
-                                                blanditiis obcaecati? Ea corporis odit dolorem fuga, fugiat soluta
-                                                consequuntur magni.</p>
-
-                                            <div class="part mt-3">
-                                                <h5 class="inner-title mb-2">fabric:</h5>
-                                                <p class="font-light">Art silk is manufactured by synthetic fibres
-                                                    like
-                                                    rayon. It's light in weight and is soft on the skin for comfort
-                                                    in
-                                                    summers.Art silk is manufactured by synthetic fibres like rayon.
-                                                    It's
-                                                    light in weight and is soft on the skin for comfort in summers.
-                                                </p>
-                                                <p class="font-light">Lorem Ipsum is simply dummy text of the
-                                                    printing
-                                                    and typesetting industry. Lorem Ipsum has been the industry's
-                                                    standard dummy text ever since the 1500s</p>
-                                            </div>
-                                        </div> -->
-
-                                        <!-- <div class="col-lg-4">
-                                            <img src="/user/assets/images/fashion/slider/1.jpg"
-                                                class="img-fluid rounded blur-up lazyload" alt="">
-                                        </div> -->
-
-                                        <!-- <div class="col-lg-8 order-lg-2 mt-4">
-                                            <p class="font-light">Lorem ipsum dolor sit amet, consectetur
-                                                adipisicing
-                                                elit.
-                                                Ab, autem nemo? Tempora vitae assumenda laudantium unde magni,
-                                                soluta
-                                                repudiandae quam, neque voluptate deleniti consequatur laboriosam
-                                                veritatis?
-                                                Tempore dolor molestias voluptatum! Minima possimus, pariatur sed,
-                                                quasi
-                                                provident dolorum unde molestias, assumenda consequuntur odit magni
-                                                blanditiis obcaecati? Ea corporis odit dolorem fuga, fugiat soluta
-                                                consequuntur magni.</p>
-                                            <div class="part mt-3">
-                                                <p class="font-light">Lorem ipsum, dolor sit amet consectetur
-                                                    adipisicing
-                                                    elit. Odio repellat numquam perspiciatis eum quis ab, sed dicta
-                                                    tenetur
-                                                    fugit culpa, aut distinctio deserunt quisquam ipsam
-                                                    reprehenderit
-                                                    iure?
-                                                    Adipisci, optio enim? Voluptates voluptatum neque id ad commodi
-                                                    quisquam
-                                                    dolorem vitae inventore quasi! Officiis facere, iusto tempore
-                                                    atque
-                                                    magnam voluptas. Architecto laboriosam deleniti hic veritatis
-                                                    nesciunt.
-                                                    Aut officia quasi inventore et. Debitis.</p>
-                                            </div>
-                                        </div> -->
-
-                                        <!-- <div class="col-lg-4 order-lg-0 mt-4">
-                                                <img src="/user/assets/images/fashion/slider/2.jpg"
-                                                    class="img-fluid rounded blur-up lazyload" alt="">
-                                            </div> -->
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -2347,47 +2222,49 @@
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
 
 
-        const form = document.getElementById("add-cart")
-        form.addEventListener("submit", async (event) => {
+        const button = document.getElementById("add-cart")
+        button.addEventListener("click", async (event) => {
             event.preventDefault()
-
+            const span = document.getElementById('added-cart');
+            if(span.textContent == 'Added To Cart'){
+                Swal.fire({
+                icon: 'success',           
+                title: 'Go to Cart!',
+                text: 'Your product was Already added.',
+                confirmButtonText: 'OK'
+                });
+                return;
+            } 
             const productId = document.getElementById("product-id").value
-            const size = document.querySelector("input[name='size']:checked").value
-            let quantity = document.getElementById("quantity").value
-            console.log("quantity", quantity);
-
+            const quantity = document.getElementById("quantity").value
             const stock = document.getElementById("stock").value
-            console.log(stock);
+            const size = document.getElementById('product-size').textContent
 
             if (stock < parseInt(quantity)) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Not enough stock available',
-                    text: 'There is not enough stock available for this quantity.',
+                    text: 'There is not enough stock available for this product.',
                 });
                 return;
             }
             if (parseInt(quantity) > 6) {
                 Swal.fire({
                     icon: 'error',
-                    title: "The Maximum Quantity for User is Six",
+                    title: "The Maximum Quantity for the User is Six",
 
                 })
                 return;
             }
 
-            console.log(parseInt(quantity) > 3);
-            console.log(stock);
 
-            const data = { productId, size, quantity }
-            console.log(data);
+            const data = { productId, quantity,size }
             try {
-
                 const response = await fetch("/insert-cart", {
                     method: "POST",
                     headers: {
@@ -2395,8 +2272,12 @@
                     },
                     body: JSON.stringify(data)
                 })
-                const responseData = response.json()
-
+                const responseData = await response.json()
+                
+                if(responseData.success){
+                    span.textContent = "Added To Cart";
+                    button.style.background = "Red"
+                }
             } catch (error) {
                 console.log(error);
             }

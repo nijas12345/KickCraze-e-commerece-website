@@ -16,10 +16,10 @@ const loadSuccess = async (req, res) => {
     const orderId = req.query.orderId;
     const categories = await Category.find({ delete: true });
 
-    const orders = await Order.findById(orderId)
+    const order = await Order.findById(orderId)
       .populate("products.productId")
       .populate("addressId");
-    if (orders.isPayment == false) {
+    if (order.isPayment == false) {
       await Order.findByIdAndUpdate(orderId, {
         isPayment: true,
       });
@@ -43,12 +43,12 @@ const loadSuccess = async (req, res) => {
     await Cart.deleteMany({ userId: userId });
 
     let total = 0;
-    orders.products.forEach((order) => {
+    order.products.forEach((order) => {
       total = total + order.total;
     });
 
     res.render("orderSuccess", {
-      orders: orders,
+      order: order,
       total: total,
       categories: categories,
     });

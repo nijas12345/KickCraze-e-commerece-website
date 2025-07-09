@@ -64,7 +64,7 @@
 
 
     <div class="">
-        <form id="form" action="/admin/edit-coupon" method="post">
+        <form id="form" method="post">
 
             <div class="mb-4">
                 <div class="spin error" id="code-error"></div>
@@ -122,7 +122,8 @@
                     id="description"><%=coupon.couponDescription %></textarea>
             </div>
             <input type="hidden" name="id" id="id" value="<%=coupon._id%>">
-            <div class="d-grid">
+            <div class="d-flex justify-content-between">
+                <a href="/admin/add-coupon" class="btn btn-primary">Back</a>
                 <button class="btn btn-primary" type="submit" id="submit-btn">Submit</button>
             </div>
         </form>
@@ -188,8 +189,13 @@
                 isValid = false
                 return
             }
-            else if (code.length !== 10) {
-                codeError.textContent = "Code must be exactly 10 characters";
+            if(!/^[A-Za-z]/.test(code.trimStart())){
+                codeError.textContent = "Code must start with a letter (A-Z or a-z)";
+                isValid = false;
+                return;
+            }
+            else if (code.length <= 5) {
+                codeError.textContent = "Code must be  more than 5 characters";
                 isValid = false;
                 return
             }
@@ -238,10 +244,36 @@
                 return
             }
 
-
-
             if (isValid == true) {
-                document.getElementById("form").submit()
+                 if (isValid == true) {
+                const data = {
+                    id,
+                    code,
+                    description,
+                    maxAmount,
+                    minAmount,
+                    expiry,
+                    discount: CouponDiscount
+                };
+                handleData(data)
+            }
+         async function handleData(data){
+            const response = await fetch("/admin/edit-coupon", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+               })
+            const res = await response.json(); 
+            console.log("res",res);
+
+            if(res.status == 'failed'){
+                 codeError.textContent = res.message
+            }else{
+                window.location.href = "/admin/add-coupon"
+            }
+        }
             }
 
         })

@@ -1184,7 +1184,7 @@
 
     <!--Invoice Section start-->
 
-    <div class="invoice-container" style="margin-left: 1100px;">
+    <div class="invoice-container" style="margin-left: 1100px" >
         <div class="invoice" id="invoice-hide" hidden>
             <h1 class="headline">Kickzone<span style="color: #000;">.</span><span style="color: #6495ED;">online</span>
             </h1>
@@ -1195,14 +1195,14 @@
             <div class="invoice-details">
                 <ul>
                     <div class="invoice-number">
-                        <input type="hidden" value="<%=orders._id %>" name="" id="orderId">
+                        <input type="hidden" value="<%=order._id %>" name="" id="orderId">
                         <label for="invoice-number">Invoice Number:</label>
                         <input type="text" id="invoice-number" readonly>
                     </div>
-                    <li>Invoice Date: <%= orders.orderedDate.toLocaleDateString('en-US', { year: 'numeric' ,
+                    <li>Invoice Date: <%= order.orderedDate.toLocaleDateString('en-US', { year: 'numeric' ,
                             month: 'numeric' , day: 'numeric' }) %>
                     </li>
-                    <li>Customer Name: <%= orders.addressId.name %>
+                    <li>Customer Name: <%= order.addressId.name %>
                     </li>
                     <!-- Add more invoice details as needed -->
                 </ul>
@@ -1221,7 +1221,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% orders.products.forEach((product, index)=> { %>
+                        <% order.products.forEach((product, index)=> { %>
                             <tr>
                                 <td>
                                     <%= product.productId.name %>
@@ -1239,10 +1239,10 @@
                                     <td colspan="3"></td>
                                     <!-- Empty cells to align with the Product, Quantity, and Item Price columns -->
                                     <td>
-                                        <%= orders.totalPrice %>
+                                        <%= order.totalPrice %>
                                     </td> <!-- Total Price -->
                                     <td>
-                                        <%= orders.discountTotal ? orders.discountTotal : orders.wcTotal %>
+                                        <%= order.discountTotal ? order.discountTotal : order.wcTotal %>
                                     </td> <!-- Discounted Total -->
                                 </tr>
                     </tbody>
@@ -1251,7 +1251,7 @@
 
             </div>
             <!-- Invoice total -->
-            <p style="margin-left: 500px;">Total: <% if (orders.discountTotal) { %>₹ <%= orders.discountTotal %>
+            <p style="margin-left: 500px;">Total: <% if (order.discountTotal) { %>₹ <%= order.discountTotal %>
                         <% } else { %>₹ <%= total %>
                                 <% } %>
             </p>
@@ -1259,11 +1259,11 @@
 
             <div>
                 <p>Address:</p>
-                <div style="display: flex;"><span>Name: <%=orders.addressId.name %></span></div>
-                <div style="display: flex;"><span>houseName: <%=orders.addressId.houseName %></span></div>
-                <div style="display: flex;"><span>state: <%=orders.addressId.state %></span></div>
-                <div style="display: flex;"><span>Phone: <%=orders.addressId.mobile %></span></div>
-                <div style="display: flex;"><span>Pincode: <%=orders.addressId.pin %></span></div>
+                <div style="display: flex;"><span>Name: <%=order.addressId.name %></span></div>
+                <div style="display: flex;"><span>houseName: <%=order.addressId.houseName %></span></div>
+                <div style="display: flex;"><span>state: <%=order.addressId.state %></span></div>
+                <div style="display: flex;"><span>Phone: <%=order.addressId.mobile %></span></div>
+                <div style="display: flex;"><span>Pincode: <%=order.addressId.pin %></span></div>
             </div>
         </div>
 
@@ -1291,7 +1291,7 @@
                             <tbody>
 
 
-                                <% orders.products.forEach((product)=>{%>
+                                <% order.products.forEach((product)=>{%>
 
 
                                     <tr class="table-order">
@@ -1313,11 +1313,11 @@
                                                 <%= product.quantity %>
                                             </h5>
                                         </td>
-                                        <%if(orders.discountTotal) { %>
+                                        <%if(order.discountTotal) { %>
                                             <td>
                                                 <p>Price</p>
                                                 <h5>
-                                                    <%= orders.discountTotal %>
+                                                    <%= order.discountTotal %>
                                                 </h5>
                                             </td>
                                             <% }else{ %>
@@ -1334,42 +1334,16 @@
 
                             </tbody>
                             <tfoot>
-                                <!-- <tr class="table-order">
-                                    <td colspan="3">
-                                        <h5 class="font-light">Subtotal :</h5>
-                                    </td>
-                                    <td>
-                                      
-                                    </td>
-                                </tr>  -->
-
-                                <!-- <tr class="table-order">
-                                    <td colspan="3">
-                                        <h5 class="font-light">Shipping :</h5>
-                                    </td>
-                                    <td>
-                                        <h4>$12.00</h4>
-                                    </td>
-                                </tr> -->
-
-                                <!-- <tr class="table-order">
-                                    <td colspan="3">
-                                        <h5 class="font-light">Tax(GST) :</h5>
-                                    </td>
-                                    <td>
-                                        <h4>$10.00</h4>
-                                    </td>
-                                </tr> -->
 
                                 <tr class="table-order">
                                     <td colspan="3">
                                         <h4 class="theme-color fw-bold">Total Price :</h4>
                                     </td>
-                                    <%if(orders.discountTotal) {%>
+                                    <%if(order.discountTotal) {%>
 
                                         <td>
                                             <h4 class="theme-color fw-bold">
-                                                <%= orders.discountTotal%>
+                                                <%= order.discountTotal%>
                                             </h4>
                                         </td>
                                         <% }else{%>
@@ -1392,10 +1366,10 @@
                                 <h4>summery</h4>
                                 <ul class="order-details">
                                     <li>Order ID: 5563853658932</li>
-                                    <li><%=orders.orderedDate.toLocaleDateString('en-US', { year: 'numeric' ,
+                                    <li><%=order.orderedDate.toLocaleDateString('en-US', { year: 'numeric' ,
                                             month: 'numeric' , day: 'numeric' })%> </li>
-                                    <% if(orders.discountTotal){%>
-                                        <li>₹ <%= orders.discountTotal %>
+                                    <% if(order.discountTotal){%>
+                                        <li>₹ <%= order.discountTotal %>
                                         </li>
                                         <%}else{%>
                                             <li>₹ <%= total %>
@@ -1413,13 +1387,13 @@
                                 <h4>shipping address</h4>
                                 <ul class="order-details">
                                     <li>
-                                        <%= orders.addressId.name %>
+                                        <%= order.addressId.name %>
                                     </li>
                                     <li>
-                                        <%= orders.addressId.houseName %>
+                                        <%= order.addressId.houseName %>
                                     </li>
-                                    <li>India ,<%= orders.addressId.state %>
-                                            <%= orders.addressId.pin %>, <%= orders.addressId.mobile %>
+                                    <li>India ,<%= order.addressId.state %>
+                                            <%= order.addressId.pin %>, <%= order.addressId.mobile %>
                                     </li>
                                 </ul>
                             </div>
@@ -1428,14 +1402,14 @@
                                 <div class="payment-mode">
                                     <h4>payment method</h4>
                                     <p>
-                                        <%= orders.payment %>
+                                        <%= order.payment %>
                                     </p>
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="delivery-sec">
-                                    <% const deliveryDate=new Date(orders.orderedDate); %>
+                                    <% const deliveryDate=new Date(order.orderedDate); %>
                                         <% deliveryDate.setDate(deliveryDate.getDate() + 7); %>
 
                                             <span>Delivery Date:
@@ -1445,7 +1419,7 @@
                                                             month: 'numeric' , day: 'numeric' }) %>
                                                     </span>%>
                                             </span></h3>
-                                            <a href="/view-order?id=<%=orders._id %>">track order</a>
+                                            <a href="/view-order?id=<%=order._id %>">track order</a>
                                 </div>
                             </div>
                         </div>
@@ -1489,7 +1463,7 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <span>
+                                     <span>
                                         <b>Email:</b><span class="">nijasbinabbas@gmail.com</span>
                                     </span>
                                 </li>
@@ -1626,26 +1600,6 @@
             </div>
         </div>
     </footer>
-    <!-- footer end -->
-
-    <!-- theme Setting Start -->
-    <!-- <div class="theme-setting">
-        <ul>
-            <li>
-                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>
-            </li>
-            <li>
-                <button class="btn btn-sm rtl-button">RTL</button>
-            </li>
-            <li class="color-picker">
-                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#e22454"
-                    title="Choose your color">
-            </li>
-        </ul>
-    </div> -->
-    <!-- theme Setting End -->
-
-    <!-- tap to top Section Start -->
     <div class="tap-to-top">
         <a href="/user/#home">
             <i class="fas fa-chevron-up"></i>

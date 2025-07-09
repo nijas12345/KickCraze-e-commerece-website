@@ -5,7 +5,7 @@ const StatusCode = require("../helpers/statusCode");
 
 const ListProduct = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({ status: true });
 
     const categories = await Category.find({ delete: true });
     res
@@ -30,7 +30,6 @@ const addProduct = async (req, res) => {
 const insertProduct = async (req, res) => {
   try {
     const fileNames = req.files.map((file) => file.filename);
-
     let image = [];
 
     fileNames.forEach((filename) => {
@@ -38,7 +37,6 @@ const insertProduct = async (req, res) => {
       image.push(outputPath2);
     });
     const discount = req.body.discount;
-    const category = req.body.category;
     const categoryy = await Category.findOne({ name: req.body.category });
 
     const offer = categoryy.offer;
@@ -59,14 +57,12 @@ const insertProduct = async (req, res) => {
         color: req.body.color,
         stock: req.body.stock,
         category: req.body.category,
-        sizes: req.body.sizes,
+        size: req.body.size,
         image: image,
       });
       await product.save();
       const products = await Product.find();
-      res
-        .status(StatusCode.SUCCESS)
-        .render("productList", { product: products });
+      res.status(StatusCode.SUCCESS).redirect("/admin/product-list");
     } else {
       const discounts = parseInt(discount);
       const disprice = Math.floor(
@@ -81,7 +77,7 @@ const insertProduct = async (req, res) => {
         color: req.body.color,
         stock: req.body.stock,
         category: req.body.category,
-        sizes: req.body.sizes,
+        size: req.body.size,
         image: image,
       });
       await product.save();
@@ -200,11 +196,7 @@ const insertEditedProduct = async (req, res) => {
       }
     }
 
-    const products = await Product.find();
-    const categories = await Category.find();
-    res
-      .status(StatusCode.SUCCESS)
-      .render("productList", { product: products, categories: categories });
+    res.status(StatusCode.SUCCESS).redirect("/admin/product-list");
   } catch (error) {
     return renderError(res, error);
   }
@@ -212,15 +204,9 @@ const insertEditedProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const deleteId = req.query.id;
-
+    const deleteId = req.body.id;
     await Product.findByIdAndUpdate(deleteId, { status: false });
-    const products = await Product.find();
-
-    const categories = await Category.find();
-    res
-      .status(StatusCode.SUCCESS)
-      .render("productList", { product: products, categories: categories });
+    res.status(StatusCode.SUCCESS).json({ success: true });
   } catch (error) {
     return renderError(res, error);
   }

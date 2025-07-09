@@ -184,8 +184,6 @@ const adminDashboard = async (req, res) => {
       year = 2024;
     }
 
-    await Order.find();
-
     const orderData = await Order.aggregate([
       { $unwind: "$products" },
       {
@@ -214,12 +212,12 @@ const adminDashboard = async (req, res) => {
               $cond: {
                 if: {
                   $gt: [
-                    { $toDouble: "$wcTotal" }, // Convert wcTotal to double
-                    { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+                    { $toDouble: { $trim: { input: "$wcTotal" } } },
+                    { $toDouble: { $trim: { input: "$discountTotal" } } },
                   ],
                 },
-                then: { $toDouble: "$wcTotal" }, // Convert wcTotal to double
-                else: { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+                then: { $toDouble: { $trim: { input: "$wcTotal" } } },
+                else: { $toDouble: { $trim: { input: "$discountTotal" } } },
               },
             },
           },
@@ -246,12 +244,12 @@ const adminDashboard = async (req, res) => {
               $cond: {
                 if: {
                   $gt: [
-                    { $toDouble: "$wcTotal" }, // Convert wcTotal to double
-                    { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+                    { $toDouble: { $trim: { input: "$wcTotal" } } },
+                    { $toDouble: { $trim: { input: "$discountTotal" } } },
                   ],
                 },
-                then: { $toDouble: "$wcTotal" }, // Convert wcTotal to double
-                else: { $toDouble: "$discountTotal" }, // Convert discountTotal to double
+                then: { $toDouble: { $trim: { input: "$wcTotal" } } },
+                else: { $toDouble: { $trim: { input: "$discountTotal" } } },
               },
             },
           },

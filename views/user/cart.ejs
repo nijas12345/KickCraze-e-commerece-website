@@ -970,11 +970,11 @@
                                         </td>
                                         <td>
                                             <div class="qty-box">
-                                                <div id="stock-error" style="color:red"></div>
+                                                
                                                 <% if(carts[i].productId.stock>=1) {%>
-
+                                                    <div id="stock-error<%=i %>" style="color:red"></div>
                                                     <div class="input-group">
-
+                                                        
                                                         <input type="number" name="quantity" min="1" max="6"
                                                             class="form-control input-number" id="quantity<%= i %>"
                                                             value="<%= carts[i].quantity %>"
@@ -983,9 +983,7 @@
                                                             data-stock="<%= carts[i].productId.stock %>"
                                                             onkeydown="return false;" />
                                                     </div>
-                                                    <% } else {%>
-
-                                                        <% } %>
+                                                    <% } %>
                                             </div>
                                         </td>
 
@@ -1355,21 +1353,15 @@
 
                     const quantityInputs = document.querySelectorAll("[id^='quantity']");
 
-                    quantityInputs.forEach(input => {
+                    quantityInputs.forEach((input,index) => {
 
                         input.addEventListener("input", async () => {
-                            let quantity = input.value;
-
-                            console.log("quantity", quantity);
+                            const quantity = input.value;
                             const size = input.dataset.size;
                             const productId = input.dataset.productId
                             const stock = input.dataset.stock
-                            console.log(size);
-                            console.log(stock);
-                            console.log("productId", productId);
-                            console.log("check", parseInt(quantity) < 0);
-
-                            console.log(typeof quantity);
+                            const errorDiv = document.getElementById('stock-error'+index)
+                            errorDiv.textContent = ""
                             console.log(quantity, productId, size);
 
                             // Assuming you have a variable named 'quantity' that holds the quantity value
@@ -1383,8 +1375,6 @@
 
                                 input.value = NaN
                                 quantity = NaN
-                                console.log("quna", quantity);
-                                console.log("input", input.value);
                                 document.getElementById("total-mrp").textContent = ""
                                 document.getElementById('discount').textContent = ""
                                 document.getElementById('total-price').textContent = ""
@@ -1395,30 +1385,7 @@
                                 return
                             }
 
-
-
-
-                            if (parseInt(quantity) <= 0) {
-
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'You have Entered Incorrect Quantity!',
-                                });
-
-                                input.value = "invalid"
-                                document.getElementById("total-mrp").textContent = ""
-                                document.getElementById('discount').textContent = ""
-                                document.getElementById('total-price').textContent = ""
-                                const elements = document.querySelectorAll(`[data-total-id="${productId}"][data-total-size="${size}"]`)
-                                elements.forEach(element => {
-                                    element.textContent = "Enter a Proper Quantity";
-                                });
-                                return
-                            }
-
                             try {
-                                console.log("Nijas", quantity);
                                 const response = await fetch('/update-quantity', {
                                     method: "PUT",
                                     headers: {
@@ -1431,14 +1398,12 @@
                                     throw new error("cart not updated")
                                 }
                                 else {
-                                    console.log("size", size, productId);
-
 
                                     const { total, quantity, totalCart, totalPrice, discount } = await response.json()
                                     console.log(total, quantity, totalCart);
 
                                     const elements = document.querySelectorAll(`[data-total-id="${productId}"][data-total-size="${size}"]`)
-                                    console.log(elements);
+                                    
 
                                     elements.forEach(element => {
                                         element.textContent = total;
@@ -1494,21 +1459,20 @@
 
                     const checkout = document.getElementById('checkout').addEventListener("click", async () => {
                         const quantityInputs = document.querySelectorAll("[id^='quantity']");
-                        const stockError = document.getElementById('stock-error')
-                        console.log("stock", stockError);
-
+                        
                         let isValid = true
-                        quantityInputs.forEach(input => {
-
+                        quantityInputs.forEach((input,index) => {
+                            
                             const quantity = parseInt(input.value)
-                            console.log(quantity);
-                            console.log("quantity", quantity);
                             const size = input.dataset.size;
                             const productId = input.dataset.productId
-                            const stock = parseInt(input.dataset.stock)
-                            console.log(productId);
-                            console.log(stock);
-
+                            const stock = parseInt(input.dataset.stock);
+                            const errorDiv = document.getElementById('stock-error'+index)
+                            console.log("error",errorDiv);
+                            
+                            console.log(quantity,size,productId,stock);
+                            
+                            
                             if (quantity > 6) {
                                 Swal.fire({
                                     icon: 'error',
@@ -1518,16 +1482,8 @@
                                 isValid = false
                                 return
                             }
-                            console.log("stock", stock);
-                            console.log("quantity", quantity);
-
                             if (quantity > stock) {
-                                stockError.textContent = "No stock available"
-                                isValid = false
-                                return
-                            }
-                            if (quantity <= 0) {
-                                stockError.textContent = "Please Add Proper quantity"
+                                errorDiv.textContent = `stock available, ${stock} unit`
                                 isValid = false
                                 return
                             }

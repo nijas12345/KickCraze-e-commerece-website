@@ -52,7 +52,74 @@
 
     <!-- Theme css -->
     <link id="color-link" rel="stylesheet" type="text/css" href="/user/assets/css/demo2.css">
+    <style>
+    .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
+        .invoice {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        .invoice h2 {
+            text-align: center;
+        }
+
+        .invoice-details,
+        .invoice-table,
+        .invoice-total {
+            margin-bottom: 20px;
+        }
+
+        .invoice-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-table table th,
+        .invoice-table table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+       .download-button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+
+  .download-button button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+        .headline {
+            text-align: center;
+            font-size: 36px;
+            color: #ff6347;
+            /* Red color */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 50px;
+            margin-left: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+            margin-top: 20px;
+        }
+        </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 
 <body class="theme-color2 light ltr">
@@ -89,29 +156,7 @@
                                                         <div class="row">
                                                             <div class="col-xl-3">
                                                                 <div class="category-childmenu">
-                                                                    <!-- <div class="title-category">
-                                                                        <h6>Watch Brands</h6>
-                                                                    </div> -->
-                                                                    <!-- <ul>
-                                                                        <li>
-                                                                            <a href="/user/shop-left-sidebar.html">Coros</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/user/shop-left-sidebar.html">Titan</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/user/shop-left-sidebar.html">Citizen</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/user/shop-left-sidebar.html">Casio</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/user/shop-left-sidebar.html">Movado</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="/user/shop-left-sidebar.html">Tissot</a>
-                                                                        </li>
-                                                                    </ul> -->
+                                                                   
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-3">
@@ -1008,6 +1053,7 @@
             <div hidden style="margin-left: 700px; color:green;" id="wallet">
                 <h3>Your order is cancelled and amount has been credited into your wallet</h3>
             </div>
+            
             <div class="row">
                 <% if(order.status=="delivered" ) {%>
 
@@ -1027,8 +1073,7 @@
                 <button class="btn btn-solid-default" type="button" id="returns">Return</button>
                 <button hidden class="btn btn-outline-secondary" type="button" id="submit">Submit</button>
                 </div>
-
-                            <%} else if(order.status=="cancelled" ){%>
+                                     <%} else if(order.status=="cancelled" ){%>
 
                                 <%} else if(order.status=="returned" ){%>
 
@@ -1072,12 +1117,18 @@
                                                                             <%= order.status %>
                                                                         </span></p>
                                                                     <p class="font-light mb-0">Order Placed : <span>
-                                                                            <%= order.orderedDate.toLocaleDateString('en-US',
+                                                                            <%= order.orderedDate.toLocaleDateString('en-GB',
                                                                                 { year: 'numeric' , month: 'numeric' ,
                                                                                 day: 'numeric' })%>
                                                                         </span></p>
                                                                     <p class="font-light">Size : <span>
                                                                             <%= product.size %>
+                                                                        </span></p>
+                                                                    <p class="font-light">Price : <span>
+                                                                            <%= product.productId.disprice %>
+                                                                        </span></p>  
+                                                                    <p class="font-light">Qty : <span>
+                                                                            <%= product.quantity %>
                                                                         </span></p>
                                                                     <p class="font-light">Payment : <span>
                                                                             <%= order.payment%>
@@ -1114,6 +1165,95 @@
     <p class="font-light mb-0"><strong>Mobile:</strong> <%= order.addressId.mobile %></p>
   </div>
 </div>
+  <div class="invoice-container"  >
+        <div class="invoice" id="invoice-hide" hidden>
+            <h1 class="headline">Kickzone<span style="color: #000;">.</span><span style="color: #6495ED;">online</span>
+            </h1>
+            <p class="tagline">The Ultimate Destination for Premium Shoes</p>
+            <br>
+            <h2>Invoice</h2>
+            <!-- Invoice details -->
+            <div class="invoice-details">
+                <ul>
+                    <div class="invoice-number">
+                        <input type="hidden" value="<%=order._id %>" name="" id="orderId">
+                        <label for="invoice-number">Invoice Number:</label>
+                        <input type="text" id="invoice-number" readonly>
+                    </div>
+                    <li>Invoice Date: <%= order.orderedDate.toLocaleDateString('en-US', { year: 'numeric' ,
+                            month: 'numeric' , day: 'numeric' }) %>
+                    </li>
+                    <li>Customer Name: <%= order.addressId.name %>
+                    </li>
+                    <!-- Add more invoice details as needed -->
+                </ul>
+
+            </div>
+            <!-- Invoice table -->
+            <div class="invoice-table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Item Price</th>
+                            <th>Total Price</th>
+                            <th>Discounted Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% order.products.forEach((product, index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= product.productId.name %>
+                                </td>
+                                <td>
+                                    <%= product.quantity %>
+                                </td>
+                                <td>
+                                    <%= product.total %>
+                                </td>
+                            </tr>
+                            <% }) %>
+                                <!-- Display Total Price and Discounted Total in separate rows -->
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <!-- Empty cells to align with the Product, Quantity, and Item Price columns -->
+                                    <td>
+                                        <%= order.totalPrice %>
+                                    </td> <!-- Total Price -->
+                                    <td>
+                                        <%= order.discountTotal ? order.discountTotal : order.wcTotal %>
+                                    </td> <!-- Discounted Total -->
+                                </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <!-- Invoice total -->
+            <p style="margin-left: 500px;">Total: <% if (order.discountTotal) { %>₹ <%= order.discountTotal %>
+                        <% } else { %>₹ <%= total %>
+                                <% } %>
+            </p>
+            <!-- Your invoice total here -->
+
+            <div>
+                <p>Address:</p>
+                <div style="display: flex;"><span>Name: <%=order.addressId.name %></span></div>
+                <div style="display: flex;"><span>houseName: <%=order.addressId.houseName %></span></div>
+                <div style="display: flex;"><span>state: <%=order.addressId.state %></span></div>
+                <div style="display: flex;"><span>Phone: <%=order.addressId.mobile %></span></div>
+                <div style="display: flex;"><span>Pincode: <%=order.addressId.pin %></span></div>
+            </div>
+        </div>
+
+        <!-- Download button -->
+        <div class="download-button">
+            <button onclick="downloadInvoice()">Download PDF</button>
+        </div>
+    </div>
+         
 
                                    
             </div>
@@ -1353,7 +1493,34 @@
     <script src="/user/assets/js/theme-setting.js"></script>
     <script src="/user/assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+         function generateInvoiceNumber(orderId) {
+            // Logic to generate invoice number (you can customize this)
+            return "12" + orderId; // Example: INV-123456
+            console.log(orderId);
+        }
 
+        // Function to update invoice number input field
+        function updateInvoiceNumber(orderId) {
+            const invoiceNumberInput = document.getElementById("invoice-number");
+            const invoiceNumber = generateInvoiceNumber(orderId);
+            invoiceNumberInput.value = invoiceNumber;
+        }
+
+        async function downloadInvoice() {
+            const invoiceContainer = document.querySelector('.invoice');
+            document.getElementById('invoice-hide').hidden = false
+            const data = await html2pdf().from(invoiceContainer).save();
+
+            document.getElementById('invoice-hide').hidden = true
+
+        }
+
+
+        const order = document.getElementById('orderId').value
+        const orderId = order.substring(0, 3);
+        updateInvoiceNumber(orderId);
+    </script>
 
     <script>
         const button = document.getElementById("submit").addEventListener("click", async function () {
