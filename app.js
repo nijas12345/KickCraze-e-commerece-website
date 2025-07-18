@@ -45,6 +45,7 @@ app.use("/", userRoute);
 // Admin route
 app.use("/admin", adminRoute);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server Created");
 });
+ 
