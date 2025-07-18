@@ -5,13 +5,14 @@ dotenv.config();
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_CALLBACK = process.env.GOOGLE_CALLBACK
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://kickzone.projecx.online/auth/google/callback",
+      callbackURL: GOOGLE_CALLBACK,
       passReqToCallback: true,
     },
     function (request, accessToken, refreshToken, profile, done) {

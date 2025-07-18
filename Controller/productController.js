@@ -2,6 +2,7 @@ const Product = require("../model/productModel");
 const Category = require("../model/categoryModel");
 const renderError = require("../helpers/errorHandling");
 const StatusCode = require("../helpers/statusCode");
+const path = require('path')
 
 const ListProduct = async (req, res) => {
   try {
@@ -31,10 +32,6 @@ const insertProduct = async (req, res) => {
   try {
     const fileNames = req.files.map((file) => file.filename);
     let image = [];
-    const dir = path.join(__dirname,"public",'productImages');
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
-      }
     fileNames.forEach((filename) => {
       const outputPath2 = "/productImages/" + filename;
       image.push(outputPath2);
