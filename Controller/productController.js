@@ -31,7 +31,10 @@ const insertProduct = async (req, res) => {
   try {
     const fileNames = req.files.map((file) => file.filename);
     let image = [];
-
+    const dir = path.join(__dirname,"public",'productImages');
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir);
+      }
     fileNames.forEach((filename) => {
       const outputPath2 = "/productImages/" + filename;
       image.push(outputPath2);
