@@ -107,7 +107,7 @@ const loadOtp = async (req, res) => {
     console.log(otpCode);
     
     const isSend = await sendMail(email, otpCode);
-
+    
     if (isSend) {
       res.status(StatusCode.SUCCESS).render("registerOtp");
     } else {

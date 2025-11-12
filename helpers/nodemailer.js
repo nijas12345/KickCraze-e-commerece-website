@@ -24,7 +24,7 @@ async function sendMail(email, otpCode) {
     const info = await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
-    console.log(error);
+    console.log("error",error);
     return false;
   }
 }
